@@ -1,0 +1,82 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <div class="card p-4 shadow">
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+
+      <!-- Email or Username -->
+      <div class="mb-3">
+        <label class="form-label text-dark">Identifier</label>
+        <input
+          formControlName="emailOrUsername"
+          type="text"
+          class="form-control"
+          placeholder="Email or Username"
+          [ngClass]="{ 'is-invalid': f.emailOrUsername.invalid && f.emailOrUsername.touched }"
+          style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.6);">
+        <div *ngIf="f.emailOrUsername.invalid && f.emailOrUsername.touched" class="invalid-feedback d-block">
+          Email or Username is required
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-1">
+        <label class="form-label text-dark">Password</label>
+        <div class="position-relative">
+          <input
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+            class="form-control pe-5"
+            placeholder="Enter your Password"
+            [ngClass]="{ 'is-invalid': f.password.invalid && f.password.touched }"
+            style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.6);">
+          <i class="fas"
+             [class.fa-eye]="!showPassword"
+             [class.fa-eye-slash]="showPassword"
+             (click)="togglePasswordVisibility()"
+             style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+        </div>
+        <div *ngIf="f.password.invalid && f.password.touched" class="invalid-feedback d-block mt-1">
+          <div *ngIf="f.password.errors?.['required']">Password is required</div>
+          <div *ngIf="f.password.errors?.['pattern']">
+            Password must contain:
+            <ul>
+              <li>At least one uppercase letter</li>
+              <li>At least one lowercase letter</li>
+              <li>At least one number</li>
+              <li>At least one special character</li>
+              <li>8-20 characters long</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forgot Password Link -->
+      <div class="text-start mb-3">
+        <a routerLink="/forgot-password" class="text-decoration-none text-primary" style="font-size: 14px;">
+          Forgot your password?
+        </a>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid || isLoading">
+        <span *ngIf="isLoading">
+          <i class="fas fa-spinner fa-spin"></i> Authenticating...
+        </span>
+        <span *ngIf="!isLoading">Sign In</span>
+      </button>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Register Redirect -->
+      <div class="text-center mt-3">
+        <span class="text-dark" style="font-size: 14px;">
+          Don't have an account?
+          <a routerLink="/register" class="text-primary text-decoration-none">Register here</a>
+        </span>
+      </div>
+
+    </form>
+  </div>
+</div>

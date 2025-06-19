@@ -1,0 +1,131 @@
+<!-- Title -->
+<h4 class="mb-2 text-center text-black">Welcome 👋</h4>
+
+<!-- Registration Form -->
+<form [formGroup]="registerform" (ngSubmit)="onSubmit()">
+
+  <!-- Username -->
+  <div class="mb-2">
+    <label for="username" class="text-black">Username:</label>
+    <input
+      type="text"
+      id="username"
+      formControlName="username"
+      class="form-control"
+      placeholder="Enter your username"
+      style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.5);">
+    
+    <div class="alert alert-danger" *ngIf="registerform.get('username')?.touched && registerform.get('username')?.errors">
+      <p *ngIf="registerform.get('username')?.getError('required')">Username is required</p>
+      <p *ngIf="registerform.get('username')?.getError('minlength')">Username Min Length 3</p>
+      <p *ngIf="registerform.get('username')?.getError('maxlength')">Username Max Length 20</p>
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="mb-2">
+    <label for="email" class="text-black">Email:</label>
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      class="form-control"
+      placeholder="Enter your email"
+      style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.5);">
+    
+    <div class="alert alert-danger" *ngIf="registerform.get('email')?.touched && registerform.get('email')?.errors">
+      <p *ngIf="registerform.get('email')?.getError('required')">Email is required</p>
+      <p *ngIf="registerform.get('email')?.getError('email')">Invalid email format</p>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="mb-2">
+    <label for="password" class="text-black">Password:</label>
+    <div class="position-relative">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        class="form-control pe-5"
+        placeholder="Enter your password"
+        style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.5);">
+      
+      <i class="fas"
+         [class.fa-eye]="!showPassword"
+         [class.fa-eye-slash]="showPassword"
+         (click)="togglePasswordVisibility()"
+         style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+    </div>
+    
+    <div class="alert alert-danger" *ngIf="registerform.get('password')?.touched && registerform.get('password')?.errors">
+      <p *ngIf="registerform.get('password')?.getError('required')">Password is required</p>
+      <div *ngIf="registerform.get('password')?.hasError('pattern')">
+        Password must contain:
+        <ul>
+          <li>At least one uppercase letter (A–Z)</li>
+          <li>At least one lowercase letter (a–z)</li>
+          <li>At least one number (0–9)</li>
+          <li>At least one special character (e.g., $!%*?&)</li>
+          <li>Between 8 and 20 characters</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Repassword -->
+  <div class="mb-2">
+    <label for="repassword" class="text-black">Repassword:</label>
+    <div class="position-relative">
+      <input
+        [type]="showRePassword ? 'text' : 'password'"
+        id="repassword"
+        formControlName="rePassword"
+        class="form-control pe-5"
+        placeholder="Confirm your password"
+        style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.5);">
+      
+      <i class="fas"
+         [class.fa-eye]="!showRePassword"
+         [class.fa-eye-slash]="showRePassword"
+         (click)="toggleRePasswordVisibility()"
+         style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="registerform.get('rePassword')?.touched && registerform.get('rePassword')?.hasError('required')">
+      Repassword is required
+    </div>
+
+    <div class="alert alert-danger" *ngIf="registerform.errors?.['mismatch'] && registerform.get('rePassword')?.touched">
+      Passwords do not match
+    </div>
+  </div>
+
+  <!-- Role -->
+  <div class="mb-2">
+    <label for="role" class="text-black">Role:</label>
+    <select
+      id="role"
+      formControlName="role"
+      class="form-control"
+      style="font-size: 14px; padding: 7px; color: black; background-color: rgba(255, 255, 255, 0.5);">
+      <option value="" disabled>Select a role</option>
+      <option value="USER">👨User</option>
+      <option value="ADMIN">🛠️ Admin</option>
+    </select>
+    
+    <div class="alert alert-danger" *ngIf="registerform.get('role')?.touched && registerform.get('role')?.errors">
+      <p *ngIf="registerform.get('role')?.getError('required')">Role is required</p>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="registerform.invalid || isloading">
+    <i class="fas fa-spinner fa-spin" *ngIf="isloading"></i>
+    <span *ngIf="!isloading">Register</span>
+  </button>
+
+  <!-- Error Message -->
+  <p class="alert alert-danger mt-3 mb-0" *ngIf="msgerror">{{ msgerror }}</p>
+
+</form>
