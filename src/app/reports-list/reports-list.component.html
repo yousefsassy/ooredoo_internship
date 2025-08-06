@@ -1,0 +1,30 @@
+<div class="reports-container">
+  <button class="btn-create" (click)="createReport()">+ Create New Report</button>
+
+  <div *ngIf="reports.length === 0" class="no-reports">
+    <p>No reports found.</p>
+  </div>
+
+  <div class="reports-grid">
+    <div class="report-card" *ngFor="let report of reports" (click)="viewReport(report)">
+      <div class="card-header">
+        <h3 class="report-title">{{ report.titre }}</h3>
+        <span class="status" [ngClass]="{'read': report.vu, 'unread': !report.vu}">
+          {{ report.vu ? 'Read' : 'Unread' }}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Shop:</strong> {{ report.nomShop || 'N/A' }}</p>
+        <p><strong>Admin:</strong> {{ report.nomAdmin || 'N/A' }}</p>
+        <p><strong>Created on:</strong> {{ report.dateCreation | date:'medium' }}</p>
+
+        <div class="fields-container">
+          <div *ngFor="let item of report.labelsEtValeurs" class="field-item">
+            <strong>{{ item.label }}:</strong> {{ item.valeur || 'Not filled' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

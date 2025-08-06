@@ -1,0 +1,109 @@
+.ooredoo-dashboard-container {
+  padding: 2rem;
+  background-color: #f9f9fb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-title {
+  color: #b00014;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.stat-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  flex: 1 1 150px;
+  max-width: 200px;
+  border-radius: 12px;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card.red { background-color: #d0001a; }
+.stat-card.green { background-color: #2e7d32; }
+.stat-card.blue { background-color: #1976d2; }
+.stat-card.orange { background-color: #f57c00; }
+.stat-card.purple { background-color: #7b1fa2; }
+
+.chart-container.single {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: white;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+.chart-pair-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.chart-card {
+  background: white;
+  flex: 1 1 400px;
+  max-width: 500px;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.chart-card h4 {
+  color: #b00014;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.percentage-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.percentage-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  border-bottom: 1px dashed #ccc;
+  color: #333;
+}
+
+canvas {
+  max-height: 220px !important;
+}
+
+.zone-breakdown {
+  margin-top: 2rem;
+}
+
+.zone-group {
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.zone-group h5 {
+  margin-bottom: 0.5rem;
+  color: #b00014;
+}
+.chart-card canvas {
+  height: 250px !important;
+}
+

@@ -1,0 +1,72 @@
+.report-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.report-meta p {
+  margin: 0.3rem 0;
+  color: #555;
+}
+
+.form-card {
+  margin-top: 2rem;
+}
+
+.form-card-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3rem;
+}
+
+.form-group {
+  margin-bottom: 1.3rem;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.required {
+  color: red;
+  margin-left: 0.2rem;
+}
+
+.form-control, .form-select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-submit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-submit:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.loading-message {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+  color: #666;
+}

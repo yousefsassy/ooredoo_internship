@@ -1,0 +1,258 @@
+.shop-management-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #333;
+}
+
+/* Header */
+.management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ed1c24;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-icon {
+  font-size: 2rem;
+  color: #ed1c24;
+}
+
+h2 {
+  color: #b71c1c;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Add shop button */
+.add-shop-btn {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.5);
+}
+
+.add-shop-btn:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(183, 28, 28, 0.7);
+}
+
+/* Filters container */
+.filters-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  flex: 1 1 300px;
+  min-width: 200px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #ed1c24;
+  outline: none;
+  box-shadow: 0 0 8px rgba(237, 28, 36, 0.4);
+}
+
+/* Table container */
+.modern-table-container {
+  background: #fff0f0;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.25);
+  overflow-x: auto;
+}
+
+/* Table */
+.modern-shop-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-weight: 500;
+  color: #4a1f1f;
+}
+
+.modern-shop-table thead {
+  background-color: #ed1c24;
+  color: white;
+}
+
+.modern-shop-table th {
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 3px solid #b71c1c;
+}
+
+.modern-shop-table th i {
+  margin-right: 0.75rem;
+  color: white;
+}
+
+.modern-shop-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f8bbd0;
+  vertical-align: middle;
+}
+
+.modern-shop-table td i {
+  margin-right: 0.75rem;
+  color: #b71c1c;
+}
+
+.modern-shop-table tr:hover td {
+  background-color: #f8bbd0;
+  cursor: pointer;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Buttons base */
+.action-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid transparent;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(183, 28, 28, 0.3);
+}
+
+.action-buttons button i {
+  font-size: 1.2rem;
+  line-height: 0;
+}
+
+/* View Button */
+.view-btn {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  border-color: #f44336;
+}
+
+.view-btn:hover {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 5px 14px rgba(244, 67, 54, 0.7);
+}
+
+/* Edit Button */
+.edit-btn {
+  background-color: #ffebee;
+  color: #b71c1c;
+  border-color: #f48fb1;
+}
+
+.edit-btn:hover {
+  background-color: #f48fb1;
+  color: white;
+  box-shadow: 0 5px 14px rgba(183, 28, 28, 0.7);
+}
+
+/* Archive Button */
+.archive-btn {
+  background-color: #fce4ec;
+  color: #d32f2f;
+  border-color: #ef9a9a;
+}
+
+.archive-btn:hover {
+  background-color: #ffcdd2;
+  box-shadow: 0 5px 14px rgba(244, 67, 54, 0.7);
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border-color: #d3d3d3;
+}
+
+.delete-btn:hover {
+  background-color: #e9ecef;
+}
+
+/* Empty state */
+.empty-state {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #f8bbd0;
+  border-radius: 12px;
+  color: #b71c1c;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: #b71c1c;
+  margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .management-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .filters-container {
+    flex-direction: column;
+  }
+  
+  .modern-shop-table th, 
+  .modern-shop-table td {
+    padding: 0.75rem;
+  }
+  
+  .action-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .action-buttons button {
+    padding: 0.5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    justify-content: center;
+    font-size: 0;
+    overflow: hidden;
+  }
+  
+  .action-buttons button i {
+    margin: 0;
+    font-size: 1rem;
+  }
+}

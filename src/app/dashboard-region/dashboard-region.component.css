@@ -1,0 +1,163 @@
+:root {
+  --red-ooredoo: #d50000;
+  --shops-gradient-start: #ff3b3b;
+  --shops-gradient-end: #ff6f6f;
+  --reports-gradient-start: #ffa726;
+  --reports-gradient-end: #ffcc80;
+  --text-dark: #333333;
+  --text-muted: #555555;
+  --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Conteneur principal */
+.dashboard-wrapper {
+  background-color: #ffffff;  /* fond blanc neutre */
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  font-family: var(--font-family-base);
+  color: var(--text-dark);
+}
+
+/* Titre principal */
+.dashboard-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Conteneur cartes KPI */
+.dashboard-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Cartes KPI */
+.kpi-card {
+  background-color: #f8f8f8;
+  flex: 1 1 260px;
+  max-width: 280px;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  will-change: transform, box-shadow;
+}
+
+.kpi-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Icône dans la carte */
+.kpi-card .icon {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+/* Carte magasins */
+.shops-card {
+  background: linear-gradient(135deg, var(--shops-gradient-start), var(--shops-gradient-end));
+  color: white;
+  box-shadow: 0 6px 15px rgba(255, 59, 59, 0.6);
+}
+
+/* Carte rapports */
+.reports-card {
+  background: linear-gradient(135deg, var(--reports-gradient-start), var(--reports-gradient-end));
+  color: #4a2e00;
+  box-shadow: 0 6px 15px rgba(255, 167, 38, 0.6);
+}
+
+/* Titre chiffres dans cartes */
+.kpi-card h4 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Description sous chiffres */
+.kpi-card p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 0;
+}
+
+/* Conteneur de la région */
+.region-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-family: var(--font-family-base);
+  color: var(--text-dark);
+  padding: 30px 25px;
+}
+
+/* Titre région */
+.region-container h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--red-ooredoo);
+  margin-bottom: 25px;
+}
+
+/* Labels (strong) */
+.region-container strong {
+  color: var(--red-ooredoo);
+  font-weight: 600;
+}
+
+/* Valeurs à côté des labels */
+.region-container span {
+  margin-left: 8px;
+  font-size: 1.1rem;
+  color: #444444;
+}
+
+/* Bootstrap row adjustment (attention à garder cohérence avec bootstrap) */
+.row > div {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Messages d'erreur */
+.alert-danger {
+  max-width: 600px;
+  margin: 20px auto;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Spinner loader */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Texte sous le loader */
+.text-center p {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Responsive mobile */
+@media (max-width: 576px) {
+  .kpi-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+}

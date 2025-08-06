@@ -1,0 +1,33 @@
+<form [formGroup]="shopForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="nomShop">Nom Shop :</label>
+    <input id="nomShop" formControlName="nomShop" />
+    <div *ngIf="shopForm.get('nomShop')?.invalid && shopForm.get('nomShop')?.touched" style="color:red">
+      Le nom du shop est requis.
+    </div>
+  </div>
+
+  <div>
+    <label for="telephone">Téléphone :</label>
+    <input id="telephone" formControlName="telephone" />
+    <div *ngIf="shopForm.get('telephone')?.invalid && shopForm.get('telephone')?.touched" style="color:red">
+      Le téléphone est requis.
+    </div>
+  </div>
+
+
+  <div>
+    <label for="region">Région :</label>
+    <select id="region" formControlName="region">
+      <option [ngValue]="null" disabled>-- Sélectionner une région --</option>
+      <option *ngFor="let r of regions" [ngValue]="r">{{ r.nom }} ({{ r.delegation }})</option>
+    </select>
+    <div *ngIf="shopForm.get('region')?.invalid && shopForm.get('region')?.touched" style="color:red">
+      La région est requise.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="shopForm.invalid">Créer Shop</button>
+
+</form>

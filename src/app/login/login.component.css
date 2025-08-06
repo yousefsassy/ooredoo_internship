@@ -1,0 +1,280 @@
+  /* Variables Ooredoo */
+  :root {
+    --ooredoo-red: #ED1C24;
+    --ooredoo-dark-red: #C41017;
+    --ooredoo-white: #FFFFFF;
+    --ooredoo-light-gray: #F8F9FA;
+    --ooredoo-medium-gray: #E9ECEF;
+    --ooredoo-dark-gray: #495057;
+    --ooredoo-text: #212529;
+    --ooredoo-error: #DC3545;
+  }
+
+  .brand {
+    color: var(--ooredoo-red);
+  }
+
+  .subheading {
+    font-size: 13px;
+    color: var(--ooredoo-dark-gray);
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+
+  /* Entrance animation */
+  .animate-fade-in {
+    animation: fadeInUp 0.6s ease-in-out;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ooredoo-login-card {
+    background: rgba(255, 255, 255, 0.9); /* semi-transparent */
+    backdrop-filter: blur(6px);
+  }
+  /* Reset et base */
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: var(--ooredoo-light-gray);
+  }
+
+  /* Conteneur principal */
+  .ooredoo-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(to bottom right, #ed1c24, #c41017, #8b0f11);
+    /* REMOVE this ↓ */
+    /* color: white; */
+  }
+
+
+
+  /* Carte de connexion */
+  .ooredoo-login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    background-color: #ffffff; /* Solid white */
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    border: 1px solid #eee;
+    color: var(--ooredoo-text); /* Ensure text inside is black */
+    transition: all 0.3s ease-in-out;
+  }
+
+
+
+  /* En-tête */
+  .ooredoo-login-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+
+  .custom-ooredoo-logo {
+  width: 120px;   /* or whatever size you prefer */
+  height: auto;   /* keeps aspect ratio */
+  display: block;
+  margin: 0 auto; /* center horizontally */
+}
+  .ooredoo-login-header h2 {
+    color: var(--ooredoo-text);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* Champs de formulaire */
+  .ooredoo-form-group {
+    margin-bottom: 20px;
+  }
+
+  .ooredoo-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--ooredoo-text);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .ooredoo-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 15px;
+    border: 1px solid var(--ooredoo-medium-gray);
+    border-radius: 8px;
+    background-color: var(--ooredoo-white);
+    transition: all 0.2s;
+  }
+
+  .ooredoo-input:focus {
+    outline: none;
+    border-color: var(--ooredoo-red);
+    box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.1);
+  }
+
+  .ooredoo-input-error {
+    border-color: var(--ooredoo-error) !important;
+  }
+
+  /* Groupe mot de passe */
+  .ooredoo-password-group {
+    position: relative;
+  }
+
+  .ooredoo-password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ooredoo-dark-gray);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .ooredoo-password-toggle:hover {
+    color: var(--ooredoo-red);
+  }
+
+  /* Bouton de connexion */
+  .ooredoo-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--ooredoo-red);
+    color: var(--ooredoo-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+  }
+
+  .ooredoo-submit-btn:hover {
+    background-color: #f87171; /* Lighter red hover */
+    color: white;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+
+  .ooredoo-submit-btn:disabled {
+    background-color: #ccc; /* Soft grey */
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    pointer-events: none; /* <-- prevents hover effects */
+  }
+
+  /* Liens */
+  .ooredoo-forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+
+  .ooredoo-forgot-password a {
+    color: var(--ooredoo-red) !important;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+  }
+
+  .ooredoo-forgot-password a:hover {
+    color: var(--ooredoo-dark-red) !important;
+    text-decoration: underline;
+  }
+
+  .ooredoo-register-link {
+    text-align: center;
+    margin-top: 24px;
+    color: var(--ooredoo-dark-gray);
+    font-size: 14px;
+  }
+
+  .ooredoo-register-link a {
+    color: var(--ooredoo-red) !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+  }
+
+  .ooredoo-register-link a:hover {
+    color: var(--ooredoo-dark-red) !important;
+    text-decoration: underline;
+  }
+
+
+  /* Messages d'erreur */
+  .ooredoo-error-message {
+    color: var(--ooredoo-error);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  .ooredoo-password-rules {
+    margin-top: 8px;
+  }
+
+  .ooredoo-password-rules ul {
+    padding-left: 20px;
+    margin: 8px 0 0 0;
+  }
+
+  .ooredoo-password-rules li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ooredoo-dark-gray);
+  }
+
+  .ooredoo-alert-error {
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    color: var(--ooredoo-error);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  /* Animation spinner */
+  .fa-spinner {
+    animation: ooredoo-spin 1s linear infinite;
+    margin-right: 8px;
+  }
+
+  @keyframes ooredoo-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .ooredoo-login-container {
+      padding: 0;
+      align-items: flex-start;
+    }
+    
+    .ooredoo-login-card {
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      padding: 40px 24px;
+    }
+  }

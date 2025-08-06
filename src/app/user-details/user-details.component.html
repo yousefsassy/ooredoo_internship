@@ -1,0 +1,23 @@
+<div class="user-details-container" *ngIf="!isLoading && user; else loading">
+  <div class="user-details-header">
+    <i class="fas fa-user user-details-icon"></i>
+    <h2>{{ user.username }}</h2>
+    <span class="user-id">#{{ user.id }}</span>
+  </div>
+  <div class="user-details-body">
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Role:</strong> {{ user.roleName }}</p>
+    <p><strong>Status:</strong> {{ user.enabled ? "Active" : "Inactive" }}</p>
+    <p>
+      <strong>Account Locked:</strong> {{ user.accountLocked ? "Yes" : "No" }}
+    </p>
+    <!-- If you don't have createdDate in your UserDTO, remove the next line: -->
+    <!-- <p><strong>Account Created:</strong> {{ user.createdDate | date : "medium" }}</p> -->
+  </div>
+</div>
+<ng-template #loading>
+  <div class="user-details-loading">
+    <p *ngIf="!error">Loading user details...</p>
+    <p *ngIf="error" class="error-msg">{{ error }}</p>
+  </div>
+</ng-template>

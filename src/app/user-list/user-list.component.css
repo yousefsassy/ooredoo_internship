@@ -1,0 +1,264 @@
+.ooredoo-admin-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #333;
+}
+
+/* Header */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #ed1c24;
+  padding-bottom: 1rem;
+}
+
+.admin-header h2 {
+  color: #b71c1c;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Search + Filter */
+.admin-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box i {
+  position: absolute;
+  left: 10px;
+  color: #999;
+}
+
+.search-box input {
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  min-width: 200px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: #ed1c24;
+  outline: none;
+  box-shadow: 0 0 6px rgba(237, 28, 36, 0.4);
+}
+
+.filter-dropdown select {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 1rem;
+}
+
+/* Table */
+.ooredoo-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.25);
+}
+
+.ooredoo-admin-table thead {
+  background-color: #ed1c24;
+  color: white;
+}
+
+.ooredoo-admin-table th,
+.ooredoo-admin-table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ooredoo-admin-table th.sortable {
+  cursor: pointer;
+}
+
+.ooredoo-admin-table th.sortable:hover {
+  background-color: #c62828;
+}
+
+.ooredoo-admin-table tbody tr:hover {
+  background-color: #ffe5e5;
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  background-color: #ed1c24;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-details small {
+  display: block;
+  color: #777;
+  font-size: 0.85rem;
+}
+
+/* Role Badge */
+.role-badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.role-admin {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+}
+
+.role-user {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background-color: #ffe0b2;
+  color: #ef6c00;
+}
+
+/* Lock Status */
+.lock-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.locked {
+  color: #d32f2f;
+}
+
+.unlocked {
+  color: #388e3c;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-approve {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.btn-approve:hover {
+  background-color: #66bb6a;
+  color: white;
+}
+
+.btn-view {
+  background-color: #ffe0b2;
+  color: #ef6c00;
+}
+
+.btn-view:hover {
+  background-color: #ffa726;
+  color: white;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #b71c1c;
+  font-weight: 600;
+}
+
+/* Pagination Footer */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid #ed1c24;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.btn-pagination {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-pagination:disabled {
+  background-color: #f5c6cb;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  margin: 0 1rem;
+  font-weight: 600;
+}

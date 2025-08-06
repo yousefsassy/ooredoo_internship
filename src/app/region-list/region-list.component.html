@@ -1,0 +1,53 @@
+<div class="region-management-container">
+  <!-- Header + Add -->
+  <div class="management-header">
+    <div class="header-content">
+      <i class="fas fa-map-marked-alt header-icon"></i>
+      <h2>Region Management</h2>
+    </div>
+    <button class="add-region-btn" (click)="onAddRegion()">
+      <i class="fas fa-plus-circle"></i> Add New Region
+    </button>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="filters-container">
+    <input
+      type="text"
+      placeholder="Search by region name, delegation or zone..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Cards container -->
+  <div class="cards-container">
+    <div *ngFor="let region of filteredRegions" class="region-card">
+      <h3>{{ region.nom }}</h3>
+      <p><strong>Delegation:</strong> {{ region.delegation }}</p>
+      <button
+        class="view-btn"
+        (click)="onViewRegion(region.idRegion!)"
+        title="View"
+        aria-label="View"
+      >
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+
+    <ng-container *ngIf="!loading && filteredRegions.length === 0">
+      <div class="empty-state">
+        <i class="fas fa-map-marked-alt empty-icon"></i>
+        <h3>No Regions Found</h3>
+        <p>Try adding a new region.</p>
+        <button class="add-region-btn" (click)="onAddRegion()">
+          <i class="fas fa-plus-circle"></i> Add Region
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading regions...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+</div>

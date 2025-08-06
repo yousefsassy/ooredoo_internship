@@ -1,0 +1,79 @@
+form {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background-color: #fff5f5;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(237, 28, 36, 0.25);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4a1f1f;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+form label {
+  font-weight: 600;
+  color: #b71c1c;
+  font-size: 1.1rem;
+}
+
+select, input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #f3c2c2;
+  border-radius: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none;
+  cursor: pointer;
+  color: #4a1f1f;
+}
+
+select:disabled, input:disabled {
+  background-color: #f9dada;
+  cursor: not-allowed;
+  color: #a17777;
+}
+
+select:focus, input:focus {
+  border-color: #ed1c24;
+  box-shadow: 0 0 14px rgba(237, 28, 36, 0.5);
+  outline: none;
+}
+
+.error {
+  color: #b71c1c;
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-top: -1rem;
+  margin-bottom: 0.8rem;
+  user-select: none;
+}
+
+button {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 0.85rem 0;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.7);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+}
+
+button:hover:not(:disabled) {
+  background-color: #b71c1c;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(183, 28, 28, 0.8);
+}
+
+button:disabled {
+  background-color: #f5b5b5;
+  cursor: not-allowed;
+  box-shadow: none;
+}

@@ -1,0 +1,39 @@
+<div class="register-container">
+  <h2 class="text-center mb-4">Chef of Sector Registration</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+    <!-- Sector Selection -->
+    <div class="form-group">
+      <label for="secteurId">Select a Sector:</label>
+      <select
+        id="secteurId"
+        class="form-control"
+        formControlName="secteurId"
+        [ngClass]="{ 'is-invalid': form.get('secteurId')?.invalid && form.get('secteurId')?.touched }"
+      >
+        <option value="" disabled>Select a sector</option>
+        <option *ngFor="let secteur of secteursWithoutChef" [value]="secteur.idSecteur">
+          {{ secteur.nom }}
+        </option>
+      </select>
+      <div class="invalid-feedback" *ngIf="form.get('secteurId')?.invalid && form.get('secteurId')?.touched">
+        Sector selection is required.
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="msgerror" class="alert alert-danger mt-3">
+      {{ msgerror }}
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      class="btn btn-primary w-100 mt-4"
+      type="submit"
+      [disabled]="isloading || form.invalid"
+    >
+      {{ isloading ? 'Registering...' : 'Complete Registration' }}
+    </button>
+  </form>
+</div>

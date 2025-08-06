@@ -1,0 +1,14 @@
+<div class="shop-container" *ngIf="shop; else errorOrLoading">
+  <h2>🏪 Your Shop</h2>
+  <ul>
+    <li><strong>Name:</strong> {{ shop.nomShop }}</li>
+    <li><strong>Phone:</strong> {{ shop.telephone }}</li>
+    
+
+  </ul>
+</div>
+
+<ng-template #errorOrLoading>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="!errorMessage">Loading your shop...</div>
+</ng-template>

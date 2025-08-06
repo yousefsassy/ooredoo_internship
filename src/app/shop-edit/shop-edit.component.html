@@ -1,0 +1,15 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nomShop">Shop Name</label>
+    <input id="nomShop" formControlName="nomShop" />
+  </div>
+
+  <div>
+    <label for="telephone">Phone</label>
+    <input id="telephone" formControlName="telephone" />
+  </div>
+
+  <!-- Add other form fields here -->
+
+  <button type="submit" [disabled]="editForm.invalid">Save Changes</button>
+</form>

@@ -1,0 +1,61 @@
+<div class="report-container" *ngIf="!loadingReport && !loadingFields; else loadingTpl">
+
+  <h1>{{ report.titre }}</h1>
+
+  <div class="report-meta">
+    <p><strong>Description:</strong> {{ report.contenu || 'N/A' }}</p>
+    <p><strong>Type:</strong> {{ report.type }}</p>
+    <p><strong>Created At:</strong> {{ report.dateCreation | date:'medium' }}</p>
+  </div>
+
+  <form (ngSubmit)="submitReport()" *ngIf="fields.length > 0" class="form-card">
+
+    <h4 class="form-card-title">Fill in the report details</h4>
+
+    <div *ngFor="let field of fields" class="form-group">
+      <label class="form-label">
+        {{ field.label }}
+        <span *ngIf="field.required" class="required">*</span>
+      </label>
+
+      <!-- Input text -->
+      <input
+        *ngIf="field.type === 'TEXT'"
+        type="text"
+        [(ngModel)]="fieldValues[field.idReportField]"
+        [name]="'field_' + field.idReportField"
+        [required]="field.required"
+        class="form-control"
+      />
+
+      <!-- Textarea -->
+      <textarea
+        *ngIf="field.type === 'TEXTAREA'"
+        [(ngModel)]="fieldValues[field.idReportField]"
+        [name]="'field_' + field.idReportField"
+        [required]="field.required"
+        class="form-control"
+        rows="4">
+      </textarea>
+
+      <!-- Dropdown -->
+      <select
+        *ngIf="field.type === 'DROPDOWN'"
+        [(ngModel)]="fieldValues[field.idReportField]"
+        [name]="'field_' + field.idReportField"
+        [required]="field.required"
+        class="form-select">
+        <option value="" disabled selected>Select an option</option>
+        <option *ngFor="let option of (field.options || [])" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="submitInProgress">Submit</button>
+  </form>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading-message">
+    <p>Loading report data, please wait...</p>
+  </div>
+</ng-template>

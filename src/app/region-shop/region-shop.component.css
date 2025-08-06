@@ -1,0 +1,163 @@
+.shop-management-container {
+  max-width: 900px;
+  margin: 30px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  padding: 20px 30px;
+}
+
+/* Header */
+.management-header {
+  border-bottom: 2px solid #d50000;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #d50000;
+}
+
+.header-icon {
+  font-size: 2.4rem;
+}
+
+/* Search input */
+.filters-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 2px solid #d50000;
+  border-radius: 30px;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #a30000;
+  box-shadow: 0 0 5px #a30000;
+}
+
+/* Table */
+.modern-table-container {
+  overflow-x: auto;
+}
+
+.modern-shop-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 1rem;
+  min-width: 600px;
+}
+
+.modern-shop-table thead tr {
+  background-color: #d50000;
+  color: white;
+  text-align: left;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.modern-shop-table thead th {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+.modern-shop-table thead th i {
+  margin-right: 8px;
+}
+
+.modern-shop-table tbody tr {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  border-radius: 10px;
+  transition: background-color 0.25s ease;
+}
+
+.modern-shop-table tbody tr:hover {
+  background-color: #ffe6e6;
+}
+
+.modern-shop-table tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  border-top: 1px solid #eee;
+}
+
+.modern-shop-table tbody td i {
+  margin-right: 6px;
+  color: #d50000;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+.action-buttons button {
+  padding: 6px 12px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.view-btn {
+  background-color: #d50000;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #a30000;
+}
+
+.report-btn {
+  background-color: #f4a261;
+  color: #333;
+}
+
+.report-btn:hover {
+  background-color: #cc7c35;
+  color: white;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  color: #d50000;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  font-size: 1rem;
+}

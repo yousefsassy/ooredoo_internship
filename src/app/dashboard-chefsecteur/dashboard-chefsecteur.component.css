@@ -1,0 +1,54 @@
+.sector-dashboard-container {
+  background-color: #f9f9fb;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sector-dashboard-container h2 {
+  color: #b00014;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.sector-dashboard-container h3 {
+  color: #b00014;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sector-dashboard-container p {
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+.sector-dashboard-container ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sector-dashboard-container li {
+  background: #fff;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: #333;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 1rem auto;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #f5c2c7;
+}

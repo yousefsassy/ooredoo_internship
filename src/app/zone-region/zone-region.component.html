@@ -1,0 +1,67 @@
+<div class="region-management-container">
+
+  <!-- Header + Add -->
+  <div class="management-header">
+    <div class="header-content">
+      <i class="fas fa-map-marker-alt header-icon"></i>
+      <h2>Regions Management</h2>
+    </div>
+    <button class="add-region-btn" (click)="onAddRegion()">
+      <i class="fas fa-plus-circle"></i> Add New Region
+    </button>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="filters-container">
+    <input
+      type="text"
+      placeholder="Search by region name..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Table -->
+  <div class="modern-table-container">
+    <table class="modern-region-table" *ngIf="filteredRegions.length > 0; else emptyState">
+      <thead>
+        <tr>
+          <th><i class="fas fa-map-marker"></i> Region Name</th>
+          <th><i class="fas fa-city"></i> Delegation</th>
+          <th><i class="fas fa-user"></i> Region Manager</th>
+          <th><i class="fas fa-cog"></i> Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let region of filteredRegions">
+          <td data-label="Region Name"><i class="fas fa-map-pin"></i> {{ region.nom }}</td>
+          <td data-label="Delegation"><i class="fas fa-city"></i> {{ region.delegation }}</td>
+          <td data-label="Region Manager"><i class="fas fa-user-tie"></i> {{ region.chefRegion?.username || 'N/A' }}</td>
+          <td class="action-buttons">
+            <button class="view-btn d-none d-md-flex" (click)="onViewRegion(region.idRegion!)" title="View" aria-label="View">
+              <i class="fas fa-eye"></i> View
+            </button>
+            <button class="edit-btn d-none d-md-flex" (click)="onEditRegion(region.idRegion!)" title="Edit" aria-label="Edit">
+              <i class="fas fa-pencil-alt"></i> Edit
+            </button>
+            <button class="delete-btn d-none d-md-flex" (click)="onDeleteRegion(region.idRegion!)" title="Delete" aria-label="Delete">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <i class="fas fa-map-marker-alt empty-icon"></i>
+        <h3>No Regions Found</h3>
+        <p>Start by adding your first region.</p>
+        <button class="add-region-btn" (click)="onAddRegion()">
+          <i class="fas fa-plus-circle"></i> Add Region
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

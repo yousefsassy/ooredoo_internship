@@ -1,0 +1,80 @@
+:host {
+  display: block;
+  max-width: 600px;
+  margin: 3rem auto;
+  background-color: #fff5f5;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4a1f1f;
+}
+
+h3 {
+  color: #ed1c24;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.mb-2 {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  color: #b71c1c;
+  margin-bottom: 0.4rem;
+}
+
+input.form-control,
+select.form-control {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #f3c2c2;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none; /* For consistent styling on selects */
+}
+
+input.form-control:focus,
+select.form-control:focus {
+  border-color: #ed1c24;
+  box-shadow: 0 0 10px rgba(237, 28, 36, 0.3);
+  outline: none;
+}
+
+/* Placeholder text color */
+input::placeholder {
+  color: #b71c1caa;
+  font-style: italic;
+}
+
+/* Button style */
+button.btn-primary {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(237, 28, 36, 0.4);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.btn-primary:hover:not(:disabled) {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(183, 28, 28, 0.6);
+}
+
+button.btn-primary:disabled {
+  background-color: #f5b5b5;
+  cursor: not-allowed;
+  box-shadow: none;
+}

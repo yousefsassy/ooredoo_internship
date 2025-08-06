@@ -1,0 +1,33 @@
+<div class="zone-edit-container" *ngIf="zoneLoaded; else loading">
+  <h2 class="mb-3">Edit Zone</h2>
+
+  <form [formGroup]="zoneForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="libelle">Label</label>
+      <input id="libelle" class="form-control" formControlName="libelle" />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="gouvernorat">Governorate</label>
+      <input id="gouvernorat" class="form-control" formControlName="gouvernorat" />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="delegation">Delegation</label>
+      <input id="delegation" class="form-control" formControlName="delegation" />
+    </div>
+
+    <div class="form-group mb-4">
+      <label for="adresse">Address</label>
+      <input id="adresse" class="form-control" formControlName="adresse" />
+    </div>
+
+    <button type="submit" class="btn btn-danger" [disabled]="zoneForm.invalid">
+      Update Zone
+    </button>
+  </form>
+</div>
+
+<ng-template #loading>
+  <p>Loading zone data...</p>
+</ng-template>

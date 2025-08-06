@@ -1,0 +1,28 @@
+<div
+  class="region-details-container"
+  *ngIf="!isLoading && region; else loading"
+>
+  <div class="region-details-header">
+    <i class="fas fa-map-signs region-details-icon"></i>
+    <h2>{{ region.nom }}</h2>
+    <!-- Using nom instead of libelle -->
+    <span class="region-id">#{{ region.idRegion }}</span>
+  </div>
+  <div class="region-details-body">
+    <p><strong>Delegation:</strong> {{ region.delegation }}</p>
+    <!-- You can display zone label if it exists -->
+    <p *ngIf="region.zone"><strong>Zone:</strong> {{ region.zone.libelle }}</p>
+    <p *ngIf="region.chefRegion">
+      <strong>Chef Region:</strong> {{ region.chefRegion.nom }}
+    </p>
+    <p><strong>Number of Shops:</strong> {{ region.shops?.length || 0 }}</p>
+    <!-- Add more fields as needed -->
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="region-details-loading">
+    <p *ngIf="!error">Loading region details...</p>
+    <p *ngIf="error" class="error-msg">{{ error }}</p>
+  </div>
+</ng-template>

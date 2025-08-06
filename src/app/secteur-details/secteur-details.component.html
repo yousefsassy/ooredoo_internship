@@ -1,0 +1,37 @@
+<div class="secteur-details-container" *ngIf="secteur; else loadingOrError">
+
+  <h2>Sector Details: {{ secteur.nom }}</h2>
+
+  <div>
+    <strong>Zones:</strong>
+    <table class="zones-table" *ngIf="secteur.zones?.length; else noZones">
+      <thead>
+        <tr>
+          <th>Zone Name</th>
+          <th>Zone Chief</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let zone of secteur.zones">
+          <td>{{ zone.libelle }}</td>
+          <td>{{ zone.chefZone?.username || 'Not assigned' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noZones>
+      <p class="no-zones-message">No zones assigned.</p>
+    </ng-template>
+  </div>
+
+  <div class="sector-chief">
+    <strong>Sector Chief:</strong>
+    {{ secteur.chefSecteur ? secteur.chefSecteur.nom : 'Not assigned' }}
+  </div>
+
+  <button (click)="onBack()">Back to Sector List</button>
+</div>
+
+<ng-template #loadingOrError>
+  <div *ngIf="loading">Loading sector details...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+</ng-template>

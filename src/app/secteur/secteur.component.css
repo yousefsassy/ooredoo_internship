@@ -1,0 +1,124 @@
+.secteur-create-container {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background-color: #fff5f5;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(237, 28, 36, 0.25);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4a1f1f;
+  text-align: center;
+}
+
+.secteur-create-container h2 {
+  color: #ed1c24;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-size: 1.9rem;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-weight: 600;
+  color: #b71c1c;
+  margin-bottom: 0.6rem;
+  display: block;
+  font-size: 1.1rem;
+}
+
+select.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #f3c2c2;
+  border-radius: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+select.form-control:focus {
+  border-color: #ed1c24;
+  box-shadow: 0 0 14px rgba(237, 28, 36, 0.5);
+  outline: none;
+}
+
+.error {
+  color: #b71c1c;
+  font-style: italic;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+}
+
+button.btn-danger {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 0.85rem 0;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.7);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.btn-danger:hover:not(:disabled) {
+  background-color: #b71c1c;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(183, 28, 28, 0.8);
+}
+
+button.btn-danger:disabled {
+  background-color: #f5b5b5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secteur-details {
+  max-width: 480px;
+  margin: 20px auto 50px auto;
+  padding: 15px 25px;
+  background-color: #fff0f0;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(237, 28, 36, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4a1f1f;
+  text-align: left;
+}
+
+.secteur-details h4 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #c21818;
+  font-size: 1.4rem;
+}
+
+.secteur-details ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0.7rem;
+}
+
+.secteur-details ul > li > strong {
+  font-weight: 600;
+  color: #8b0000;
+}
+
+.secteur-details ul ul {
+  padding-left: 1.25rem;
+  margin-top: 0.3rem;
+}
+
+.secteur-details ul ul li {
+  font-size: 0.95rem;
+  color: #661414;
+  margin-bottom: 0.2rem;
+}

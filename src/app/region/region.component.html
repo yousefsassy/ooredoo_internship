@@ -1,0 +1,28 @@
+<form [formGroup]="regionForm" (ngSubmit)="onSubmit()">
+  <!-- Zone Selection -->
+  <label for="zone">Zone:</label>
+  <select id="zone" formControlName="zone">
+    <option value="">-- Select a zone --</option>
+    <option *ngFor="let z of zones" [ngValue]="z">{{ z.libelle }}</option>
+  </select>
+  <div *ngIf="regionForm.get('zone')?.touched && regionForm.get('zone')?.invalid" class="error">
+    Zone is required
+  </div>
+
+  <!-- Delegation Selection -->
+  <label for="delegation">Delegation:</label>
+  <select id="delegation" formControlName="delegation" [disabled]="delegations.length === 0">
+    <option value="">-- Select a delegation --</option>
+    <option *ngFor="let d of delegations" [value]="d">{{ d }}</option>
+  </select>
+  <div *ngIf="regionForm.get('delegation')?.touched && regionForm.get('delegation')?.invalid" class="error">
+    Delegation is required
+  </div>
+
+  <!-- Auto-generated Name -->
+  <label for="nom">Name (auto-generated):</label>
+<input id="nom" formControlName="nom" [disabled]="true" />
+
+  <!-- Submit Button -->
+  <button type="submit" [disabled]="regionForm.invalid">Create Region</button>
+</form>

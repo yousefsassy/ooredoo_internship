@@ -1,0 +1,60 @@
+<h4 class="text-center text-white mb-3">Chef Zone Complement</h4>
+
+<div class="ooredoo-register-card animate-fade-in">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Zone Dropdown Dynamique -->
+    <div class="ooredoo-form-group">
+      <label for="zoneId">Zone:</label>
+      <select
+        id="zoneId"
+        formControlName="zoneId"
+        class="ooredoo-select"
+      >
+        <option value="" disabled selected>Select a zone</option>
+        <option *ngFor="let zone of availableZones" [value]="zone.idZone">
+          {{ zone.libelle }} - {{ zone.delegation }} - {{ zone.gouvernorat }}
+        </option>
+      </select>
+      <div
+        class="ooredoo-error-message"
+        *ngIf="form.get('zoneId')?.touched && form.get('zoneId')?.hasError('required')"
+      >
+        Zone is required
+      </div>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="ooredoo-form-group">
+      <label for="phone">Phone Number:</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phoneNumber"
+        class="ooredoo-input"
+        placeholder="Enter your phone number"
+      />
+      <div
+        class="ooredoo-error-message"
+        *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('required')"
+      >
+        Phone number is required
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="ooredoo-submit-btn"
+      [disabled]="form.invalid || isloading"
+    >
+      <i class="fas fa-spinner fa-spin" *ngIf="isloading"></i>
+      <span *ngIf="!isloading">Finish Registration</span>
+    </button>
+
+    <!-- Error Global -->
+    <p class="ooredoo-error-message mt-3 mb-0" *ngIf="msgerror">
+      {{ msgerror }}
+    </p>
+  </form>
+</div>

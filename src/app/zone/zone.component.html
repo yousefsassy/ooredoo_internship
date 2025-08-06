@@ -1,0 +1,29 @@
+<form [formGroup]="zoneForm" (ngSubmit)="onSubmit()">
+
+  <label for="secteur">Sector</label>
+  <select id="secteur" formControlName="secteur">
+    <option value="">-- Select a sector --</option>
+    <option *ngFor="let sec of secteurs" [ngValue]="sec">{{ sec.nom }}</option>
+  </select>
+  <div *ngIf="zoneForm.get('secteur')?.touched && zoneForm.get('secteur')?.invalid" class="error">
+    Sector is required
+  </div>
+
+  <label for="gouvernorat">Governorate</label>
+  <select id="gouvernorat" formControlName="gouvernorat" [disabled]="gouvernorats.length === 0">
+    <option value="">-- Select a governorate --</option>
+    <option *ngFor="let gov of gouvernorats" [value]="gov">{{ gov }}</option>
+  </select>
+  <div *ngIf="zoneForm.get('gouvernorat')?.touched && zoneForm.get('gouvernorat')?.invalid" class="error">
+    Governorate is required
+  </div>
+
+
+
+  <label for="libelle">Label (auto-generated)</label>
+<input id="libelle" formControlName="libelle" [disabled]="true" />
+
+
+  <button type="submit" [disabled]="zoneForm.invalid">Create Zone</button>
+
+</form>

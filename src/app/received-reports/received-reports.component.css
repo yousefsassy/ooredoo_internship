@@ -1,0 +1,90 @@
+/* Container général pour les cards */
+.reports-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Message "no reports" */
+.no-reports {
+  text-align: center;
+  color: #cc0000; /* Rouge Ooredoo */
+  font-size: 1.3rem;
+  margin-top: 50px;
+  font-weight: 600;
+}
+
+/* Card */
+.report-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(204, 0, 0, 0.2);
+  width: 320px;
+  padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(204, 0, 0, 0.35);
+}
+
+/* En-tête de la card avec titre et date */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #cc0000;
+  margin: 0;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #999;
+  font-style: italic;
+}
+
+/* Corps de la card */
+.card-body p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.card-body p strong {
+  color: #666;
+}
+
+/* Bouton stylé */
+.btn-fill-report {
+  margin-top: 20px;
+  align-self: flex-start;
+  background-color: #cc0000;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(204, 0, 0, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-fill-report:hover {
+  background-color: #a30000;
+  box-shadow: 0 6px 14px rgba(163, 0, 0, 0.7);
+}

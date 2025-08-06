@@ -1,0 +1,20 @@
+<div *ngIf="reports.length === 0" class="no-reports">
+  <p>No reports received yet.</p>
+</div>
+
+<div class="reports-container">
+  <div *ngFor="let report of reports" class="report-card">
+    <div class="card-header">
+      <h3>{{ report.titre }}</h3>
+      <span class="date">{{ report.dateCreation | date:'mediumDate' }}</span>
+    </div>
+    <div class="card-body">
+      <p><strong>Type:</strong> {{ report.type }}</p>
+      <p><strong>Shop:</strong> {{ report.nomShop }}</p>
+      <p><strong>Admin:</strong> {{ report.nomAdmin }}</p>
+    </div>
+    <button (click)="onFillReport(report.idReport)" class="btn-fill-report">
+      Fill Report
+    </button>
+  </div>
+</div>

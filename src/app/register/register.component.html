@@ -1,0 +1,229 @@
+<div class="ooredoo-register-container">
+  <div class="ooredoo-register-card animate-fade-in">
+    <div class="ooredoo-register-header">
+      <img
+        src="assets/ooredoo logo.png"
+        alt="Ooredoo Logo"
+        class="custom-ooredoo-logo"
+        style="width: 90px; height: auto; display: block; margin: 0 auto 16px"
+      />
+      <h4>Register to <span class="brand">Ooredoo Admin</span></h4>
+      <p class="subheading">Create your account and join the admin portal</p>
+    </div>
+
+    <form [formGroup]="registerform" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="ooredoo-form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="ooredoo-input"
+          placeholder="Enter your username"
+          [ngClass]="{
+            'ooredoo-input-error':
+              registerform.get('username')?.touched &&
+              registerform.get('username')?.invalid
+          }"
+        />
+        <div
+          class="ooredoo-error-message"
+          *ngIf="
+            registerform.get('username')?.touched &&
+            registerform.get('username')?.errors
+          "
+        >
+          <p *ngIf="registerform.get('username')?.getError('required')">
+            Username is required
+          </p>
+          <p *ngIf="registerform.get('username')?.getError('minlength')">
+            Username Min Length 3
+          </p>
+          <p *ngIf="registerform.get('username')?.getError('maxlength')">
+            Username Max Length 20
+          </p>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="ooredoo-form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="ooredoo-input"
+          placeholder="Enter your email"
+          [ngClass]="{
+            'ooredoo-input-error':
+              registerform.get('email')?.touched &&
+              registerform.get('email')?.invalid
+          }"
+        />
+        <div
+          class="ooredoo-error-message"
+          *ngIf="
+            registerform.get('email')?.touched &&
+            registerform.get('email')?.errors
+          "
+        >
+          <p *ngIf="registerform.get('email')?.getError('required')">
+            Email is required
+          </p>
+          <p *ngIf="registerform.get('email')?.getError('email')">
+            Invalid email format
+          </p>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="ooredoo-form-group">
+        <label for="password">Password</label>
+        <div class="ooredoo-password-group">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            class="ooredoo-input"
+            placeholder="Enter your password"
+            [ngClass]="{
+              'ooredoo-input-error':
+                registerform.get('password')?.touched &&
+                registerform.get('password')?.invalid
+            }"
+          />
+          <i
+            class="fas"
+            [class.fa-eye]="!showPassword"
+            [class.fa-eye-slash]="showPassword"
+            (click)="togglePasswordVisibility()"
+            class="ooredoo-password-toggle"
+          ></i>
+        </div>
+        <div
+          class="ooredoo-error-message"
+          *ngIf="
+            registerform.get('password')?.touched &&
+            registerform.get('password')?.errors
+          "
+        >
+          <p *ngIf="registerform.get('password')?.getError('required')">
+            Password is required
+          </p>
+          <div
+            *ngIf="registerform.get('password')?.getError('pattern')"
+            class="ooredoo-password-rules"
+          >
+            Password must contain:
+            <ul>
+              <li>At least one uppercase letter</li>
+              <li>At least one lowercase letter</li>
+              <li>At least one number</li>
+              <li>At least one special character</li>
+              <li>8-20 characters long</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repassword -->
+      <div class="ooredoo-form-group">
+        <label for="repassword">Confirm Password</label>
+        <div class="ooredoo-password-group">
+          <input
+            [type]="showRePassword ? 'text' : 'password'"
+            id="repassword"
+            formControlName="rePassword"
+            class="ooredoo-input"
+            placeholder="Confirm your password"
+            [ngClass]="{
+              'ooredoo-input-error':
+                registerform.get('rePassword')?.touched &&
+                registerform.get('rePassword')?.invalid
+            }"
+          />
+          <i
+            class="fas"
+            [class.fa-eye]="!showRePassword"
+            [class.fa-eye-slash]="showRePassword"
+            (click)="toggleRePasswordVisibility()"
+            class="ooredoo-password-toggle"
+          ></i>
+        </div>
+        <div
+          class="ooredoo-error-message"
+          *ngIf="
+            registerform.get('rePassword')?.touched &&
+            registerform.get('rePassword')?.hasError('required')
+          "
+        >
+          Repassword is required
+        </div>
+        <div
+          class="ooredoo-error-message"
+          *ngIf="registerform.errors?.['mismatch'] && registerform.get('rePassword')?.touched"
+        >
+          Passwords do not match
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div class="ooredoo-form-group">
+        <label for="role">Role</label>
+        <select
+          id="role"
+          formControlName="role"
+          class="ooredoo-input"
+          [ngClass]="{
+            'ooredoo-input-error':
+              registerform.get('role')?.touched &&
+              registerform.get('role')?.invalid
+          }"
+        >
+          <option value="" disabled>Select a role</option>
+<option value="ADMIN">Admin</option>
+<option value="ADMINSHOP">Shop Admin</option>
+<option value="CHEFZONE">Zone Chief</option>
+<option value="CHEFREGION">Region Chief</option>
+<option value="CHEFSECTEUR">Sector Chief</option>
+
+          
+        </select>
+        <div
+          class="ooredoo-error-message"
+          *ngIf="
+            registerform.get('role')?.touched &&
+            registerform.get('role')?.errors
+          "
+        >
+          <p *ngIf="registerform.get('role')?.getError('required')">
+            Role is required
+          </p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="ooredoo-submit-btn"
+        [disabled]="registerform.invalid || isloading"
+      >
+        <span *ngIf="isloading">
+          <i class="fas fa-spinner fa-spin"></i> Registering...
+        </span>
+        <span *ngIf="!isloading">Register</span>
+      </button>
+
+      <!-- Error Message -->
+      <div *ngIf="msgerror" class="ooredoo-alert-error mt-3">
+        {{ msgerror }}
+      </div>
+
+      <!-- Login Link -->
+      <div class="ooredoo-register-link">
+        Already have an account? <a routerLink="/login">Sign in here</a>
+      </div>
+    </form>
+  </div>
+</div>

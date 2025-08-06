@@ -1,0 +1,63 @@
+<div class="container">
+  <section class="activation-section">
+    <h4 class="mb-2 text-center">Activate Your Account 👋</h4>
+    <p class="mb-4 text-center">Please enter the activation code sent to your email</p>
+
+    <form [formGroup]="activationForm" (ngSubmit)="activateAccount()">
+      <!-- Activation Code Field -->
+      <div class="mb-2">
+        <label for="activationCode" class="form-label">Activation Code:</label>
+        <input
+          id="activationCode"
+          type="text"
+          class="form-control"
+          placeholder="Enter 6-digit code"
+          formControlName="activationCode"
+          maxlength="6"
+          minlength="6"
+          required
+          pattern="^[0-9]{6}$"
+        >
+
+        <!-- Validation Errors -->
+        <div
+          class="alert alert-danger mt-1"
+          *ngIf="activationForm.get('activationCode')?.touched && activationForm.get('activationCode')?.invalid"
+        >
+          <p *ngIf="activationForm.get('activationCode')?.errors?.['required']">
+            Activation code is required.
+          </p>
+          <p *ngIf="activationForm.get('activationCode')?.errors?.['minlength'] ||
+                    activationForm.get('activationCode')?.errors?.['maxlength']">
+            Code must be exactly 6 digits.
+          </p>
+          <p *ngIf="activationForm.get('activationCode')?.errors?.['pattern']">
+            Only numbers are allowed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-main ms-auto d-block"
+        [disabled]="activationForm.invalid || isActivating"
+      >
+        <i class="fas fa-spinner fa-spin" *ngIf="isActivating"></i>
+        <span *ngIf="!isActivating">Activate Account</span>
+      </button>
+
+      <!-- Success or Error Message -->
+      <div
+        *ngIf="activationMessage"
+        class="alert mt-3"
+        [ngClass]="{
+          'alert-success': activationSuccess,
+          'alert-danger': !activationSuccess
+        }"
+      >
+        {{ activationMessage }}
+      </div>
+    </form>
+  </section>
+</div>

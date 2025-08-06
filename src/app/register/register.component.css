@@ -1,0 +1,212 @@
+/* Ooredoo Theme Variables */
+
+:root {
+  --ooredoo-red: #ED1C24;
+  --ooredoo-dark-red: #C41017;
+  --ooredoo-white: #FFFFFF;
+  --ooredoo-light-gray: #F8F9FA;
+  --ooredoo-medium-gray: #E9ECEF;
+  --ooredoo-dark-gray: #495057;
+  --ooredoo-text: #212529;
+  --ooredoo-error: #DC3545;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #ed1c24, #c41017, #8b0f11);
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  color: var(--ooredoo-text);
+  overscroll-behavior: none; 
+  touch-action: none;         /* ✅ Disables touch panning */
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+  overscroll-behavior: none;  /* ✅ Inherit for children */
+}
+
+.ooredoo-register-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ed1c24, #c41017, #8b0f11);
+  padding: 0; /* remove spacing that could push it */
+}
+
+.ooredoo-register-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 32px;
+  background-color: white; /* make sure it's white */
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb; /* optional soft border */
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ooredoo-register-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.ooredoo-register-header img {
+  width: 75px;
+  height: auto;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.ooredoo-register-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ooredoo-text);
+}
+
+.ooredoo-subheading {
+  font-size: 13px;
+  color: var(--ooredoo-dark-gray);
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+/* Form Fields */
+.ooredoo-form-group {
+  margin-bottom: 14px;
+}
+
+.ooredoo-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ooredoo-text);
+  font-weight: 500;
+}
+
+.ooredoo-input,
+.ooredoo-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--ooredoo-medium-gray);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+  color: var(--ooredoo-text);
+}
+
+.ooredoo-input:focus,
+.ooredoo-select:focus {
+  border-color: var(--ooredoo-red);
+  box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.1);
+  outline: none;
+}
+
+.ooredoo-input-error {
+  border-color: var(--ooredoo-error);
+}
+
+/* Password Eye Icon */
+.ooredoo-password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ooredoo-dark-gray);
+  cursor: pointer;
+}
+
+.ooredoo-password-toggle:hover {
+  color: var(--ooredoo-red);
+}
+
+/* Error Messages */
+.ooredoo-error-message,
+.alert.alert-danger {
+  color: var(--ooredoo-error);
+  font-size: 13px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 6px;
+}
+
+/* Submit Button */
+.ooredoo-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--ooredoo-red);
+  color: var(--ooredoo-white);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.ooredoo-submit-btn:hover {
+  background-color: #f87171;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ooredoo-submit-btn:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Spinner */
+.fa-spinner {
+  animation: ooredoo-spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes ooredoo-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ooredoo-register-card {
+    padding: 32px 24px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+/* Reuse fade animation for cards */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out both;
+}

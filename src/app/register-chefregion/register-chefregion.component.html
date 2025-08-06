@@ -1,0 +1,61 @@
+<h4 class="text-center text-white mb-3">Chef Region Complement</h4>
+
+<div class="ooredoo-register-card animate-fade-in">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Region Dropdown -->
+    <div class="ooredoo-form-group">
+      <label for="regionId">Region:</label>
+      <select
+        id="regionId"
+        formControlName="regionId"
+        class="ooredoo-select"
+      >
+        <option value="" disabled selected>Select a region</option>
+        <option *ngFor="let region of availableRegions" [value]="region.idRegion">
+  {{ region.nom }} - {{ region.delegation }}
+</option>
+
+      </select>
+      <div
+        class="ooredoo-error-message"
+        *ngIf="form.get('regionId')?.touched && form.get('regionId')?.hasError('required')"
+      >
+        Region is required
+      </div>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="ooredoo-form-group">
+      <label for="phone">Phone Number:</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phoneNumber"
+        class="ooredoo-input"
+        placeholder="Enter your phone number"
+      />
+      <div
+        class="ooredoo-error-message"
+        *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('required')"
+      >
+        Phone number is required
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="ooredoo-submit-btn"
+      [disabled]="form.invalid || isLoading"
+    >
+      <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i>
+      <span *ngIf="!isLoading">Finish Registration</span>
+    </button>
+
+    <!-- Global Error Message -->
+    <p class="ooredoo-error-message mt-3 mb-0" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </p>
+  </form>
+</div>

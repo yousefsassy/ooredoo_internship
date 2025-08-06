@@ -1,0 +1,134 @@
+.zone-dashboard-wrapper {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Zone info */
+.zone-container {
+  background-color: #fff5f5;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 8px 24px rgba(237, 28, 36, 0.15);
+  color: #4a1f1f;
+  margin-bottom: 2rem;
+}
+
+.zone-container h2 {
+  color: #d32f2f;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.zone-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.detail-box {
+  flex: 1 1 calc(50% - 1rem);
+  background: #fde6e6;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 5px rgba(237, 28, 36, 0.1);
+}
+
+.detail-box strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  color: #b71c1c;
+  font-size: 1rem;
+}
+
+.detail-box span {
+  font-size: 1.1rem;
+  color: #5c2c2c;
+}
+
+/* KPI Cards */
+.dashboard-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.kpi-card {
+  flex: 1 1 260px;
+  max-width: 280px;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  color: white;
+}
+
+.kpi-card .icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+/* Color themes */
+.kpi-card.red {
+  background: linear-gradient(135deg, #d50000, #ff5252);
+  box-shadow: 0 6px 15px rgba(213, 0, 0, 0.6);
+}
+
+.kpi-card.orange {
+  background: linear-gradient(135deg, #ff8f00, #ffcc80);
+  color: #4a2e00;
+}
+
+.kpi-card.yellow {
+  background: linear-gradient(135deg, #fdd835, #fff9c4);
+  color: #5d4500;
+}
+
+.kpi-card h4 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.kpi-card p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 0;
+}
+
+/* Error & Loading */
+.alert-danger {
+  background-color: #f8d7da;
+  color: #842029;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  box-shadow: 0 4px 15px rgba(183, 28, 28, 0.25);
+}
+
+.loading {
+  margin-top: 2rem;
+}
+
+.spinner-border.text-danger {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+.loading p {
+  font-size: 1rem;
+  color: #b71c1c;
+  margin-top: 1rem;
+}

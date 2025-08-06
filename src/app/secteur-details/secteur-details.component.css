@@ -1,0 +1,100 @@
+.secteur-details-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  color: #333;
+}
+
+.secteur-details-container h2 {
+  color: #ed1c24;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #ed1c24;
+  padding-bottom: 0.3rem;
+}
+
+.secteur-details-container strong {
+  color: #444;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Tableau zones */
+table.zones-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+table.zones-table th,
+table.zones-table td {
+  padding: 0.65rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table.zones-table th {
+  background-color: #f44336; /* rouge Ooredoo */
+  color: white;
+  font-weight: 700;
+}
+
+table.zones-table tbody tr:hover {
+  background-color: #fceaea;
+}
+
+/* Message pas de zones */
+.no-zones-message {
+  font-style: italic;
+  color: #777;
+  margin-bottom: 1.5rem;
+}
+
+/* Secteur chief */
+.sector-chief {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Bouton retour */
+button {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b01215;
+}
+
+/* Loading et erreurs */
+.error {
+  color: #b00020;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .secteur-details-container {
+    padding: 1rem 1.2rem;
+  }
+
+  table.zones-table th,
+  table.zones-table td {
+    padding: 0.45rem 0.8rem;
+  }
+}

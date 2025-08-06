@@ -1,0 +1,120 @@
+/* Container */
+.reports-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Create button */
+.btn-create {
+  background-color: #e60012; /* Ooredoo red */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.btn-create:hover {
+  background-color: #b0000f;
+}
+
+/* Message no reports */
+.no-reports {
+  text-align: center;
+  color: #777;
+  font-size: 1.2rem;
+  margin-top: 40px;
+}
+
+/* Grid layout for cards */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Card style */
+.report-card {
+  background-color: white;
+  border: 2px solid #e60012;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(230, 0, 18, 0.25);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(230, 0, 18, 0.45);
+}
+
+/* Header with title and status */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e60012;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.report-title {
+  font-size: 1.3rem;
+  color: #e60012;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Status badges */
+.status {
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.status.read {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #3c763d;
+}
+
+.status.unread {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #a94442;
+}
+
+/* Body text */
+.card-body p {
+  margin: 6px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Fields container */
+.fields-container {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #e60012;
+}
+
+/* Each label/value */
+.field-item {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.field-item strong {
+  color: #e60012;
+}

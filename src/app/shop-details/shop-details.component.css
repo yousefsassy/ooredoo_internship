@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 3rem auto;
+  background-color: #fff5f5;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4a1f1f;
+}
+
+h2 {
+  color: #ed1c24;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+p {
+  font-size: 1.1rem;
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  padding-left: 0.5rem;
+  border-left: 4px solid #f8c1c1;
+}
+
+strong {
+  color: #b71c1c;
+}
+
+/* Optional icon style if you add icons later */
+p i {
+  margin-right: 0.5rem;
+  color: #b71c1c;
+}

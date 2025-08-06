@@ -1,0 +1,7 @@
+<div class="shop-details-container" *ngIf="shop">
+  <h2>{{ shop.nomShop }}</h2>
+
+  <p><i class="fas fa-user-tie"></i> <strong>Admin:</strong> {{ shop.adminShop?.username || "N/A" }}</p>
+<p><i class="fas fa-phone-alt"></i> <strong>Phone:</strong> {{ shop.telephone }}</p>
+
+</div>

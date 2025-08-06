@@ -1,0 +1,274 @@
+.zone-list-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #333;
+}
+
+/* Header */
+.zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #ed1c24;
+  padding-bottom: 0.75rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.zone-icon {
+  font-size: 2.5rem;
+  color: #ed1c24;
+}
+
+.zone-header h2 {
+  margin: 0;
+  font-weight: 700;
+  color: #b71c1c;
+}
+
+.subtitle {
+  color: #7f0000;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Add Zone Button */
+.add-zone-btn {
+  background-color: #ed1c24;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.4);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-zone-btn:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filters input[type="text"],
+.filters select {
+  flex: 1 1 220px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.filters input[type="text"]:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #ed1c24;
+  box-shadow: 0 0 8px rgba(237, 28, 36, 0.4);
+}
+
+/* Grid of cards */
+.zones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Zone Card */
+.zone-card {
+  background-color: #fff0f0;
+  border: 2px solid #ed1c24;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.zone-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(237, 28, 36, 0.35);
+}
+
+/* Card Header */
+.zone-card-header {
+  background-color: #ed1c24;
+  color: white;
+  padding: 1rem 1.2rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.zone-badge {
+  background: white;
+  color: #ed1c24;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(237, 28, 36, 0.3);
+}
+
+.zone-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  user-select: none;
+}
+
+/* Card Body */
+.zone-card-body {
+  padding: 1rem 1.2rem;
+  flex-grow: 1;
+  font-size: 0.95rem;
+  color: #4a1f1f;
+}
+
+.zone-card-body p {
+  margin: 0.3rem 0;
+}
+
+.zone-card-body strong {
+  color: #b71c1c;
+}
+
+/* Card Footer */
+.zone-card-footer {
+  padding: 0.75rem 1.2rem;
+  border-top: 1px solid #ed1c24;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff0f0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.btn i {
+  font-size: 1.1rem;
+}
+
+/* View Button */
+.btn-view {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  box-shadow: 0 3px 8px rgba(183, 28, 28, 0.4);
+}
+
+.btn-view:hover {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 5px 14px rgba(244, 67, 54, 0.7);
+}
+
+/* Edit Button */
+.btn-edit {
+  background-color: #ffebee;
+  color: #b71c1c;
+  box-shadow: 0 3px 8px rgba(183, 28, 28, 0.3);
+}
+
+.btn-edit:hover {
+  background-color: #f8bbd0;
+  color: #7b1fa2;
+  box-shadow: 0 5px 14px rgba(123, 31, 162, 0.7);
+}
+
+/* Delete Button */
+.btn-delete {
+  background-color: #ffebee;
+  color: #d32f2f;
+  box-shadow: 0 3px 8px rgba(211, 47, 47, 0.4);
+}
+
+.btn-delete:hover {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 5px 14px rgba(244, 67, 54, 0.7);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #b71c1c;
+}
+
+.empty-state h4 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.btn-add {
+  background-color: #ed1c24;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+  background-color: #b71c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+  
+  .zones-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .zone-card-footer {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  .btn {
+    justify-content: center;
+  }
+}

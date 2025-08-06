@@ -1,0 +1,19 @@
+<div class="zone-details-container" *ngIf="!isLoading && zone; else loading">
+  <div class="zone-details-header">
+    <i class="fas fa-map-pin zone-details-icon"></i>
+    <h2>{{ zone.libelle }}</h2>
+    <span class="zone-id">#{{ zone.idZone }}</span>
+  </div>
+  <div class="zone-details-body">
+    <p><strong>Governorate:</strong> {{ zone.gouvernorat }}</p>
+    <p><strong>Number of Shops:</strong> {{ zone.nbShop ?? "N/A" }}</p>
+    <!-- Add more fields as needed -->
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="zone-details-loading">
+    <p *ngIf="!error">Loading zone details...</p>
+    <p *ngIf="error" class="error-msg">{{ error }}</p>
+  </div>
+</ng-template>

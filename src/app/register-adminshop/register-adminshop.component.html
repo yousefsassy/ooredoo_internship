@@ -1,0 +1,48 @@
+<h4 class="mb-2 text-center text-black">Admin Shop Complement</h4>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+ 
+<!-- Shop Name -->
+  <div class="mb-2">
+    <label class="text-black">Shop Name:</label>
+    <input type="text" formControlName="shopName" class="form-control"
+      placeholder="Enter the shop name"
+      style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.5);" />
+    <div class="alert alert-danger" *ngIf="form.get('shopName')?.touched && form.get('shopName')?.hasError('required')">
+      Shop name is required
+    </div>
+  </div>
+  <!-- Address -->
+  <div class="mb-2">
+    <label class="text-black">Address:</label>
+    <input type="text" formControlName="address" class="form-control"
+      placeholder="Enter shop address" />
+    <div class="alert alert-danger" *ngIf="form.get('address')?.touched && form.get('address')?.hasError('required')">
+      Address is required
+    </div>
+  </div>
+
+  <!-- Shop Without Admin Dropdown -->
+  <div class="mb-2">
+    <label class="text-black">Select Shop to Manage:</label>
+    <select formControlName="shopId" class="form-control">
+      <option value="" disabled selected>Select a shop</option>
+      <option *ngFor="let shop of shopsWithoutAdmin" [value]="shop.idShop">
+        {{ shop.nomShop }}
+      </option>
+    </select>
+    <div class="alert alert-danger" *ngIf="form.get('shopId')?.touched && form.get('shopId')?.hasError('required')">
+      Please select a shop
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="form.invalid || isloading">
+    <i class="fas fa-spinner fa-spin" *ngIf="isloading"></i>
+    <span *ngIf="!isloading">Finish Registration</span>
+  </button>
+
+  <!-- Error -->
+  <p class="alert alert-danger mt-3 mb-0" *ngIf="msgerror">{{ msgerror }}</p>
+</form>

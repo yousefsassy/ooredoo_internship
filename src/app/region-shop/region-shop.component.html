@@ -1,0 +1,58 @@
+<div class="shop-management-container">
+
+  <!-- Header -->
+  <div class="management-header">
+    <div class="header-content">
+      <i class="fas fa-map-marked-alt header-icon"></i>
+      <h2>🧭 Shops in Your Region</h2>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="filters-container">
+    <input
+      type="text"
+      placeholder="Search by shop name..."
+      [(ngModel)]="searchTerm"
+      (input)="filterShops()"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Table -->
+  <div class="modern-table-container">
+    <table class="modern-shop-table" *ngIf="filteredShops.length > 0; else noData">
+      <thead>
+        <tr>
+          <th><i class="fas fa-store"></i> Shop Name</th>
+          <th><i class="fas fa-user-tie"></i> Admin</th>
+          <th><i class="fas fa-phone"></i> Phone</th>
+          <th><i class="fas fa-cogs"></i> Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shop of filteredShops">
+          <td><i class="fas fa-store-alt"></i> {{ shop.nomShop }}</td>
+          <td><i class="fas fa-user"></i> {{ shop.adminShop?.username || 'N/A' }}</td>
+          <td><i class="fas fa-phone-alt"></i> {{ shop.telephone }}</td>
+          <td class="action-buttons">
+            <button class="view-btn" (click)="viewShop(shop.idShop)">
+              <i class="fas fa-eye"></i> View
+            </button>
+            <button class="report-btn" (click)="reportShop(shop.idShop)">
+              <i class="fas fa-flag"></i> Report
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      <div class="empty-state">
+        <i class="fas fa-store-slash empty-icon"></i>
+        <h3>No Shops Found</h3>
+        <p>This region has no registered shops yet.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

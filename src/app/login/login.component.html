@@ -1,0 +1,111 @@
+<div class="ooredoo-login-container">
+  <!-- Big Ooredoo Logo above card -->
+
+  <div class="ooredoo-login-card animate-fade-in">
+    <div class="ooredoo-login-header">
+      <img
+        src="assets/ooredoo logo.png"
+        alt="Ooredoo Logo"
+        style="width: 120px; height: auto; margin-bottom: 16px"
+      />
+      <h2>Sign in to <span class="brand">Ooredoo Admin</span></h2>
+      <p class="subheading">
+        Access your portal to manage zones, shops, and more
+      </p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+      <!-- Email/Username -->
+      <div class="ooredoo-form-group">
+        <label>Identifier</label>
+        <input
+          formControlName="emailOrUsername"
+          type="text"
+          placeholder="Email or Username"
+          class="ooredoo-input"
+          [ngClass]="{
+            'ooredoo-input-error':
+              f.emailOrUsername.invalid && f.emailOrUsername.touched
+          }"
+        />
+        <div
+          *ngIf="f.emailOrUsername.invalid && f.emailOrUsername.touched"
+          class="ooredoo-error-message"
+        >
+          Email or Username is required
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="ooredoo-form-group">
+        <label>Password</label>
+        <div class="ooredoo-password-group">
+          <input
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter your Password"
+            class="ooredoo-input"
+            [ngClass]="{
+              'ooredoo-input-error': f.password.invalid && f.password.touched
+            }"
+          />
+          <i
+            class="fas"
+            [class.fa-eye]="!showPassword"
+            [class.fa-eye-slash]="showPassword"
+            (click)="togglePasswordVisibility()"
+            class="ooredoo-password-toggle"
+          ></i>
+        </div>
+        <div
+          *ngIf="f.password.invalid && f.password.touched"
+          class="ooredoo-error-message"
+        >
+          <div *ngIf="f.password.errors?.['required']">
+            Password is required
+          </div>
+          <div
+            *ngIf="f.password.errors?.['pattern']"
+            class="ooredoo-password-rules"
+          >
+            Password must contain:
+            <ul>
+              <li>At least one uppercase letter</li>
+              <li>At least one lowercase letter</li>
+              <li>At least one number</li>
+              <li>At least one special character</li>
+              <li>8-20 characters long</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forgot Password -->
+      <div class="ooredoo-forgot-password">
+        <a routerLink="/ForgotPassword">Forgot your password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="ooredoo-submit-btn"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        <span *ngIf="isLoading">
+          <i class="fas fa-spinner fa-spin"></i> Authenticating...
+        </span>
+        <span *ngIf="!isLoading">Sign In</span>
+      </button>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="ooredoo-alert-error">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Register Link -->
+      <div class="ooredoo-register-link">
+        Don't have an account? <a routerLink="/register">Register here</a>
+      </div>
+    </form>
+  </div>
+</div>

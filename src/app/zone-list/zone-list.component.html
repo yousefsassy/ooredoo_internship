@@ -1,0 +1,67 @@
+<div class="zone-list-container">
+  <div class="zone-header">
+    <div class="header-content">
+      <i class="fas fa-map-marked-alt zone-icon"></i>
+      <h2>All Zones</h2>
+      <p class="subtitle">Browse and manage zones</p>
+    </div>
+    <button class="add-zone-btn" (click)="onAddZone()">
+      <i class="fas fa-plus-circle"></i> Add Zone
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      placeholder="Search by label..."
+    />
+    <select [(ngModel)]="filterGovernorate" (change)="onGovernorateChange()">
+      <option value="">All Governorates</option>
+      <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
+    </select>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="zones-grid">
+    <div class="zone-card" *ngFor="let zone of filteredZones">
+      <div class="zone-card-header">
+        <div class="zone-badge">
+          <i class="fas fa-map-pin"></i>
+        </div>
+        <h4 class="zone-title">{{ zone.libelle }}</h4>
+      </div>
+      <div class="zone-card-body">
+        <p><strong>Governorate:</strong> {{ zone.gouvernorat }}</p>
+      </div>
+      <div class="zone-card-footer">
+        <ng-container *ngIf="zone.idZone != null">
+          <button
+            class="btn btn-view"
+            *ngIf="zone.idZone != null"
+            (click)="onViewZone(zone.idZone!)"
+          >
+            <i class="fas fa-eye"></i> View
+          </button>
+          <button class="btn btn-edit" (click)="onEditZone(zone.idZone!)">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="btn btn-delete" (click)="onArchiveZone(zone.idZone!)">
+            <i class="fas fa-trash"></i> Archive
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <h4>No Zones Found</h4>
+      <button class="btn btn-add" (click)="onAddZone()">
+        <i class="fas fa-plus"></i> Add Zone
+      </button>
+    </div>
+  </ng-template>
+</div>

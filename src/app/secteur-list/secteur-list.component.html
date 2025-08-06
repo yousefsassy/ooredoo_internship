@@ -1,0 +1,52 @@
+<div class="shop-management-container">
+
+  <!-- Header + Add -->
+  <div class="management-header">
+    <div class="header-content">
+      <i class="fas fa-map-marked-alt header-icon"></i>
+      <h2>Sector Management</h2>
+    </div>
+    <button class="add-shop-btn" (click)="onAddSecteur()">
+      <i class="fas fa-plus-circle"></i> Add New Sector
+    </button>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="filters-container">
+    <input
+      type="text"
+      placeholder="Search by sector name..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Cards container -->
+  <div class="cards-container">
+    <div *ngFor="let secteur of filteredSecteurs" class="secteur-card">
+      <h3>{{ secteur.nom }}</h3>
+      <p>
+        <strong>Sector Chief:</strong>
+        {{ secteur.chefSecteur?.prenom || '' }} {{ secteur.chefSecteur?.nom || 'Not Assigned' }}
+      </p>
+      <button class="view-btn" (click)="onViewSecteur(secteur)" title="View" aria-label="View">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+
+    <ng-container *ngIf="!loading && filteredSecteurs.length === 0">
+      <div class="empty-state">
+        <i class="fas fa-map-marked-alt empty-icon"></i>
+        <h3>No Sectors Found</h3>
+        <p>Start by adding your first sector.</p>
+        <button class="add-shop-btn" (click)="onAddSecteur()">
+          <i class="fas fa-plus-circle"></i> Add Sector
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading sectors...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+</div>

@@ -1,0 +1,55 @@
+<h2>📝 New Report</h2>
+
+<!-- Affiche le formulaire seulement si le formulaire est créé et le shop chargé -->
+<form *ngIf="reportForm && shop" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+
+  <label for="titre">Title</label>
+  <input id="titre" formControlName="titre" />
+  <div *ngIf="reportForm.get('titre')?.invalid && (reportForm.get('titre')?.touched || reportForm.get('titre')?.dirty)" style="color:red">
+    Title is required.
+  </div>
+
+  <label for="type">Type</label>
+  <select id="type" formControlName="type">
+    <option value="">-- Select --</option>
+    <option value="VISITE">Visit</option>
+    <option value="PROBLEME">Problem</option>
+  </select>
+  <div *ngIf="reportForm.get('type')?.invalid && (reportForm.get('type')?.touched || reportForm.get('type')?.dirty)" style="color:red">
+    Type is required.
+  </div>
+
+  <label for="contenu">Description</label>
+  <textarea id="contenu" formControlName="contenu"></textarea>
+  <div *ngIf="reportForm.get('contenu')?.invalid && (reportForm.get('contenu')?.touched || reportForm.get('contenu')?.dirty)" style="color:red">
+    Description is required.
+  </div>
+
+  <div formArrayName="fieldValues" *ngIf="fields.length > 0">
+    <div *ngFor="let fieldCtrl of fieldValues.controls; let i = index" [formGroupName]="i" style="margin-top: 1rem;">
+
+      <label>{{ fields[i].label }}</label>
+
+      <ng-container [ngSwitch]="fields[i].type">
+        <input *ngSwitchCase="'TEXT'" formControlName="value" />
+        <textarea *ngSwitchCase="'TEXTAREA'" formControlName="value"></textarea>
+        <select *ngSwitchCase="'DROPDOWN'" formControlName="value">
+          <option value="">-- Select --</option>
+          <option *ngFor="let option of fields[i].options" [value]="option">{{ option }}</option>
+        </select>
+      </ng-container>
+
+      <div *ngIf="isFieldInvalid(i)" style="color: red;">
+        {{ fields[i].label }} is required.
+      </div>
+
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="reportForm.invalid" style="margin-top: 1rem;">📨 Submit Report</button>
+</form>
+
+<!-- Optionnel: afficher un message de chargement -->
+<div *ngIf="!shop || !reportForm">
+  Loading...
+</div>

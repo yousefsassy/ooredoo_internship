@@ -1,0 +1,132 @@
+/* Container card with subtle fade-in animation */
+.ooredoo-register-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2.5rem 2rem;
+  background: #e2001a; /* Ooredoo Red */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(226, 0, 26, 0.6);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Form groups spacing */
+.ooredoo-form-group {
+  margin-bottom: 1.4rem;
+}
+
+/* Labels */
+.ooredoo-form-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Inputs and selects */
+.ooredoo-input,
+.ooredoo-select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  color: #2a2a2a;
+  background-color: #fff;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  font-weight: 600;
+}
+
+.ooredoo-select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #e2001a 50%),
+    linear-gradient(135deg, #e2001a 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px);
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.ooredoo-input:focus,
+.ooredoo-select:focus {
+  box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
+  background-color: #fff;
+}
+
+/* Error message styling */
+.ooredoo-error-message {
+  margin-top: 0.4rem;
+  color: #ffdddd;
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Submit button */
+.ooredoo-submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 14px 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #a50012, #e2001a);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(226, 0, 26, 0.8);
+  
+}
+
+.ooredoo-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #e2001a, #a50012);
+  box-shadow: 0 8px 30px rgba(226, 0, 26, 1);
+}
+
+.ooredoo-submit-btn:disabled {
+  background: #b8323a;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Spinner icon */
+.ooredoo-submit-btn i.fas.fa-spinner {
+  animation: spin 1s linear infinite;
+  font-size: 1.3rem;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Title styling override */
+h4.text-center.text-white.mb-3 {
+  font-weight: 900;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  font-size: 1.75rem;
+}

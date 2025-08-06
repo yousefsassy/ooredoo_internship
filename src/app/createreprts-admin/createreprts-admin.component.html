@@ -1,0 +1,81 @@
+<div class="container" style="display: flex; gap: 20px;">
+  <!-- Left: Available Fields -->
+  <div style="flex: 1;">
+    <h3>Available Fields</h3>
+    <div *ngFor="let field of fields" class="field-item">
+      <input
+        type="checkbox"
+        [checked]="isFieldSelected(field)"
+        (change)="onFieldToggle(field, $event)"
+        id="field-{{field.id}}"
+      />
+      <label for="field-{{field.id}}">{{ field.label }} ({{ field.type }})</label>
+    </div>
+
+    <h4 class="mt-4">Add Custom Field</h4>
+    <input
+      type="text"
+      [(ngModel)]="customFieldLabel"
+      placeholder="Field label"
+      class="form-control mb-2"
+    />
+    <select [(ngModel)]="customFieldType" class="form-control mb-2">
+      <option value="text">Text</option>
+      <option value="number">Number</option>
+      <option value="date">Date</option>
+    </select>
+    <button (click)="addCustomField()" class="btn btn-primary">
+      Add Custom Field
+    </button>
+  </div>
+
+  <!-- Right: Report Form and Selected Fields -->
+  <div style="flex: 2;">
+    <h2>Create Report</h2>
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Title</label>
+        <input class="form-control" formControlName="titre" />
+      </div>
+
+      <div>
+        <label>Description</label>
+        <textarea class="form-control" formControlName="description"></textarea>
+      </div>
+
+      <div>
+        <label>Select Shop</label>
+        <select class="form-control" formControlName="shopId">
+          <option value="">-- Choose a shop --</option>
+          <option *ngFor="let shop of shops" [value]="shop.idShop">{{ shop.nomShop }}</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Select Recipient</label>
+        <select class="form-control" formControlName="destinataireId">
+          <option value="">-- Choose a recipient --</option>
+          <option *ngFor="let user of users" [value]="user.id">{{ user.nom || user.username }}</option>
+        </select>
+      </div>
+
+      <hr />
+
+      <h4>Selected Fields (Drag & Drop)</h4>
+      <div
+        cdkDropList
+        [cdkDropListData]="selectedFields"
+        class="selected-fields"
+        (cdkDropListDropped)="drop($event)"
+        style="min-height: 150px; border: 1px solid #ccc; padding: 10px;"
+      >
+        <div *ngFor="let field of selectedFields" cdkDrag class="drag-field" style="margin-bottom: 5px;">
+          {{ field.label }} ({{ field.type }})
+          <button type="button" (click)="removeField(field)" style="margin-left: 10px;">❌</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-3">Create Report</button>
+    </form>
+  </div>
+</div>
