@@ -1,4 +1,5 @@
 <div class="container" style="display: flex; gap: 20px;">
+
   <!-- Left: Available Fields -->
   <div style="flex: 1;">
     <h3>Available Fields</h3>
@@ -29,21 +30,31 @@
     </button>
   </div>
 
-  <!-- Right: Report Form and Selected Fields -->
-  <div style="flex: 2;">
+  <!-- Middle: Report Form and Selected Fields -->
+  <div style="flex: 1.5;">
     <h2>Create Report</h2>
     <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-      <div>
+      <div class="mb-3">
         <label>Title</label>
         <input class="form-control" formControlName="titre" />
       </div>
 
-      <div>
+      <div class="mb-3">
         <label>Description</label>
         <textarea class="form-control" formControlName="description"></textarea>
       </div>
+      <div class="mb-3">
+    <label>Type</label>
+    <select class="form-control" formControlName="type">
+      <option value="">-- Choose a type --</option>
+      <option value="TECHNICAL">Technical</option>
+      <option value="MARKETING">Marketing</option>
+      <option value="FINANCIAL">Financial</option>
+      <option value="OTHER">Other</option>
+    </select>
+  </div>
 
-      <div>
+      <div class="mb-3">
         <label>Select Shop</label>
         <select class="form-control" formControlName="shopId">
           <option value="">-- Choose a shop --</option>
@@ -51,7 +62,7 @@
         </select>
       </div>
 
-      <div>
+      <div class="mb-3">
         <label>Select Recipient</label>
         <select class="form-control" formControlName="destinataireId">
           <option value="">-- Choose a recipient --</option>
@@ -78,4 +89,35 @@
       <button type="submit" class="btn btn-primary mt-3">Create Report</button>
     </form>
   </div>
+
+  <!-- Right: Display Created Report -->
+  <div style="flex: 1.5;" *ngIf="createdReport">
+    <h2>Report Details</h2>
+    <p><strong>Title:</strong> {{ createdReport.titre }}</p>
+    <p><strong>Description:</strong></p>
+    <p>{{ createdReport.description || 'No description' }}</p>
+    <p><strong>Shop:</strong> {{ createdReport.shop?.nomShop || 'N/A' }}</p>
+    <p><strong>Recipient:</strong> {{ createdReport.destinataire?.username || 'N/A' }}</p>
+    <p><strong>Created At:</strong> {{ createdReport.dateCreation | date:'medium' }}</p>
+
+    <h4>Fields and Values</h4>
+    <table class="table-report" *ngIf="createdReport.fields?.length > 0">
+      <thead>
+        <tr>
+          <th>Field Label</th>
+          <th>Type</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let field of createdReport.fields">
+          <td>{{ field.label }}</td>
+          <td>{{ field.type }}</td>
+          <td>{{ getFieldValue(field.idReportField) }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!createdReport.fields || createdReport.fields.length === 0">No fields added.</p>
+  </div>
+
 </div>

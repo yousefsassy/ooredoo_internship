@@ -1,80 +1,77 @@
-:host {
-  display: block;
-  max-width: 600px;
-  margin: 3rem auto;
-  background-color: #fff5f5;
+.zone-form {
+  max-width: 500px;
+  margin: 2rem auto;
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.2);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #4a1f1f;
 }
 
-h3 {
-  color: #ed1c24;
-  font-weight: 700;
-  margin-bottom: 2rem;
+.form-title {
   text-align: center;
+  font-size: 1.5rem;
+  color: #E30613;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
-.mb-2 {
-  margin-bottom: 1.25rem;
+.form-group {
+  margin-bottom: 1.2rem;
 }
 
 label {
+  font-weight: 600;
   display: block;
-  font-weight: 600;
-  color: #b71c1c;
   margin-bottom: 0.4rem;
+  color: #333;
 }
 
-input.form-control,
-select.form-control {
+.required {
+  color: #E30613;
+}
+
+.form-control {
   width: 100%;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  border: 2px solid #f3c2c2;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  appearance: none; /* For consistent styling on selects */
+  transition: border-color 0.2s ease-in-out;
 }
 
-input.form-control:focus,
-select.form-control:focus {
-  border-color: #ed1c24;
-  box-shadow: 0 0 10px rgba(237, 28, 36, 0.3);
+.form-control:focus {
+  border-color: #E30613;
   outline: none;
+  box-shadow: 0 0 0 2px rgba(227, 6, 19, 0.2);
 }
 
-/* Placeholder text color */
-input::placeholder {
-  color: #b71c1caa;
-  font-style: italic;
+.error {
+  color: #E30613;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
 }
 
-/* Button style */
-button.btn-primary {
-  background-color: #ed1c24;
+.form-actions {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  background: #E30613;
   color: white;
+  padding: 0.6rem 1.4rem;
   border: none;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  padding: 0.75rem 1.5rem;
-  width: 100%;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(237, 28, 36, 0.4);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background 0.2s ease-in-out;
 }
 
-button.btn-primary:hover:not(:disabled) {
-  background-color: #b71c1c;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(183, 28, 28, 0.6);
+.btn-primary:hover {
+  background: #b00510;
 }
 
-button.btn-primary:disabled {
-  background-color: #f5b5b5;
+.btn-primary:disabled {
+  background: #ccc;
   cursor: not-allowed;
-  box-shadow: none;
 }

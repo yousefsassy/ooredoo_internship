@@ -8,7 +8,7 @@
 
 /* Create button */
 .btn-create {
-  background-color: #e60012; /* Ooredoo red */
+  background-color: #e60012;
   color: white;
   border: none;
   padding: 12px 25px;
@@ -21,22 +21,30 @@
   display: inline-block;
 }
 
-.btn-create:hover {
+.btn-create:hover,
+.btn-create:focus {
   background-color: #b0000f;
+  outline: none;
 }
 
-/* Message no reports */
+/* Loading and error messages */
+.loading,
+.error-message,
 .no-reports {
   text-align: center;
-  color: #777;
   font-size: 1.2rem;
   margin-top: 40px;
+  color: #555;
+}
+
+.error-message {
+  color: #a94442;
 }
 
 /* Grid layout for cards */
 .reports-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
@@ -48,12 +56,22 @@
   box-shadow: 0 3px 8px rgba(230, 0, 18, 0.25);
   padding: 20px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+  user-select: none;
 }
 
-.report-card:hover {
+.report-card:hover,
+.report-card:focus {
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(230, 0, 18, 0.45);
+  background-color: #fff7f7;
+  outline: none;
+}
+
+/* Keyboard accessibility */
+.report-card:focus {
+  outline: 3px solid #e60012;
+  outline-offset: 3px;
 }
 
 /* Header with title and status */
@@ -71,6 +89,7 @@
   color: #e60012;
   margin: 0;
   font-weight: 700;
+  word-break: break-word;
 }
 
 /* Status badges */
@@ -101,6 +120,14 @@
   font-size: 1rem;
 }
 
+/* Created date styling */
+.card-body p.created-date {
+  font-style: italic;
+  color: #b33a3a;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
 /* Fields container */
 .fields-container {
   margin-top: 15px;
@@ -113,6 +140,7 @@
   font-size: 0.95rem;
   margin-bottom: 8px;
   color: #555;
+  word-break: break-word;
 }
 
 .field-item strong {

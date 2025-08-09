@@ -101,24 +101,13 @@ export interface ReportField {
 export interface ReportDTO {
   titre: string;
   type: string;
-  contenu: string;
+  description: string;
   shopId: number;
   dateCreation?: string;  // <-- ajout facultatif (optionnel)
   fieldValues: ReportFieldValueDTO[];
 }
 
 
-export interface DestinataireReportDTO {
-  idReport: number; // c’est l’ID attendu
-  titre: string;
-  contenu: string;
-  type: string;
-  vu: boolean;
-  dateCreation: string;
-  nomShop: string;
-  nomAdmin: string;
-  labelsEtValeurs: { label: string; valeur: string }[];
-}
 
 
 export interface DashboardRegionDTO {
@@ -150,6 +139,7 @@ export interface ReportFieldCreation {
 export interface ReportCreationRequest {
   titre: string;
   description: string;
+  type: string;
   destinataireId: number;
   shopId: number;
   fieldIds: number[];// ✅ plus de `fieldIds`
@@ -164,7 +154,7 @@ export interface ReportWithValuesDTO {
   idReport: number;
   titre: string;
   type: string;
-  contenu: string;
+  description: string;
   shopId: number;
   dateCreation?: string;
   fieldValues: ReportFieldValueDTO[];  // all filled fields with their values
@@ -174,7 +164,7 @@ export interface ReportWithValuesDTO {
 export interface DestinataireReportDTO {
   idReport: number;       // report ID
   titre: string;         // report title
-  contenu: string;       // report content/description
+  description: string;       // report content/description
   type: string;          // report type
   vu: boolean;           // if read or not
   dateCreation: string;  // creation date
@@ -183,8 +173,15 @@ export interface DestinataireReportDTO {
   labelsEtValeurs: {     // array of fields label + values
     label: string;
     valeur: string;
+    
   }[];
 }
+export const environment = {
+  production: false,
+  apiBaseUrl: 'http://localhost:8089'  // URL de ton backend
+};
+
+
 export interface FieldDTO {
   label: string;
   type: string;
@@ -199,6 +196,7 @@ export interface ReportFieldDTO {
   required: boolean;
   options?: string[]; 
 }
+
 
 @Injectable({
   providedIn: 'root'
@@ -509,6 +507,26 @@ getAllReports(): Observable<DestinataireReportDTO[]> {
 addField(fieldDTO: FieldDTO): Observable<Field> {
     return this.http.post<Field>(`${this.apiUrl}/addField`, fieldDTO);
   }
+getReportDTOById(id: number): Observable<DestinataireReportDTO> {
+  const headers = this.getAuthHeaders();
+  return this.http.get<DestinataireReportDTO>(`${this.apiUrl}/report/${id}`, { headers });
+}
+submitReportWithFormData(reportId: number, username: string, formData: FormData) {
+  return this.http.post(
+    `${this.apiUrl}/report/${reportId}/submit?username=${username}`,
+    formData,
+    { responseType: 'text' }  // <-- Important, attendre une réponse en texte
+  );
+}
 
+getReportWithValues(idReport: number): Observable<DestinataireReportDTO> {
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.authService.getToken()}`
+  });
+  return this.http.get<DestinataireReportDTO>(`http://localhost:8089/Ooredoo/reportwithvalues/${idReport}`, { headers });
+}
+getPhotoUrl(relativePath: string): string {
+  return environment.apiBaseUrl + relativePath;
 
+}
 }

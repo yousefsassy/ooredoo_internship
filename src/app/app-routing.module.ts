@@ -41,6 +41,7 @@ import { FillReportComponent } from './fill-report/fill-report.component';
 import { ZoneDetailsComponent } from './zone-details/zone-details.component';
 import { RegionDetailsComponent } from './region-details/region-details.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { ReportDetailsComponent } from './report-details/report-details.component';
 
 const routes: Routes = [
 
@@ -182,6 +183,7 @@ const routes: Routes = [
   { path: 'reports-list', component: ReportsListComponent },
   { path: 'createreports-admin', component: CreatereprtsAdminComponent },
   { path: 'fill-report/:id', component: FillReportComponent },
+  { path: 'report-details/:idReport', component: ReportDetailsComponent },
 ];
 
 @NgModule({

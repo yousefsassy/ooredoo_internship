@@ -107,7 +107,7 @@ export class LoginComponent {
                 this.router.navigate(['/DashboardAdmin']);
                 break;
               case 'ADMINSHOP':
-                this.router.navigate(['/test']);
+                this.router.navigate(['/myShop']);
                 break;
               case 'CHEFZONE':
                 this.router.navigate(['/dashboardChefZone']);

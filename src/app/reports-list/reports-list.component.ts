@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./reports-list.component.css']
 })
 export class ReportsListComponent implements OnInit {
-      reports: DestinataireReportDTO[] = [];
+    reports: DestinataireReportDTO[] = [];
+  loading = false;
+  errorMessage = '';
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -17,18 +19,25 @@ export class ReportsListComponent implements OnInit {
   }
 
   loadReports(): void {
+    this.loading = true;
+    this.errorMessage = '';
     this.userService.getAllReports().subscribe({
       next: (data) => {
         this.reports = data;
+        this.loading = false;
       },
-      error: (err) => console.error('Error loading reports', err)
+      error: (err) => {
+        console.error('Error loading reports', err);
+        this.errorMessage = 'Failed to load reports. Please try again later.';
+        this.loading = false;
+      }
     });
   }
-
-  viewReport(report: DestinataireReportDTO): void {
+   viewReport(report: DestinataireReportDTO): void {
     this.router.navigate(['/report-details', report.idReport]);
   }
 
   createReport(): void {
     this.router.navigate(['/createreports-admin']);
-  }}
+  }
+}

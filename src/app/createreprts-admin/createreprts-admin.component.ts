@@ -22,12 +22,16 @@ export class CreatereprtsAdminComponent implements OnInit {
   customFieldLabel: string = '';
   customFieldType: string = 'text';
 
+  // Le rapport créé, utilisé pour afficher les détails
+  createdReport: any = null;
+
   constructor(private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
     this.reportForm = this.fb.group({
       titre: ['', Validators.required],
       description: [''],
+      type: ['', Validators.required],
       shopId: ['', Validators.required],
       destinataireId: ['', Validators.required],
     });
@@ -92,10 +96,8 @@ export class CreatereprtsAdminComponent implements OnInit {
       options: []
     };
 
-    // Call backend to add the new field
     this.userService.addField(newFieldDTO).subscribe({
       next: (createdField) => {
-        // Ajouter dans la liste locale
         const newField: Field = {
           id: createdField.idField,
           label: createdField.label,
@@ -130,32 +132,35 @@ export class CreatereprtsAdminComponent implements OnInit {
       .map(field => field.id)
       .filter((id): id is number => id !== undefined && id !== null);
 
-    if (selectedFieldIds.length !== this.selectedFields.length) {
-      alert('Warning: Some selected fields have invalid IDs.');
-      console.warn('Invalid IDs detected in selectedFields');
-    }
-
     const requestBody: ReportCreationRequest = {
       titre: this.reportForm.value.titre,
       description: this.reportForm.value.description,
+      type: this.reportForm.value.type,
       destinataireId: Number(this.reportForm.value.destinataireId),
       shopId: Number(this.reportForm.value.shopId),
       fieldIds: selectedFieldIds,
     };
 
     this.userService.createReport(requestBody).subscribe({
-      next: response => {
+      next: (response) => {
         alert('Report created successfully.');
+        this.createdReport = response;  // Sauvegarder pour affichage
         this.reportForm.reset();
         this.selectedFields = [];
       },
-      error: err => {
+      error: (err) => {
         console.error('Error creating report:', err);
         alert('Failed to create report.');
       }
     });
   }
 
+  // Méthode pour récupérer la valeur d'un champ dans le rapport créé
+  getFieldValue(fieldId: number): string {
+    if (!this.createdReport || !this.createdReport.fieldValues) return 'N/A';
+    const found = this.createdReport.fieldValues.find((val: any) => val.fieldId === fieldId);
+    return found ? found.value : 'N/A';
+  }
 
 
 

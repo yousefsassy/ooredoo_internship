@@ -53,6 +53,7 @@ import { ZoneDetailsComponent } from './zone-details/zone-details.component';
 import { RegionDetailsComponent } from './region-details/region-details.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ReportDetailsComponent } from './report-details/report-details.component';
 
 
 
@@ -102,7 +103,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FillReportComponent,
     ZoneDetailsComponent,
     RegionDetailsComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    ReportDetailsComponent
     
   ],
   imports: [
