@@ -8,7 +8,7 @@ import tn.esprit.examen.nomPrenomClasseExamen.model.Shop;
 import java.util.List;
 
 public interface IRegionService {
-    Region addRegion(Region region);
+    RegionDTO addRegion(RegionDTO regionDTO);
 
     RegionDTO updateRegion(Long id, RegionDTO updatedRegionDTO);
 

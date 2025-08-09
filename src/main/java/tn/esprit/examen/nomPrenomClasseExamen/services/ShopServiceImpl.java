@@ -30,11 +30,13 @@ public class ShopServiceImpl implements IShopService{
     @Autowired
     private final RegionRepository regionRepository;
 
+
     @Override
     public Shop createShop(Shop shop) {
         shop.setArchived(false);  // Toujours non archivé à la création
         return shopRepository.save(shop);
     }
+
     // Conversion Entity -> DTO
     public ShopDTO convertToDTO(Shop shop) {
         return new ShopDTO(
@@ -46,7 +48,7 @@ public class ShopServiceImpl implements IShopService{
         );
     }
 
-    // Conversion DTO -> Entity
+    // Conversion DTO -> Entity (optionnel, si besoin)
     public Shop convertToEntity(ShopDTO dto) {
         Shop shop = new Shop();
         shop.setIdShop(dto.getIdShop());
@@ -68,6 +70,9 @@ public class ShopServiceImpl implements IShopService{
         } else {
             shop.setRegion(null);
         }
+
+        shop.setArchived(false); // Par défaut
+
         return shop;
     }
 

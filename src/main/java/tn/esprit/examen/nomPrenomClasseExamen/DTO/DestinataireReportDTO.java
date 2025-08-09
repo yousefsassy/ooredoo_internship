@@ -7,7 +7,7 @@ public class DestinataireReportDTO {
 
     private Long idReport;
     private String titre;
-    private String contenu;
+    private String description;
     private String type;
     private boolean vu;
     private String dateCreation;
@@ -32,12 +32,12 @@ public class DestinataireReportDTO {
         this.titre = titre;
     }
 
-    public String getContenu() {
-        return contenu;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {

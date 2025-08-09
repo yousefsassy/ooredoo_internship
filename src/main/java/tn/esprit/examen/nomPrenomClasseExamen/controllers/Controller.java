@@ -3,20 +3,27 @@ package tn.esprit.examen.nomPrenomClasseExamen.controllers;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tn.esprit.examen.nomPrenomClasseExamen.DTO.*;
 import tn.esprit.examen.nomPrenomClasseExamen.model.*;
 import tn.esprit.examen.nomPrenomClasseExamen.repositories.ReportRepository;
 import tn.esprit.examen.nomPrenomClasseExamen.repositories.UserRepository;
 import tn.esprit.examen.nomPrenomClasseExamen.services.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*",
@@ -42,10 +49,14 @@ public class Controller {
     @Autowired
     private ReportRepository reportRepository;
 
-    @PostMapping("/createZone")
-    public ResponseEntity<Zone> createZone(@RequestBody Zone zone) {
-        Zone created = zoneService.createZone(zone);
-        return ResponseEntity.ok(created);
+    @PostMapping(value = "/createZone", consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<ZoneDTO> createZone(@RequestBody ZoneDTO zoneDTO) {
+        // Conversion DTO -> Entity
+        Zone zone = zoneService.convertToEntity(zoneDTO);
+        Zone savedZone = zoneService.createZone(zone);
+        // Conversion Entity -> DTO pour la réponse
+        return ResponseEntity.ok(zoneService.convertToDTO(savedZone));
     }
 
     @PutMapping("/updateZone/{id}")
@@ -92,9 +103,11 @@ public class Controller {
 
 
     @PostMapping("/createShop")
-    public ResponseEntity<Shop> createShop(@RequestBody Shop shop) {
+    public ResponseEntity<ShopDTO> createShop(@RequestBody ShopDTO shopDTO) {
+        Shop shop = shopService.convertToEntity(shopDTO);
         Shop created = shopService.createShop(shop);
-        return ResponseEntity.ok(created);
+        ShopDTO responseDTO = shopService.convertToDTO(created);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @PutMapping("/updateShop/{id}")
@@ -206,8 +219,9 @@ public class Controller {
     }
 
     @PostMapping("/createRegion")
-    public Region createRegion(@RequestBody Region region) {
-        return regionService.addRegion(region);
+    public ResponseEntity<RegionDTO> createRegion(@RequestBody RegionDTO regionDTO) {
+        RegionDTO createdRegion = regionService.addRegion(regionDTO);
+        return ResponseEntity.ok(createdRegion);
     }
 
     @PutMapping("/updateRegion/{id}")
@@ -327,7 +341,7 @@ public class Controller {
     }
 
 
-    @PostMapping("/report/{reportId}/submit")
+    /*@PostMapping("/report/{reportId}/submit")
     public ResponseEntity<?> submitReport(
             @PathVariable Long reportId,
             @RequestParam String username,
@@ -335,7 +349,7 @@ public class Controller {
     ) {
         reportService.enregistrerChampsRemplis(reportId, username, values);
         return ResponseEntity.ok("✅ Report submitted successfully.");
-    }
+    }*/
 
 
 
@@ -371,4 +385,91 @@ public class Controller {
         Field createdField = reportService.addField(fieldDTO);
         return new ResponseEntity<>(createdField, HttpStatus.CREATED);
     }
+    @PostMapping(value = "/report/{reportId}/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> submitReportWithFiles(
+            @PathVariable Long reportId,
+            @RequestParam String username,
+            @RequestParam Map<String, String> allRequestParams,
+            @RequestParam(required = false) Map<String, MultipartFile> files) {
+
+        try {
+            List<ReportFieldValueDTO> valeurs = new ArrayList<>();
+
+            // Traitement des champs texte
+            for (Map.Entry<String, String> entry : allRequestParams.entrySet()) {
+                String key = entry.getKey();
+                if (key.startsWith("field_")) {
+                    Long fieldId = Long.parseLong(key.substring(6));
+                    String value = entry.getValue();
+                    if (value != null && !value.isEmpty()) {
+                        ReportFieldValueDTO dto = new ReportFieldValueDTO();
+                        dto.setFieldId(fieldId);
+                        dto.setValue(value);
+                        valeurs.add(dto);
+                    }
+                }
+            }
+
+            // Traitement des fichiers (photos)
+            if (files != null) {
+                for (Map.Entry<String, MultipartFile> entry : files.entrySet()) {
+                    String paramName = entry.getKey(); // ex: field_123
+                    MultipartFile file = entry.getValue();
+
+                    Long fieldId = Long.parseLong(paramName.substring(6));
+                    String storedPath = storeFileAndGetPath(file);
+
+                    ReportFieldValueDTO dto = new ReportFieldValueDTO();
+                    dto.setFieldId(fieldId);
+                    dto.setValue(storedPath);  // URL relative accessible, ex: /photos/uuid-filename.png
+                    valeurs.add(dto);
+                }
+            }
+
+            reportService.enregistrerChampsRemplis(reportId, username, valeurs);
+
+            return ResponseEntity.ok("Report submitted successfully");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error submitting report: " + e.getMessage());
+        }
+    }
+
+    // Méthode pour sauvegarder fichier et retourner URL accessible
+    private String storeFileAndGetPath(MultipartFile file) throws IOException {
+        String storageDir = System.getProperty("user.dir") + "/uploads/photos/";
+        Files.createDirectories(Paths.get(storageDir));
+
+        String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(storageDir).resolve(filename);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // retourne l'URL d'accès relative exposée par addResourceHandlers
+        return "/photos/" + filename;
+    }
+
+
+
+    // Endpoint pour récupérer les données du rapport avec valeurs (texte et photos)
+    @GetMapping("/reportwithvalues/{idReport}")
+    public ResponseEntity<DestinataireReportDTO> getReportDetailswithvalues(@PathVariable Long idReport) {
+        try {
+            DestinataireReportDTO reportDetails = reportService.getReportWithLabelsAndValues(idReport);
+            return ResponseEntity.ok(reportDetails);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @GetMapping("/photos/test")
+    public ResponseEntity<String> testPhotoAccess() {
+        return ResponseEntity.ok("Endpoint photos OK");
+    }
+
+
+
+
 }

@@ -13,7 +13,7 @@ public class Report {
     @GeneratedValue
     private Long idReport;
     private String titre;
-    private String contenu; // facultatif, peut contenir une description
+    private String description; // facultatif, peut contenir une description
     private String type;
     private LocalDateTime dateCreation;
     @ManyToOne
@@ -33,12 +33,12 @@ public class Report {
         this.dateCreation = LocalDateTime.now();
     }
 
-    public String getContenu() {
-        return contenu;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {

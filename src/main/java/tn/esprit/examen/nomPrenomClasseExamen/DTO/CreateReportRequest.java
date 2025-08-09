@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CreateReportRequest {
     public String titre;
-    public String contenu;
+    public String description;
     public String type;
     public Long destinataireId;
     public Long shopId;
@@ -18,12 +18,12 @@ public class CreateReportRequest {
         this.titre = titre;
     }
 
-    public String getContenu() {
-        return contenu;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {

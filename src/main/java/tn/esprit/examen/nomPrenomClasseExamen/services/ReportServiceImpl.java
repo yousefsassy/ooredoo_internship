@@ -33,7 +33,7 @@ public class ReportServiceImpl implements IReportService {
     public Report createReportWithFields(CreateReportRequest request) {
         Report report = new Report();
         report.setTitre(request.getTitre());
-        report.setContenu(request.getContenu());
+        report.setDescription(request.getDescription());
         report.setType(request.getType());
         report.setDateCreation(LocalDateTime.now());
 
@@ -84,20 +84,28 @@ public class ReportServiceImpl implements IReportService {
     public List<DestinataireReportDTO> getReportsForDestinataire(String username) {
         List<Report> reports = reportRepository.findByDestinataireUsername(username);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
         return reports.stream().map(report -> {
             DestinataireReportDTO dto = new DestinataireReportDTO();
-            dto.setIdReport(report.getIdReport());  // <-- IL FAUT CETTE LIGNE !!
+            dto.setIdReport(report.getIdReport());
             dto.setTitre(report.getTitre());
-            dto.setContenu(report.getContenu());
+            dto.setDescription(report.getDescription());
             dto.setType(report.getType());
 
 
             if (report.getShop() != null)
                 dto.setNomShop(report.getShop().getNomShop());
+
             if (report.getDestinataire() != null)
                 dto.setNomAdmin(report.getDestinataire().getUsername());
 
-            // Si tu as des labelsEtValeurs, ajoute ici aussi
+            if (report.getDateCreation() != null)
+                dto.setDateCreation(report.getDateCreation().format(formatter));  // <-- conversion ici
+            else
+                dto.setDateCreation(null);
+
+            // TODO: gérer labelsEtValeurs ici si besoin
 
             return dto;
         }).collect(Collectors.toList());
@@ -115,7 +123,7 @@ public class ReportServiceImpl implements IReportService {
         ReportDTO dto = new ReportDTO();
         dto.setIdReport(report.getIdReport());
         dto.setTitre(report.getTitre());
-        dto.setContenu(report.getContenu());
+        dto.setDescription(report.getDescription());
         dto.setType(report.getType());
 
 
@@ -228,12 +236,23 @@ public class ReportServiceImpl implements IReportService {
                 .map(report -> convertToDestinataireReportDTO(report))
                 .collect(Collectors.toList());
     }
+
     private DestinataireReportDTO convertToDestinataireReportDTO(Report report) {
         DestinataireReportDTO dto = new DestinataireReportDTO();
         dto.setIdReport(report.getIdReport());
         dto.setTitre(report.getTitre());
         dto.setType(report.getType());
-        dto.setContenu(report.getContenu());
+        dto.setDescription(report.getDescription());
+
+        // Formatteur de date au format ISO (ou adapte selon ton besoin)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // Conversion LocalDateTime -> String
+        if (report.getDateCreation() != null) {
+            dto.setDateCreation(report.getDateCreation().format(formatter));
+        } else {
+            dto.setDateCreation(null);
+        }
 
         if (report.getShop() != null)
             dto.setNomShop(report.getShop().getNomShop());
@@ -286,6 +305,49 @@ public class ReportServiceImpl implements IReportService {
 
         // Sauvegarde en base et retour de l'objet
         return fieldRepository.save(field);
+    }
+    public List<ReportFieldValueDTO> getAllFilledFieldsWithValues(Long reportId) {
+        // Récupérer tous les ReportFieldValue liés au rapport
+        List<ReportFieldValue> values = reportFieldValueRepository.findByReportIdReport(reportId);
+
+        return values.stream().map(val -> {
+            ReportField field = val.getField();
+
+            ReportFieldValueDTO dto = new ReportFieldValueDTO();
+            dto.setFieldId(field.getIdReportField());
+
+            dto.setValue(val.getValue()); // Contenu ou URL/fichier encodé
+
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public DestinataireReportDTO getReportWithLabelsAndValues(Long reportId) {
+        Report report = reportRepository.findById(reportId)
+                .orElseThrow(() -> new RuntimeException("Rapport non trouvé"));
+
+        DestinataireReportDTO dto = new DestinataireReportDTO();
+        dto.setIdReport(report.getIdReport());
+        dto.setTitre(report.getTitre());
+        dto.setDescription(report.getDescription());
+        dto.setType(report.getType());
+        dto.setNomShop(report.getShop() != null ? report.getShop().getNomShop() : "");
+        dto.setNomAdmin(report.getDestinataire() != null ? report.getDestinataire().getUsername() : "");
+        dto.setDateCreation(report.getDateCreation() != null ? report.getDateCreation().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : "");
+
+        List<LabelValeurDTO> labelsEtValeurs = reportFieldValueRepository.findByReportIdReport(reportId)
+                .stream()
+                .map(val -> {
+                    LabelValeurDTO lv = new LabelValeurDTO();
+                    lv.setLabel(val.getField().getLabel());
+                    lv.setValeur(val.getValue());
+                    return lv;
+                })
+                .collect(Collectors.toList());
+
+        dto.setLabelsEtValeurs(labelsEtValeurs);
+
+        return dto;
     }
 
 }

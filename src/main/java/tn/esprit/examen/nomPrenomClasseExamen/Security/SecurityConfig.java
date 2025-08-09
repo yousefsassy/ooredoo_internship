@@ -95,7 +95,10 @@ public class SecurityConfig {
                                 "/reports/all",
                                 "/fields/all",
                                 "/addField",
-                                "/report/{reportId}/submit"
+                                "/report/{reportId}/submit",
+                                "/report/{idReport}/filled-fields",
+                                "/reportwithvaues/{id}",
+                                "/photos/test"
 
 
 

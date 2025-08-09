@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class ReportDTO {
     private Long idReport;
     private String titre;
-    private String contenu;
+    private String description;
     private String type;
     private LocalDateTime dateCreation;
     private UserDTO destinataire;
@@ -20,6 +20,11 @@ public class ReportDTO {
     public LocalDateTime getDateCreation() {
         return dateCreation;
     }
+
+
+    public ReportDTO() {}
+
+
 
     public Long getShopId() {
         return shopId;
@@ -81,12 +86,12 @@ public class ReportDTO {
         this.type = type;
     }
 
-    public String getContenu() {
-        return contenu;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<ReportFieldValueDTO> getFieldValues() {
@@ -99,7 +104,7 @@ public class ReportDTO {
     public ReportDTO(Report report) {
         this.idReport = report.getIdReport();
         this.titre = report.getTitre();
-        this.contenu = report.getContenu();
+        this.description = report.getDescription();
         this.type = report.getType();
         this.dateCreation = report.getDateCreation();
 
@@ -127,5 +132,4 @@ public class ReportDTO {
             }).collect(Collectors.toList());
         }
     }
-    public ReportDTO() {}
 }

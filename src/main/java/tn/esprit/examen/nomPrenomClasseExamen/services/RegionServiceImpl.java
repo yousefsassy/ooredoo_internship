@@ -24,13 +24,35 @@ public class RegionServiceImpl implements IRegionService {
     private final ZoneRepository zoneRepository;
 
     @Override
-    public Region addRegion(Region region) {
+    public RegionDTO addRegion(RegionDTO regionDTO) {
+        Region region = new Region();
+        region.setDelegation(regionDTO.getDelegation());
+
+        // Associer Zone
+        if (regionDTO.getZoneId() != null) {
+            Zone zone = zoneRepository.findById(regionDTO.getZoneId())
+                    .orElseThrow(() -> new RuntimeException("Zone not found with id " + regionDTO.getZoneId()));
+            region.setZone(zone);
+        }
+
+        // Associer Chef de Région
+        if (regionDTO.getChefRegionId() != null) {
+            User chef = userRepository.findById(regionDTO.getChefRegionId())
+                    .orElseThrow(() -> new RuntimeException("Chef region not found with id " + regionDTO.getChefRegionId()));
+            region.setChefRegion(chef);
+        }
+
         // Auto-générer le nom
         if (region.getZone() != null && region.getZone().getLibelle() != null && region.getDelegation() != null) {
             region.setNom(region.getZone().getLibelle() + " - " + region.getDelegation());
+        } else {
+            region.setNom(regionDTO.getNom()); // fallback si non auto-générable
         }
-        return regionRepository.save(region);
+
+        Region saved = regionRepository.save(region);
+        return convertToDTO(saved);
     }
+
 
     @Override
     public RegionDTO updateRegion(Long id, RegionDTO updatedRegionDTO) {
