@@ -5,27 +5,29 @@ server.port=8089
 spring.datasource.url=jdbc:mysql://localhost:3306/Ooredoo?createDatabaseIfNotExist=true
 spring.datasource.username=root
 spring.datasource.password=
+
 ### JPA / HIBERNATE ###
 spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto= update
-#Logging
-logging.level.root = info
-logging.pattern.console= %d{yyyy-MM-dd HH:mm:ss} -%level -%logger{60} %msg %n
+spring.jpa.hibernate.ddl-auto=update
+
+# Logging
+logging.level.root=info
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} -%level -%logger{60} %msg %n
 
 # Context path
 server.servlet.context-path=/Ooredoo
-security.jwt.secret-key=2B7E151628AED2A6ABF7158809CF4F3C2D6E4DDE47A56FAE0D3A7CE5D1F9B8A3
+
+# JWT - replace with your own secret key
+security.jwt.secret-key=YOUR_JWT_SECRET_KEY_HERE
 security.jwt.expiration=86400000
 
+# Email (Gmail SMTP) - replace with your own credentials
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=youssefsassi27@gmail.com
-spring.mail.password=pikyqpylqipkqhif
+spring.mail.username=your-email@gmail.com
+spring.mail.password=your-app-password
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 spring.mail.properties.mail.smtp.ssl.trust=smtp.gmail.com
-spring.mail.from=youssefsassi27@gmail.com
-
-
-
+spring.mail.from=your-email@gmail.com
