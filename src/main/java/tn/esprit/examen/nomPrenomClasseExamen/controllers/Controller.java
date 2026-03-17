@@ -164,12 +164,12 @@ public class Controller {
 
 
     @GetMapping("/zones-without-chef")
-    public ResponseEntity<List<Zone>> getZonesWithoutChef() {
+    public ResponseEntity<List<ZoneDTO>> getZonesWithoutChef() {
         List<Zone> zonesWithoutChef = zoneService.getZonesWithoutChef();
-        if (zonesWithoutChef.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(zonesWithoutChef);
+        List<ZoneDTO> dtos = zonesWithoutChef.stream()
+                .map(zoneService::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
     /*@GetMapping("/shops/{zoneId}")
     public List<Shop> getShopsByZoneId(@PathVariable Long zoneId) {

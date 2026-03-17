@@ -37,7 +37,7 @@ public class EmailService {
                     UTF_8.name()
             );
 
-            helper.setFrom("ryhab.boulaares@gmail.com");
+            helper.setFrom("youssefsassi27@gmail.com");
             helper.setTo(to);
             helper.setSubject(subject);
 
@@ -66,7 +66,7 @@ public class EmailService {
                     UTF_8.name()
             );
 
-            helper.setFrom("ryhab.boulaares@gmail.com");
+            helper.setFrom("youssefsassi27@gmail.com");
             helper.setTo(to);
             helper.setSubject("Password Reset Request");
             helper.setText(htmlContent, true); // true = HTML
@@ -88,7 +88,7 @@ public class EmailService {
 
     public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("ryhab.boulaares@gmail.com"); // mets ici ton email
+        message.setFrom("youssefsassi27@gmail.com"); // mets ici ton email
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
