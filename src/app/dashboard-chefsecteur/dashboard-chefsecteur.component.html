@@ -1,11 +1,60 @@
-<div *ngIf="errorMessage" class="alert alert-danger">
-  {{ errorMessage }}
+<div class="dashboard" *ngIf="secteur; else errorOrLoading">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Sector Dashboard</h1>
+      <p class="page-subtitle">Overview of your assigned sector</p>
+    </div>
+  </div>
+
+  <!-- Sector Info Card -->
+  <div class="info-section">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon-wrap">
+          <div class="info-icon">
+            <i class="fas fa-layer-group"></i>
+          </div>
+        </div>
+        <div class="info-header-text">
+          <h3 class="info-card-title">Sector Information</h3>
+          <p class="info-card-desc">Details about your assigned sector</p>
+        </div>
+      </div>
+      <div class="info-card-body">
+        <div class="detail-row">
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--primary">
+                <i class="fas fa-tag"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Sector Name</span>
+              <span class="detail-value">{{ secteur.nom }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="info-accent"></div>
+    </div>
+  </div>
 </div>
 
-<div *ngIf="secteur" class="sector-dashboard-container">
-  <h2>Sector Overview: {{ secteur.nom }}</h2>
-
- 
-
-  
-</div>
+<ng-template #errorOrLoading>
+  <div *ngIf="errorMessage" class="error-banner">
+    <div class="error-icon-wrap">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="error-content">
+      <span class="error-title">Something went wrong</span>
+      <span class="error-text">{{ errorMessage }}</span>
+    </div>
+  </div>
+  <div *ngIf="!errorMessage" class="loading-state">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+    </div>
+    <p class="loading-text">Loading sector details...</p>
+  </div>
+</ng-template>

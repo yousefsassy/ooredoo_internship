@@ -1,15 +1,50 @@
-<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nomShop">Shop Name</label>
-    <input id="nomShop" formControlName="nomShop" />
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Edit Shop</h1>
+    <p class="page-subtitle">Update shop information</p>
   </div>
 
-  <div>
-    <label for="telephone">Phone</label>
-    <input id="telephone" formControlName="telephone" />
+  <div class="form-card">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-label" for="nomShop">Shop Name</label>
+        <div class="input-wrapper">
+          <i class="fas fa-store input-icon"></i>
+          <input
+            id="nomShop"
+            type="text"
+            class="form-input"
+            [class.input-error]="editForm.get('nomShop')?.invalid && editForm.get('nomShop')?.touched"
+            formControlName="nomShop"
+            placeholder="Enter shop name"
+          />
+        </div>
+        <div *ngIf="editForm.get('nomShop')?.invalid && editForm.get('nomShop')?.touched" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Shop name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="telephone">Phone Number</label>
+        <div class="input-wrapper">
+          <i class="fas fa-phone input-icon"></i>
+          <input
+            id="telephone"
+            type="text"
+            class="form-input"
+            [class.input-error]="editForm.get('telephone')?.invalid && editForm.get('telephone')?.touched"
+            formControlName="telephone"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <div *ngIf="editForm.get('telephone')?.invalid && editForm.get('telephone')?.touched" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Phone number is required.
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="editForm.invalid">
+        <i class="fas fa-save"></i> Save Changes
+      </button>
+    </form>
   </div>
-
-  <!-- Add other form fields here -->
-
-  <button type="submit" [disabled]="editForm.invalid">Save Changes</button>
-</form>
+</div>

@@ -1,65 +1,83 @@
-<div class="zone-list-container">
-  <div class="zone-header">
-    <div class="header-content">
-      <i class="fas fa-map-marked-alt zone-icon"></i>
-      <h2>All Zones</h2>
-      <p class="subtitle">Browse and manage zones</p>
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Zones</h1>
+      <p class="page-subtitle">Browse and manage all zones</p>
     </div>
-    <button class="add-zone-btn" (click)="onAddZone()">
-      <i class="fas fa-plus-circle"></i> Add Zone
+    <button class="btn-add" (click)="onAddZone()">
+      <i class="fas fa-plus"></i> Add Zone
     </button>
   </div>
 
-  <!-- Filters -->
-  <div class="filters">
-    <input
-      type="text"
-      [(ngModel)]="searchTerm"
-      (input)="onSearchChange()"
-      placeholder="Search by label..."
-    />
-    <select [(ngModel)]="filterGovernorate" (change)="onGovernorateChange()">
-      <option value="">All Governorates</option>
-      <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
-    </select>
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Search zones..."
+      />
+    </div>
+    <div class="filter-dropdown">
+      <select [(ngModel)]="filterGovernorate" (change)="onGovernorateChange()">
+        <option value="">All Governorates</option>
+        <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
+      </select>
+    </div>
   </div>
 
   <!-- Cards Grid -->
-  <div class="zones-grid">
+  <div class="cards-grid" *ngIf="filteredZones.length > 0; else emptyState">
     <div class="zone-card" *ngFor="let zone of filteredZones">
-      <div class="zone-card-header">
-        <div class="zone-badge">
+      <div class="card-top">
+        <div class="card-icon">
           <i class="fas fa-map-pin"></i>
         </div>
-        <h4 class="zone-title">{{ zone.libelle }}</h4>
+        <div class="card-info">
+          <h3 class="card-title">{{ zone.libelle }}</h3>
+          <span class="card-meta">
+            <i class="fas fa-building"></i>
+            {{ zone.gouvernorat }}
+          </span>
+        </div>
       </div>
-      <div class="zone-card-body">
-        <p><strong>Governorate:</strong> {{ zone.gouvernorat }}</p>
-      </div>
-      <div class="zone-card-footer">
-        <ng-container *ngIf="zone.idZone != null">
-          <button
-            class="btn btn-view"
-            *ngIf="zone.idZone != null"
-            (click)="onViewZone(zone.idZone!)"
-          >
-            <i class="fas fa-eye"></i> View
-          </button>
-          <button class="btn btn-edit" (click)="onEditZone(zone.idZone!)">
-            <i class="fas fa-edit"></i> Edit
-          </button>
-          <button class="btn btn-delete" (click)="onArchiveZone(zone.idZone!)">
-            <i class="fas fa-trash"></i> Archive
-          </button>
-        </ng-container>
+      <div class="card-actions" *ngIf="zone.idZone != null">
+        <button
+          class="action-btn"
+          (click)="onViewZone(zone.idZone!)"
+          title="View zone"
+        >
+          <i class="fas fa-eye"></i>
+        </button>
+        <button
+          class="action-btn"
+          (click)="onEditZone(zone.idZone!)"
+          title="Edit zone"
+        >
+          <i class="fas fa-pen"></i>
+        </button>
+        <button
+          class="action-btn action-btn-danger"
+          (click)="onArchiveZone(zone.idZone!)"
+          title="Archive zone"
+        >
+          <i class="fas fa-archive"></i>
+        </button>
       </div>
     </div>
   </div>
 
   <ng-template #emptyState>
     <div class="empty-state">
-      <h4>No Zones Found</h4>
-      <button class="btn btn-add" (click)="onAddZone()">
+      <div class="empty-icon">
+        <i class="fas fa-map-marked-alt"></i>
+      </div>
+      <h3>No zones found</h3>
+      <p>Try adjusting your search or filters</p>
+      <button class="btn-add" (click)="onAddZone()">
         <i class="fas fa-plus"></i> Add Zone
       </button>
     </div>

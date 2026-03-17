@@ -1,55 +1,99 @@
-<h2>📝 New Report</h2>
-
-<!-- Affiche le formulaire seulement si le formulaire est créé et le shop chargé -->
-<form *ngIf="reportForm && shop" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-
-  <label for="titre">Title</label>
-  <input id="titre" formControlName="titre" />
-  <div *ngIf="reportForm.get('titre')?.invalid && (reportForm.get('titre')?.touched || reportForm.get('titre')?.dirty)" style="color:red">
-    Title is required.
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">New Report</h1>
+    <p class="page-subtitle">Create a new report for your shop</p>
   </div>
 
-  <label for="type">Type</label>
-  <select id="type" formControlName="type">
-    <option value="">-- Select --</option>
-    <option value="VISITE">Visit</option>
-    <option value="PROBLEME">Problem</option>
-  </select>
-  <div *ngIf="reportForm.get('type')?.invalid && (reportForm.get('type')?.touched || reportForm.get('type')?.dirty)" style="color:red">
-    Type is required.
-  </div>
-
-  <label for="contenu">Description</label>
-  <textarea id="contenu" formControlName="contenu"></textarea>
-  <div *ngIf="reportForm.get('contenu')?.invalid && (reportForm.get('contenu')?.touched || reportForm.get('contenu')?.dirty)" style="color:red">
-    Description is required.
-  </div>
-
-  <div formArrayName="fieldValues" *ngIf="fields.length > 0">
-    <div *ngFor="let fieldCtrl of fieldValues.controls; let i = index" [formGroupName]="i" style="margin-top: 1rem;">
-
-      <label>{{ fields[i].label }}</label>
-
-      <ng-container [ngSwitch]="fields[i].type">
-        <input *ngSwitchCase="'TEXT'" formControlName="value" />
-        <textarea *ngSwitchCase="'TEXTAREA'" formControlName="value"></textarea>
-        <select *ngSwitchCase="'DROPDOWN'" formControlName="value">
-          <option value="">-- Select --</option>
-          <option *ngFor="let option of fields[i].options" [value]="option">{{ option }}</option>
-        </select>
-      </ng-container>
-
-      <div *ngIf="isFieldInvalid(i)" style="color: red;">
-        {{ fields[i].label }} is required.
+  <div class="form-card" *ngIf="reportForm && shop; else loadingTpl">
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+      <!-- Title -->
+      <div class="form-group">
+        <label for="titre" class="form-label">Title</label>
+        <div class="input-wrapper">
+          <i class="fas fa-heading input-icon"></i>
+          <input id="titre" formControlName="titre" class="form-input"
+                 placeholder="Enter report title"
+                 [ngClass]="{'input-error': reportForm.get('titre')?.invalid && (reportForm.get('titre')?.touched || reportForm.get('titre')?.dirty)}" />
+        </div>
+        <div *ngIf="reportForm.get('titre')?.invalid && (reportForm.get('titre')?.touched || reportForm.get('titre')?.dirty)" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Title is required.
+        </div>
       </div>
 
-    </div>
+      <!-- Type -->
+      <div class="form-group">
+        <label for="type" class="form-label">Type</label>
+        <div class="input-wrapper">
+          <i class="fas fa-tag input-icon"></i>
+          <select id="type" formControlName="type" class="form-input form-select"
+                  [ngClass]="{'input-error': reportForm.get('type')?.invalid && (reportForm.get('type')?.touched || reportForm.get('type')?.dirty)}">
+            <option value="">-- Select type --</option>
+            <option value="VISITE">Visit</option>
+            <option value="PROBLEME">Problem</option>
+          </select>
+        </div>
+        <div *ngIf="reportForm.get('type')?.invalid && (reportForm.get('type')?.touched || reportForm.get('type')?.dirty)" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Type is required.
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="contenu" class="form-label">Description</label>
+        <div class="input-wrapper textarea-wrapper">
+          <i class="fas fa-align-left input-icon input-icon--top"></i>
+          <textarea id="contenu" formControlName="contenu" class="form-input form-textarea"
+                    placeholder="Describe the report..."
+                    rows="4"
+                    [ngClass]="{'input-error': reportForm.get('contenu')?.invalid && (reportForm.get('contenu')?.touched || reportForm.get('contenu')?.dirty)}"></textarea>
+        </div>
+        <div *ngIf="reportForm.get('contenu')?.invalid && (reportForm.get('contenu')?.touched || reportForm.get('contenu')?.dirty)" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Description is required.
+        </div>
+      </div>
+
+      <!-- Dynamic Fields -->
+      <div formArrayName="fieldValues" *ngIf="fields.length > 0">
+        <h3 class="section-label">Custom Fields</h3>
+        <div *ngFor="let fieldCtrl of fieldValues.controls; let i = index" [formGroupName]="i" class="form-group">
+          <label class="form-label">{{ fields[i].label }}</label>
+
+          <ng-container [ngSwitch]="fields[i].type">
+            <div class="input-wrapper" *ngSwitchCase="'TEXT'">
+              <i class="fas fa-font input-icon"></i>
+              <input formControlName="value" class="form-input" placeholder="Enter value" />
+            </div>
+            <div class="input-wrapper textarea-wrapper" *ngSwitchCase="'TEXTAREA'">
+              <i class="fas fa-align-left input-icon input-icon--top"></i>
+              <textarea formControlName="value" class="form-input form-textarea" rows="3" placeholder="Enter text"></textarea>
+            </div>
+            <div class="input-wrapper" *ngSwitchCase="'DROPDOWN'">
+              <i class="fas fa-list input-icon"></i>
+              <select formControlName="value" class="form-input form-select">
+                <option value="">-- Select --</option>
+                <option *ngFor="let option of fields[i].options" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+          </ng-container>
+
+          <div *ngIf="isFieldInvalid(i)" class="error-message">
+            <i class="fas fa-exclamation-circle"></i> {{ fields[i].label }} is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" [disabled]="reportForm.invalid">
+        <i class="fas fa-paper-plane"></i>
+        Submit Report
+      </button>
+    </form>
   </div>
 
-  <button type="submit" [disabled]="reportForm.invalid" style="margin-top: 1rem;">📨 Submit Report</button>
-</form>
-
-<!-- Optionnel: afficher un message de chargement -->
-<div *ngIf="!shop || !reportForm">
-  Loading...
+  <ng-template #loadingTpl>
+    <div class="loading-state">
+      <div class="spinner-ring"></div>
+      <p>Loading...</p>
+    </div>
+  </ng-template>
 </div>

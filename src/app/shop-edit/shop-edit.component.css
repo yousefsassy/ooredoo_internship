@@ -1,63 +1,163 @@
-:host {
+/* ============================================
+   SHOP EDIT — "Crimson Edge"
+   ============================================ */
+
+.page-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-8);
+  animation: fadeIn 0.4s ease both;
+}
+
+.page-header {
+  margin-bottom: var(--space-5);
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.025em;
+  margin-bottom: var(--space-1);
+}
+
+.page-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}
+
+.form-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-label {
   display: block;
-  max-width: 600px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background-color: #fff5f5;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #4a1f1f;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
 }
 
-form {
+.input-wrapper {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
 }
 
-label {
-  font-weight: 600;
-  color: #b71c1c;
-  margin-bottom: 0.3rem;
+.input-icon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  pointer-events: none;
+  transition: color var(--transition-base);
+  z-index: 1;
 }
 
-input {
-  padding: 0.75rem 1rem;
-  border: 2px solid #f3c2c2;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+.input-wrapper:focus-within .input-icon {
+  color: var(--color-primary);
 }
 
-input:focus {
-  border-color: #ed1c24;
-  box-shadow: 0 0 10px rgba(237, 28, 36, 0.3);
+.form-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 var(--space-4) 0 var(--space-10);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-base);
   outline: none;
 }
 
-button[type="submit"] {
-  background-color: #ed1c24;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 600;
+.form-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.form-input.input-error {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  font-weight: var(--font-weight-medium);
+}
+
+.error-message i {
+  font-size: var(--font-size-xs);
+}
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   width: 100%;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 12px rgba(237, 28, 36, 0.4);
+  height: 52px;
+  margin-top: var(--space-6);
+  padding: 0 var(--space-8);
+  background: var(--gradient-primary);
+  color: white;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius-xl);
   cursor: pointer;
+  box-shadow: var(--shadow-primary);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
 }
 
-button[type="submit"]:hover:not(:disabled) {
-  background-color: #b71c1c;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(183, 28, 28, 0.6);
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-shimmer);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-button[type="submit"]:disabled {
-  background-color: #f5b5b5;
+.submit-btn:hover:not(:disabled)::before {
+  opacity: 1;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
 }

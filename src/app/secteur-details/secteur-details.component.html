@@ -1,37 +1,74 @@
-<div class="secteur-details-container" *ngIf="secteur; else loadingOrError">
+<!-- Loading State -->
+<div *ngIf="loading" class="loading-state">
+  <div class="spinner-ring"></div>
+  <p>Loading sector details...</p>
+</div>
 
-  <h2>Sector Details: {{ secteur.nom }}</h2>
+<!-- Error Banner -->
+<div *ngIf="errorMessage" class="error-banner">
+  <div class="error-icon">
+    <i class="fas fa-exclamation-circle"></i>
+  </div>
+  <div class="error-content">
+    <span class="error-title">Error</span>
+    <span class="error-text">{{ errorMessage }}</span>
+  </div>
+</div>
 
-  <div>
-    <strong>Zones:</strong>
-    <table class="zones-table" *ngIf="secteur.zones?.length; else noZones">
-      <thead>
-        <tr>
-          <th>Zone Name</th>
-          <th>Zone Chief</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let zone of secteur.zones">
-          <td>{{ zone.libelle }}</td>
-          <td>{{ zone.chefZone?.username || 'Not assigned' }}</td>
-        </tr>
-      </tbody>
-    </table>
+<!-- Main Content -->
+<div *ngIf="secteur" class="page-container">
+
+  <!-- Back Button -->
+  <button (click)="onBack()" class="btn-back">
+    <i class="fas fa-arrow-left"></i>
+    <span>Back to Sectors</span>
+  </button>
+
+  <!-- Detail Header -->
+  <div class="detail-header">
+    <div class="detail-icon">
+      <i class="fas fa-sitemap"></i>
+    </div>
+    <div class="detail-header-info">
+      <h1 class="detail-title">{{ secteur.nom }}</h1>
+    </div>
+  </div>
+
+  <!-- Meta Grid -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <i class="fas fa-user-shield"></i>
+      <div class="meta-content">
+        <span class="meta-label">Sector Chief</span>
+        <span class="meta-value">{{ secteur.chefSecteur ? secteur.chefSecteur.nom : 'Not assigned' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zones Section -->
+  <div class="fields-section">
+    <h3 class="section-title">Zones in this Sector</h3>
+
+    <div class="table-card" *ngIf="secteur.zones?.length; else noZones">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Zone Name</th>
+            <th>Zone Chief</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let zone of secteur.zones">
+            <td>{{ zone.libelle }}</td>
+            <td>{{ zone.chefZone?.username || 'Not assigned' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <ng-template #noZones>
-      <p class="no-zones-message">No zones assigned.</p>
+      <div class="empty-message">No zones assigned to this sector.</div>
     </ng-template>
   </div>
 
-  <div class="sector-chief">
-    <strong>Sector Chief:</strong>
-    {{ secteur.chefSecteur ? secteur.chefSecteur.nom : 'Not assigned' }}
-  </div>
-
-  <button (click)="onBack()">Back to Sector List</button>
 </div>
-
-<ng-template #loadingOrError>
-  <div *ngIf="loading">Loading sector details...</div>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-</ng-template>

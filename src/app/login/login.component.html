@@ -1,111 +1,145 @@
-<div class="ooredoo-login-container">
-  <!-- Big Ooredoo Logo above card -->
-
-  <div class="ooredoo-login-card animate-fade-in">
-    <div class="ooredoo-login-header">
-      <img
-        src="assets/ooredoo logo.png"
-        alt="Ooredoo Logo"
-        style="width: 120px; height: auto; margin-bottom: 16px"
-      />
-      <h2>Sign in to <span class="brand">Ooredoo Admin</span></h2>
-      <p class="subheading">
-        Access your portal to manage zones, shops, and more
-      </p>
-    </div>
-
-    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
-      <!-- Email/Username -->
-      <div class="ooredoo-form-group">
-        <label>Identifier</label>
-        <input
-          formControlName="emailOrUsername"
-          type="text"
-          placeholder="Email or Username"
-          class="ooredoo-input"
-          [ngClass]="{
-            'ooredoo-input-error':
-              f.emailOrUsername.invalid && f.emailOrUsername.touched
-          }"
-        />
-        <div
-          *ngIf="f.emailOrUsername.invalid && f.emailOrUsername.touched"
-          class="ooredoo-error-message"
-        >
-          Email or Username is required
-        </div>
+<div class="login-page">
+  <!-- Left: Form Panel -->
+  <div class="form-panel">
+    <div class="form-container">
+      <div class="form-header">
+        <h1 class="form-title">Sign in<span class="accent-dot">.</span></h1>
+        <p class="form-subtitle">Enter your credentials to continue</p>
       </div>
 
-      <!-- Password -->
-      <div class="ooredoo-form-group">
-        <label>Password</label>
-        <div class="ooredoo-password-group">
-          <input
-            formControlName="password"
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Enter your Password"
-            class="ooredoo-input"
-            [ngClass]="{
-              'ooredoo-input-error': f.password.invalid && f.password.touched
-            }"
-          />
-          <i
-            class="fas"
-            [class.fa-eye]="!showPassword"
-            [class.fa-eye-slash]="showPassword"
-            (click)="togglePasswordVisibility()"
-            class="ooredoo-password-toggle"
-          ></i>
-        </div>
-        <div
-          *ngIf="f.password.invalid && f.password.touched"
-          class="ooredoo-error-message"
-        >
-          <div *ngIf="f.password.errors?.['required']">
-            Password is required
+      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+        <!-- Email/Username -->
+        <div class="form-group">
+          <label class="form-label">Identifier</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user input-icon"></i>
+            <input
+              formControlName="emailOrUsername"
+              type="text"
+              placeholder="Email or Username"
+              class="form-input"
+              [ngClass]="{
+                'input-error':
+                  f.emailOrUsername.invalid && f.emailOrUsername.touched
+              }"
+            />
           </div>
           <div
-            *ngIf="f.password.errors?.['pattern']"
-            class="ooredoo-password-rules"
+            *ngIf="f.emailOrUsername.invalid && f.emailOrUsername.touched"
+            class="error-message"
           >
-            Password must contain:
-            <ul>
-              <li>At least one uppercase letter</li>
-              <li>At least one lowercase letter</li>
-              <li>At least one number</li>
-              <li>At least one special character</li>
-              <li>8-20 characters long</li>
+            <i class="fas fa-exclamation-circle"></i>
+            Email or Username is required
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Enter your password"
+              class="form-input"
+              [ngClass]="{
+                'input-error': f.password.invalid && f.password.touched
+              }"
+            />
+            <i
+              class="fas password-toggle"
+              [class.fa-eye]="!showPassword"
+              [class.fa-eye-slash]="showPassword"
+              (click)="togglePasswordVisibility()"
+            ></i>
+          </div>
+          <div
+            *ngIf="f.password.errors?.['required'] && f.password.touched"
+            class="error-message"
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            Password is required
+          </div>
+
+          <!-- Live Password Strength Indicator -->
+          <div *ngIf="passwordValue.length > 0" class="strength-indicator">
+            <div class="strength-bar-wrapper">
+              <div class="strength-bar"
+                   [ngClass]="'strength-' + passwordStrength"
+                   [style.width.%]="passwordStrength * 20">
+              </div>
+            </div>
+            <span class="strength-label" [ngClass]="'strength-text-' + passwordStrength">
+              {{ strengthLabel }}
+            </span>
+
+            <ul class="constraint-list">
+              <li [ngClass]="{'met': hasUppercase}">
+                <i class="fas" [ngClass]="hasUppercase ? 'fa-check-circle' : 'fa-circle'"></i>
+                One uppercase letter
+              </li>
+              <li [ngClass]="{'met': hasLowercase}">
+                <i class="fas" [ngClass]="hasLowercase ? 'fa-check-circle' : 'fa-circle'"></i>
+                One lowercase letter
+              </li>
+              <li [ngClass]="{'met': hasNumber}">
+                <i class="fas" [ngClass]="hasNumber ? 'fa-check-circle' : 'fa-circle'"></i>
+                One number
+              </li>
+              <li [ngClass]="{'met': hasSpecial}">
+                <i class="fas" [ngClass]="hasSpecial ? 'fa-check-circle' : 'fa-circle'"></i>
+                One special character
+              </li>
+              <li [ngClass]="{'met': hasValidLength}">
+                <i class="fas" [ngClass]="hasValidLength ? 'fa-check-circle' : 'fa-circle'"></i>
+                8–20 characters
+              </li>
             </ul>
           </div>
         </div>
-      </div>
 
-      <!-- Forgot Password -->
-      <div class="ooredoo-forgot-password">
-        <a routerLink="/ForgotPassword">Forgot your password?</a>
-      </div>
+        <!-- Forgot Password -->
+        <div class="forgot-row">
+          <a routerLink="/ForgotPassword" class="forgot-link">Forgot password?</a>
+        </div>
 
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="ooredoo-submit-btn"
-        [disabled]="loginForm.invalid || isLoading"
-      >
-        <span *ngIf="isLoading">
-          <i class="fas fa-spinner fa-spin"></i> Authenticating...
-        </span>
-        <span *ngIf="!isLoading">Sign In</span>
-      </button>
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="loginForm.invalid || isLoading"
+        >
+          <span *ngIf="isLoading" class="btn-loading">
+            <i class="fas fa-spinner fa-spin"></i> Authenticating...
+          </span>
+          <span *ngIf="!isLoading">Sign In</span>
+        </button>
 
-      <!-- Error Message -->
-      <div *ngIf="errorMessage" class="ooredoo-alert-error">
-        {{ errorMessage }}
-      </div>
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert-error">
+          <i class="fas fa-exclamation-triangle"></i>
+          {{ errorMessage }}
+        </div>
 
-      <!-- Register Link -->
-      <div class="ooredoo-register-link">
-        Don't have an account? <a routerLink="/register">Register here</a>
-      </div>
-    </form>
+        <!-- Register Link -->
+        <div class="alt-link">
+          Don't have an account? <a routerLink="/register">Create one</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right: Visual Panel -->
+  <div class="visual-panel">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+    <div class="visual-ring"></div>
+    <div class="visual-content">
+      <img src="assets/ooredoo logo.png" alt="Ooredoo Logo" class="brand-logo" />
+      <h2 class="visual-greeting">Welcome back<span class="accent-dot-light">.</span></h2>
+      <p class="visual-subtitle">Sign in to continue to your dashboard</p>
+    </div>
   </div>
 </div>

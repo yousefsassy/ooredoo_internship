@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { AuthenticationService } from './auth/auth.service';
 
 export interface User {
@@ -335,7 +335,9 @@ getShopPercentageByZonePerGouvernorat() {
   return this.http.get<{ [gov: string]: { [zoneId: number]: number } }>(`http://localhost:8089/Ooredoo/shops-by-zone-per-gouvernorat`);
 }
 getZonesWithoutChefCount(): Observable<number> {
-  return this.http.get<number>(`http://localhost:8089/Ooredoo/zones-without-chef`);
+  return this.http.get<any[]>(`http://localhost:8089/Ooredoo/zones-without-chef`).pipe(
+    map(zones => zones ? zones.length : 0)
+  );
 }
 getShopsByZone(zoneId: number): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8089/Ooredoo/shops/${zoneId}`);

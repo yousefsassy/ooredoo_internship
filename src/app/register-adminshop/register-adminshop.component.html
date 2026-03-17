@@ -1,48 +1,76 @@
-<h4 class="mb-2 text-center text-black">Admin Shop Complement</h4>
+<div class="register-step-page">
+  <div class="register-step-card">
+    <div class="card-glow"></div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card-content">
+      <div class="form-header">
+        <div class="icon-badge">
+          <i class="fas fa-store"></i>
+        </div>
+        <h1 class="form-title">Shop Admin Setup<span class="accent-dot">.</span></h1>
+        <p class="form-subtitle">Complete your registration details</p>
+      </div>
 
- 
-<!-- Shop Name -->
-  <div class="mb-2">
-    <label class="text-black">Shop Name:</label>
-    <input type="text" formControlName="shopName" class="form-control"
-      placeholder="Enter the shop name"
-      style="font-size: 14px; padding: 10px; color: black; background-color: rgba(255, 255, 255, 0.5);" />
-    <div class="alert alert-danger" *ngIf="form.get('shopName')?.touched && form.get('shopName')?.hasError('required')">
-      Shop name is required
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Address -->
+        <div class="form-group">
+          <label class="form-label" for="address">Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-map-marker-alt input-icon"></i>
+            <input
+              id="address"
+              type="text"
+              formControlName="address"
+              class="form-input"
+              placeholder="Enter shop address"
+              [ngClass]="{'input-error': form.get('address')?.touched && form.get('address')?.hasError('required')}"
+            />
+          </div>
+          <div class="error-message" *ngIf="form.get('address')?.touched && form.get('address')?.hasError('required')">
+            <i class="fas fa-exclamation-circle"></i> Address is required
+          </div>
+        </div>
+
+        <!-- Shop Without Admin Dropdown -->
+        <div class="form-group">
+          <label class="form-label" for="shopId">Select Shop to Manage</label>
+          <div class="input-wrapper">
+            <i class="fas fa-store input-icon"></i>
+            <select
+              id="shopId"
+              formControlName="shopId"
+              class="form-input form-select"
+              [ngClass]="{'input-error': form.get('shopId')?.touched && form.get('shopId')?.hasError('required')}"
+            >
+              <option value="" disabled selected>Select a shop</option>
+              <option *ngFor="let shop of shopsWithoutAdmin" [value]="shop.idShop">
+                {{ shop.nomShop }}
+              </option>
+            </select>
+          </div>
+          <div class="error-message" *ngIf="form.get('shopId')?.touched && form.get('shopId')?.hasError('required')">
+            <i class="fas fa-exclamation-circle"></i> Please select a shop
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="form.invalid || isloading"
+        >
+          <span *ngIf="isloading" class="btn-loading">
+            <i class="fas fa-spinner fa-spin"></i> Finishing...
+          </span>
+          <span *ngIf="!isloading">Finish Registration</span>
+        </button>
+
+        <!-- Error -->
+        <div *ngIf="msgerror" class="alert-error">
+          <i class="fas fa-exclamation-triangle"></i>
+          {{ msgerror }}
+        </div>
+      </form>
     </div>
   </div>
-  <!-- Address -->
-  <div class="mb-2">
-    <label class="text-black">Address:</label>
-    <input type="text" formControlName="address" class="form-control"
-      placeholder="Enter shop address" />
-    <div class="alert alert-danger" *ngIf="form.get('address')?.touched && form.get('address')?.hasError('required')">
-      Address is required
-    </div>
-  </div>
-
-  <!-- Shop Without Admin Dropdown -->
-  <div class="mb-2">
-    <label class="text-black">Select Shop to Manage:</label>
-    <select formControlName="shopId" class="form-control">
-      <option value="" disabled selected>Select a shop</option>
-      <option *ngFor="let shop of shopsWithoutAdmin" [value]="shop.idShop">
-        {{ shop.nomShop }}
-      </option>
-    </select>
-    <div class="alert alert-danger" *ngIf="form.get('shopId')?.touched && form.get('shopId')?.hasError('required')">
-      Please select a shop
-    </div>
-  </div>
-
-  <!-- Submit -->
-  <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="form.invalid || isloading">
-    <i class="fas fa-spinner fa-spin" *ngIf="isloading"></i>
-    <span *ngIf="!isloading">Finish Registration</span>
-  </button>
-
-  <!-- Error -->
-  <p class="alert alert-danger mt-3 mb-0" *ngIf="msgerror">{{ msgerror }}</p>
-</form>
+</div>

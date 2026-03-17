@@ -1,41 +1,90 @@
-<div class="reports-container">
-  <button class="btn-create" (click)="createReport()">+ Create New Report</button>
-
-  <div *ngIf="loading" class="loading">
-    Loading reports...
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Reports</h1>
+      <p class="page-subtitle">Browse and manage all reports</p>
+    </div>
+    <button class="btn-add" (click)="createReport()">
+      <i class="fas fa-plus"></i> Create Report
+    </button>
   </div>
 
-  <div *ngIf="errorMessage" class="error-message">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading reports...</span>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="error-banner">
+    <i class="fas fa-exclamation-circle"></i>
     {{ errorMessage }}
   </div>
 
-  <div *ngIf="!loading && reports.length === 0 && !errorMessage" class="no-reports">
-    <p>No reports found.</p>
-  </div>
-
-  <div class="reports-grid" *ngIf="reports.length > 0">
-    <div class="report-card" *ngFor="let report of reports" (click)="viewReport(report)" tabindex="0" role="button" aria-pressed="false" 
-         (keyup.enter)="viewReport(report)" (keyup.space)="viewReport(report)">
-      <div class="card-header">
-        <h3 class="report-title">{{ report.titre }}</h3>
-        <span class="status" [ngClass]="{'read': report.vu, 'unread': !report.vu}">
-          {{ report.vu ? 'Read' : 'Unread' }}
-        </span>
+  <!-- Cards Grid -->
+  <div class="cards-grid" *ngIf="reports.length > 0">
+    <div
+      class="report-card"
+      *ngFor="let report of reports"
+      (click)="viewReport(report)"
+      tabindex="0"
+      role="button"
+      aria-pressed="false"
+      (keyup.enter)="viewReport(report)"
+      (keyup.space)="viewReport(report)"
+    >
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <div class="card-info">
+          <h3 class="card-title">{{ report.titre }}</h3>
+          <span class="status-badge" [ngClass]="{'status-read': report.vu, 'status-unread': !report.vu}">
+            <i class="fas" [ngClass]="{'fa-check-circle': report.vu, 'fa-clock': !report.vu}"></i>
+            {{ report.vu ? 'Read' : 'Unread' }}
+          </span>
+        </div>
       </div>
 
-      <div class="card-body">
-        <p><strong>🏬 Shop:</strong> {{ report.nomShop || 'N/A' }}</p>
-        <p><strong>👤 Admin:</strong> {{ report.nomAdmin || 'N/A' }}</p>
-        <p class="created-date" title="{{ report.dateCreation | date:'fullDate' + ' ' + (report.dateCreation | date:'shortTime') }}">
-          <strong>📅 Created on:</strong> {{ report.dateCreation | date:'dd MMM yyyy, HH:mm' }}
-        </p>
+      <div class="card-details">
+        <div class="detail-row">
+          <i class="fas fa-store"></i>
+          <span class="detail-label">Shop</span>
+          <span class="detail-value">{{ report.nomShop || 'N/A' }}</span>
+        </div>
+        <div class="detail-row">
+          <i class="fas fa-user"></i>
+          <span class="detail-label">Admin</span>
+          <span class="detail-value">{{ report.nomAdmin || 'N/A' }}</span>
+        </div>
+        <div class="detail-row">
+          <i class="fas fa-calendar"></i>
+          <span class="detail-label">Created</span>
+          <span class="detail-value" title="{{ report.dateCreation | date:'fullDate' + ' ' + (report.dateCreation | date:'shortTime') }}">
+            {{ report.dateCreation | date:'dd MMM yyyy, HH:mm' }}
+          </span>
+        </div>
+      </div>
 
-<div class="fields-container" *ngIf="report.labelsEtValeurs && report.labelsEtValeurs.length > 0">
-          <div *ngFor="let item of report.labelsEtValeurs" class="field-item">
-            <strong>{{ item.label }}:</strong> {{ item.valeur || 'Not filled' }}
-          </div>
+      <div class="card-fields" *ngIf="report.labelsEtValeurs && report.labelsEtValeurs.length > 0">
+        <div *ngFor="let item of report.labelsEtValeurs" class="field-item">
+          <span class="field-label">{{ item.label }}</span>
+          <span class="field-value">{{ item.valeur || 'Not filled' }}</span>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && reports.length === 0 && !errorMessage">
+    <div class="empty-icon">
+      <i class="fas fa-file-alt"></i>
+    </div>
+    <h3>No reports found</h3>
+    <p>Create your first report to get started</p>
+    <button class="btn-add" (click)="createReport()">
+      <i class="fas fa-plus"></i> Create Report
+    </button>
   </div>
 </div>

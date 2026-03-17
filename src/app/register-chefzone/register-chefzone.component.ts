@@ -45,7 +45,7 @@ export class RegisterChefzoneComponent implements OnInit {
   // 🔁 Charger les zones qui n'ont pas encore de chefZone
   loadAvailableZones(): void {
     this.userService.getZonesWithoutChef().subscribe({
-      next: (zones: any[]) => this.availableZones = zones,
+      next: (zones: any[]) => this.availableZones = zones || [],
       error: (err: any) => console.error('Erreur lors du chargement des zones:', err)
     });
   }

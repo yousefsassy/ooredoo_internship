@@ -1,83 +1,137 @@
-<div class="report-container" *ngIf="!loadingReport && !loadingFields; else loadingTpl">
-  <h1>{{ report.titre }}</h1>
-
-  <div class="report-meta">
-    <p><strong>Description:</strong> {{ report.description || 'N/A' }}</p>
-    <p><strong>Type:</strong> {{ report.type }}</p>
-    <p><strong>Created At:</strong> {{ report.dateCreation | date:'medium' }}</p>
-  </div>
-
-  <form (ngSubmit)="submitReport()" #reportForm="ngForm" class="form-card" *ngIf="fields.length > 0">
-    <h4 class="form-card-title">Fill in the report details</h4>
-
-    <div *ngFor="let field of fields" class="form-group">
-      <label class="form-label" [attr.for]="'field_' + field.idReportField">
-        {{ field.label }}
-        <span *ngIf="field.required" class="required">*</span>
-      </label>
-
-      <!-- Input texte -->
-      <input *ngIf="field.type === 'TEXT'" type="text"
-             [(ngModel)]="fieldValues[field.idReportField]"
-             [name]="'field_' + field.idReportField"
-             [id]="'field_' + field.idReportField"
-             [required]="field.required"
-             class="form-control" />
-
-      <!-- Textarea -->
-      <textarea *ngIf="field.type === 'TEXTAREA'"
-                [(ngModel)]="fieldValues[field.idReportField]"
-                [name]="'field_' + field.idReportField"
-                [id]="'field_' + field.idReportField"
-                [required]="field.required"
-                class="form-control"
-                rows="4"></textarea>
-
-      <!-- Dropdown -->
-      <select *ngIf="field.type === 'DROPDOWN'"
-              [(ngModel)]="fieldValues[field.idReportField]"
-              [name]="'field_' + field.idReportField"
-              [id]="'field_' + field.idReportField"
-              [required]="field.required"
-              class="form-select">
-        <option value="" disabled [selected]="!fieldValues[field.idReportField]">Select an option</option>
-        <option *ngFor="let option of (field.options || [])" [value]="option">{{ option }}</option>
-      </select>
-
-      <!-- Date -->
-      <input *ngIf="field.type === 'DATE'" type="date"
-             [(ngModel)]="fieldValues[field.idReportField]"
-             [name]="'field_' + field.idReportField"
-             [id]="'field_' + field.idReportField"
-             [required]="field.required"
-             class="form-control" />
-
-      <!-- Checkbox -->
-      <input *ngIf="field.type === 'CHECKBOX'" type="checkbox"
-             [(ngModel)]="fieldValues[field.idReportField]"
-             [name]="'field_' + field.idReportField"
-             [id]="'field_' + field.idReportField"
-             class="form-check-input" />
-
-      <!-- File upload -->
-      <input *ngIf="field.type === 'FILE_UPLOAD'" type="file"
-             (change)="onFileSelected($event, field.idReportField)"
-             [required]="field.required && !photoFiles[field.idReportField]"
-             class="form-control"
-             accept="image/*" />
-
-      <!-- Preview image -->
-      <div *ngIf="field.type === 'FILE_UPLOAD' && photoPreviews[field.idReportField]" class="photo-preview">
-        <img [src]="photoPreviews[field.idReportField]" alt="Photo preview" style="max-width: 200px; margin-top: 8px;" />
-      </div>
-    </div>
-
-    <button type="submit" class="btn-submit" [disabled]="submitInProgress || reportForm.invalid">Submit</button>
-  </form>
+<div *ngIf="loadingReport || loadingFields" class="loading-state">
+  <div class="spinner-ring"></div>
+  <p>Loading report data...</p>
 </div>
 
-<ng-template #loadingTpl>
-  <div class="loading-message">
-    <p>Loading report data, please wait...</p>
+<div class="page-container" *ngIf="!loadingReport && !loadingFields">
+  <!-- Report Header -->
+  <div class="report-header">
+    <div class="report-icon">
+      <i class="fas fa-clipboard-check"></i>
+    </div>
+    <div class="report-header-info">
+      <h1 class="report-title">{{ report.titre }}</h1>
+      <p class="report-desc" *ngIf="report.description">{{ report.description }}</p>
+    </div>
   </div>
-</ng-template>
+
+  <!-- Report Meta -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <i class="fas fa-tag"></i>
+      <div class="meta-content">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">{{ report.type }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-calendar"></i>
+      <div class="meta-content">
+        <span class="meta-label">Created</span>
+        <span class="meta-value">{{ report.dateCreation | date:'medium' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fill Form -->
+  <div class="form-card" *ngIf="fields.length > 0">
+    <h3 class="form-card-title">
+      <i class="fas fa-pen-to-square"></i>
+      Fill in the report details
+    </h3>
+
+    <form (ngSubmit)="submitReport()" #reportForm="ngForm">
+      <div *ngFor="let field of fields" class="form-group">
+        <label class="form-label" [attr.for]="'field_' + field.idReportField">
+          {{ field.label }}
+          <span *ngIf="field.required" class="required-dot"></span>
+        </label>
+
+        <!-- Input text -->
+        <div class="input-wrapper" *ngIf="field.type === 'TEXT'">
+          <i class="fas fa-font input-icon"></i>
+          <input type="text"
+                 [(ngModel)]="fieldValues[field.idReportField]"
+                 [name]="'field_' + field.idReportField"
+                 [id]="'field_' + field.idReportField"
+                 [required]="field.required"
+                 class="form-input"
+                 placeholder="Enter value" />
+        </div>
+
+        <!-- Textarea -->
+        <div class="input-wrapper textarea-wrapper" *ngIf="field.type === 'TEXTAREA'">
+          <i class="fas fa-align-left input-icon input-icon--top"></i>
+          <textarea [(ngModel)]="fieldValues[field.idReportField]"
+                    [name]="'field_' + field.idReportField"
+                    [id]="'field_' + field.idReportField"
+                    [required]="field.required"
+                    class="form-input form-textarea"
+                    rows="4"
+                    placeholder="Enter text"></textarea>
+        </div>
+
+        <!-- Dropdown -->
+        <div class="input-wrapper" *ngIf="field.type === 'DROPDOWN'">
+          <i class="fas fa-list input-icon"></i>
+          <select [(ngModel)]="fieldValues[field.idReportField]"
+                  [name]="'field_' + field.idReportField"
+                  [id]="'field_' + field.idReportField"
+                  [required]="field.required"
+                  class="form-input form-select">
+            <option value="" disabled [selected]="!fieldValues[field.idReportField]">Select an option</option>
+            <option *ngFor="let option of (field.options || [])" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <!-- Date -->
+        <div class="input-wrapper" *ngIf="field.type === 'DATE'">
+          <i class="fas fa-calendar-day input-icon"></i>
+          <input type="date"
+                 [(ngModel)]="fieldValues[field.idReportField]"
+                 [name]="'field_' + field.idReportField"
+                 [id]="'field_' + field.idReportField"
+                 [required]="field.required"
+                 class="form-input" />
+        </div>
+
+        <!-- Checkbox -->
+        <div class="checkbox-wrapper" *ngIf="field.type === 'CHECKBOX'">
+          <label class="checkbox-label" [attr.for]="'check_' + field.idReportField">
+            <input type="checkbox"
+                   [(ngModel)]="fieldValues[field.idReportField]"
+                   [name]="'field_' + field.idReportField"
+                   [id]="'check_' + field.idReportField"
+                   class="checkbox-input" />
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">{{ field.label }}</span>
+          </label>
+        </div>
+
+        <!-- File upload -->
+        <div class="file-upload-wrapper" *ngIf="field.type === 'FILE_UPLOAD'">
+          <label class="file-upload-label" [attr.for]="'file_' + field.idReportField">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <span>Choose image</span>
+          </label>
+          <input type="file"
+                 (change)="onFileSelected($event, field.idReportField)"
+                 [required]="field.required && !photoFiles[field.idReportField]"
+                 [id]="'file_' + field.idReportField"
+                 class="file-input-hidden"
+                 accept="image/*" />
+
+          <!-- Preview image -->
+          <div *ngIf="photoPreviews[field.idReportField]" class="photo-preview">
+            <img [src]="photoPreviews[field.idReportField]" alt="Photo preview" />
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="submitInProgress || reportForm.invalid">
+        <i class="fas fa-paper-plane"></i>
+        {{ submitInProgress ? 'Submitting...' : 'Submit Report' }}
+      </button>
+    </form>
+  </div>
+</div>

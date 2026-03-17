@@ -1,28 +1,58 @@
-<form [formGroup]="regionForm" (ngSubmit)="onSubmit()">
-  <!-- Zone Selection -->
-  <label for="zone">Zone:</label>
-  <select id="zone" formControlName="zone">
-    <option value="">-- Select a zone --</option>
-    <option *ngFor="let z of zones" [ngValue]="z">{{ z.libelle }}</option>
-  </select>
-  <div *ngIf="regionForm.get('zone')?.touched && regionForm.get('zone')?.invalid" class="error">
-    Zone is required
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Create Region</h1>
+    <p class="page-subtitle">Define a new region within a zone</p>
   </div>
 
-  <!-- Delegation Selection -->
-  <label for="delegation">Delegation:</label>
-  <select id="delegation" formControlName="delegation" [disabled]="delegations.length === 0">
-    <option value="">-- Select a delegation --</option>
-    <option *ngFor="let d of delegations" [value]="d">{{ d }}</option>
-  </select>
-  <div *ngIf="regionForm.get('delegation')?.touched && regionForm.get('delegation')?.invalid" class="error">
-    Delegation is required
+  <div class="form-card">
+    <form [formGroup]="regionForm" (ngSubmit)="onSubmit()">
+      <!-- Zone select -->
+      <div class="form-group">
+        <label for="zone" class="form-label">Zone</label>
+        <div class="input-wrapper">
+          <i class="fas fa-map-marked-alt input-icon"></i>
+          <select id="zone" formControlName="zone" class="form-input form-select"
+                  [ngClass]="{'input-error': regionForm.get('zone')?.touched && regionForm.get('zone')?.invalid}">
+            <option value="">-- Select a zone --</option>
+            <option *ngFor="let z of zones" [ngValue]="z">{{ z.libelle }}</option>
+          </select>
+        </div>
+        <div class="error-message" *ngIf="regionForm.get('zone')?.touched && regionForm.get('zone')?.invalid">
+          <i class="fas fa-exclamation-circle"></i> Zone is required
+        </div>
+      </div>
+
+      <!-- Delegation select -->
+      <div class="form-group">
+        <label for="delegation" class="form-label">Delegation</label>
+        <div class="input-wrapper">
+          <i class="fas fa-map-pin input-icon"></i>
+          <select id="delegation" formControlName="delegation" class="form-input form-select"
+                  [disabled]="delegations.length === 0"
+                  [ngClass]="{'input-error': regionForm.get('delegation')?.touched && regionForm.get('delegation')?.invalid}">
+            <option value="">-- Select a delegation --</option>
+            <option *ngFor="let d of delegations" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+        <div class="error-message" *ngIf="regionForm.get('delegation')?.touched && regionForm.get('delegation')?.invalid">
+          <i class="fas fa-exclamation-circle"></i> Delegation is required
+        </div>
+      </div>
+
+      <!-- Auto-generated Name -->
+      <div class="form-group">
+        <label for="nom" class="form-label">Name (auto-generated)</label>
+        <div class="input-wrapper">
+          <i class="fas fa-tag input-icon"></i>
+          <input id="nom" formControlName="nom" class="form-input input-disabled" [disabled]="true" />
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" [disabled]="regionForm.invalid">
+        <i class="fas fa-plus-circle"></i>
+        Create Region
+      </button>
+    </form>
   </div>
-
-  <!-- Auto-generated Name -->
-  <label for="nom">Name (auto-generated):</label>
-<input id="nom" formControlName="nom" [disabled]="true" />
-
-  <!-- Submit Button -->
-  <button type="submit" [disabled]="regionForm.invalid">Create Region</button>
-</form>
+</div>

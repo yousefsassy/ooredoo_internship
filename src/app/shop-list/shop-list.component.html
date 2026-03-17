@@ -1,68 +1,98 @@
-<div class="shop-management-container">
-
-  <!-- Header + Add -->
-  <div class="management-header">
-    <div class="header-content">
-      <i class="fas fa-store header-icon"></i>
-      <h2>Shop Management</h2>
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Shops</h1>
+      <p class="page-subtitle">View and manage all shops</p>
     </div>
-    <button class="add-shop-btn" (click)="onAddShop()">
-      <i class="fas fa-plus-circle"></i> Add New Shop
+    <button class="btn-add" (click)="onAddShop()">
+      <i class="fas fa-plus"></i> Add Shop
     </button>
   </div>
 
-  <!-- Search Filter -->
-  <div class="filters-container">
-    <input
-      type="text"
-      placeholder="Search by shop name..."
-      [(ngModel)]="searchTerm"
-      (input)="onSearchChange()"
-      class="search-input"
-    />
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Search by shop name..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+      />
+    </div>
   </div>
 
-  <!-- Table -->
-  <div class="modern-table-container">
-    <table class="modern-shop-table" *ngIf="filteredShops.length > 0; else emptyState">
-      <thead>
-        <tr>
-          <th><i class="fas fa-tag"></i> Shop Name</th>
-          <th><i class="fas fa-user"></i> Admin Shop</th>
-          <th><i class="fas fa-phone-alt"></i> Phone</th>
-          <th><i class="fas fa-cog"></i> Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let shop of filteredShops">
-          <td data-label="Shop Name"><i class="fas fa-store-alt"></i> {{ shop.nomShop }}</td>
-          <td data-label="Admin Shop"><i class="fas fa-user-tie"></i> {{ getAdminShopName(shop) }}</td>
-          <td data-label="Phone"><i class="fas fa-phone-alt"></i> {{ shop.telephone }}</td>
-          <td class="action-buttons">
-            <button class="view-btn d-none d-md-flex" (click)="onViewShop(shop.idShop!)" title="View" aria-label="View">
-              <i class="fas fa-eye"></i> View
-            </button>
-            <button class="edit-btn d-none d-md-flex" (click)="onEditShop(shop.idShop!)" title="Edit" aria-label="Edit">
-              <i class="fas fa-pencil-alt"></i> Edit
-            </button>
-            <button class="archive-btn d-none d-md-flex" (click)="onArchiveShop(shop.idShop!)" title="Archive" aria-label="Archive">
-              <i class="fas fa-box-archive"></i> Archive
-            </button>
-            <button class="delete-btn d-none d-md-flex" (click)="onDeleteShop(shop.idShop!)" title="Delete" aria-label="Delete">
-              <i class="fas fa-trash"></i> Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Table Card -->
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table" *ngIf="filteredShops.length > 0; else emptyState">
+        <thead>
+          <tr>
+            <th>Shop Name</th>
+            <th>Admin</th>
+            <th>Phone</th>
+            <th class="th-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let shop of filteredShops">
+            <td>
+              <div class="shop-info">
+                <div class="shop-icon">
+                  <i class="fas fa-store"></i>
+                </div>
+                <span class="shop-name">{{ shop.nomShop }}</span>
+              </div>
+            </td>
+            <td class="td-secondary">{{ getAdminShopName(shop) }}</td>
+            <td class="td-secondary">{{ shop.telephone }}</td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="action-btn"
+                  (click)="onViewShop(shop.idShop!)"
+                  title="View"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button
+                  class="action-btn"
+                  (click)="onEditShop(shop.idShop!)"
+                  title="Edit"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  class="action-btn action-btn-warning"
+                  (click)="onArchiveShop(shop.idShop!)"
+                  title="Archive"
+                >
+                  <i class="fas fa-archive"></i>
+                </button>
+                <button
+                  class="action-btn action-btn-danger"
+                  (click)="onDeleteShop(shop.idShop!)"
+                  title="Delete"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <ng-template #emptyState>
       <div class="empty-state">
-        <i class="fas fa-store empty-icon"></i>
-        <h3>No Shops Found</h3>
-        <p>Start by adding your first shop.</p>
-        <button class="add-shop-btn" (click)="onAddShop()">
-          <i class="fas fa-plus-circle"></i> Add Shop
+        <div class="empty-icon">
+          <i class="fas fa-store"></i>
+        </div>
+        <h3>No shops found</h3>
+        <p>Start by adding your first shop</p>
+        <button class="btn-add" (click)="onAddShop()">
+          <i class="fas fa-plus"></i> Add Shop
         </button>
       </div>
     </ng-template>

@@ -1,80 +1,219 @@
-<div class="ooredoo-dashboard-container" *ngIf="stats; else loadingOrError">
-  <h2 class="dashboard-title">📊 User & Zone Statistics</h2>
-
-  <!-- ✅ Summary Cards -->
-  <div class="stat-cards-grid">
-    <div class="stat-card red"><h5>Total Users</h5><p>{{ stats.totalUsers }}</p></div>
-    <div class="stat-card green"><h5>Approved</h5><p>{{ stats.approvedUsers }} ({{ stats.approvedPercentage | number:'1.0-0' }}%)</p></div>
-    <div class="stat-card blue"><h5>Zone Chiefs</h5><p>{{ stats.chefZoneCount }} ({{ stats.chefZonePercentage | number:'1.0-0' }}%)</p></div>
-    <div class="stat-card orange"><h5>Admins</h5><p>{{ stats.adminCount }} ({{ stats.adminPercentage | number:'1.0-0' }}%)</p></div>
-    <div class="stat-card purple"><h5>Shop Admins</h5><p>{{ stats.adminShopCount }} ({{ stats.adminShopPercentage | number:'1.0-0' }}%)</p></div>
-  </div>
-
-  <!-- ✅ User Roles Chart -->
-  <div class="chart-container single">
-    <h4>User Roles Distribution</h4>
-    <canvas
-      baseChart
-      [data]="{ labels: userRolesLabels, datasets: [{ data: userRolesData }] }"
-      [type]="userRolesChartType"
-      [options]="userRolesChartOptions"
-    ></canvas>
-  </div>
-
-  <!-- ✅ Zone & Shop Charts Side by Side -->
-  <div class="chart-pair-container">
-    <!-- Zone Percentages -->
-    <div class="chart-card">
-      <h4>📌 Zone Percentages</h4>
-      <ul class="percentage-list">
-        <li *ngFor="let g of zonePercentages | keyvalue">
-          <span>{{ g.key }}</span><strong>{{ g.value | number:'1.0-2' }}%</strong>
-        </li>
-      </ul>
-      <canvas
-        baseChart
-        [data]="{ labels: zoneLabels, datasets: [{ data: zoneData, label: 'Zone %' }] }"
-        [type]="zoneChartType"
-        [options]="zoneChartOptions"
-      ></canvas>
-    </div>
-
-    <!-- Shop Percentages -->
-    <div class="chart-card">
-      <h4>🏬 Shop Percentages</h4>
-      <ul class="percentage-list">
-        <li *ngFor="let g of shopPercentages | keyvalue">
-          <span>{{ g.key }}</span><strong>{{ g.value | number:'1.0-2' }}%</strong>
-        </li>
-      </ul>
-      <canvas
-        baseChart
-        [data]="{ labels: shopLabels, datasets: [{ data: shopData, label: 'Shop %' }] }"
-        [type]="shopChartType"
-        [options]="shopChartOptions"
-      ></canvas>
+<div class="dashboard" *ngIf="stats; else loadingOrError">
+  <!-- Page Header with Greeting -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Overview of users, zones, and shops</p>
     </div>
   </div>
 
-  <!-- ✅ Shop by Zone -->
-  <div class="zone-breakdown">
-    <h4>Shop Percentages by Zone per Gouvernorat</h4>
-    <div *ngFor="let g of shopPercentagesByZone | keyvalue" class="zone-group">
-      <h5>{{ g.key }}</h5>
-      <ul class="percentage-list">
-        <li *ngFor="let z of g.value | keyvalue">
-          <span>Zone {{ z.key }}</span><strong>{{ z.value | number:'1.0-2' }}%</strong>
-        </li>
-      </ul>
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-card--slate">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-users"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Total Users</span>
+        <span class="kpi-value">{{ stats.totalUsers }}</span>
+      </div>
+      <div class="kpi-accent"></div>
+    </div>
+
+    <div class="kpi-card kpi-card--green">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-user-check"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Approved</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">{{ stats.approvedUsers }}</span>
+          <span class="kpi-badge">{{ stats.approvedPercentage | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+      <div class="kpi-accent"></div>
+    </div>
+
+    <div class="kpi-card kpi-card--blue">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Zone Chiefs</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">{{ stats.chefZoneCount }}</span>
+          <span class="kpi-badge">{{ stats.chefZonePercentage | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+      <div class="kpi-accent"></div>
+    </div>
+
+    <div class="kpi-card kpi-card--orange">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-user-shield"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Admins</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">{{ stats.adminCount }}</span>
+          <span class="kpi-badge">{{ stats.adminPercentage | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+      <div class="kpi-accent"></div>
+    </div>
+
+    <div class="kpi-card kpi-card--purple">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-store"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Shop Admins</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">{{ stats.adminShopCount }}</span>
+          <span class="kpi-badge">{{ stats.adminShopPercentage | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+      <div class="kpi-accent"></div>
     </div>
   </div>
 
-  <div class="alert alert-warning mt-4">
-    <strong>⚠️ Zones without Chef:</strong> {{ zonesWithoutChefCount }}
+  <!-- Charts Section -->
+  <div class="charts-section">
+    <!-- User Roles Chart -->
+    <div class="chart-card chart-card--roles">
+      <div class="chart-header">
+        <div>
+          <h3 class="chart-title">User Roles Distribution</h3>
+          <p class="chart-desc">Breakdown of users by role</p>
+        </div>
+      </div>
+      <div class="chart-body chart-body--centered">
+        <canvas
+          baseChart
+          [data]="{ labels: userRolesLabels, datasets: [{ data: userRolesData }] }"
+          [type]="userRolesChartType"
+          [options]="userRolesChartOptions"
+        ></canvas>
+      </div>
+    </div>
+
+    <!-- Zone & Shop Charts Side by Side -->
+    <div class="chart-pair">
+      <!-- Zone Percentages -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">Zone Percentages</h3>
+            <p class="chart-desc">Distribution across zones</p>
+          </div>
+        </div>
+        <div class="chart-body">
+          <ul class="data-list">
+            <li *ngFor="let g of zonePercentages | keyvalue">
+              <span class="data-label">{{ g.key }}</span>
+              <div class="data-bar-wrap">
+                <div class="data-bar" [style.width.%]="g.value"></div>
+              </div>
+              <span class="data-value">{{ g.value | number:'1.0-2' }}%</span>
+            </li>
+          </ul>
+          <div class="chart-area">
+            <canvas
+              baseChart
+              [data]="{ labels: zoneLabels, datasets: [{ data: zoneData, label: 'Zone %' }] }"
+              [type]="zoneChartType"
+              [options]="zoneChartOptions"
+            ></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shop Percentages -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">Shop Percentages</h3>
+            <p class="chart-desc">Distribution across shops</p>
+          </div>
+        </div>
+        <div class="chart-body">
+          <ul class="data-list">
+            <li *ngFor="let g of shopPercentages | keyvalue">
+              <span class="data-label">{{ g.key }}</span>
+              <div class="data-bar-wrap">
+                <div class="data-bar data-bar--blue" [style.width.%]="g.value"></div>
+              </div>
+              <span class="data-value">{{ g.value | number:'1.0-2' }}%</span>
+            </li>
+          </ul>
+          <div class="chart-area">
+            <canvas
+              baseChart
+              [data]="{ labels: shopLabels, datasets: [{ data: shopData, label: 'Shop %' }] }"
+              [type]="shopChartType"
+              [options]="shopChartOptions"
+            ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shop by Zone Breakdown -->
+  <div class="breakdown-section">
+    <div class="section-header">
+      <h3 class="section-title">Shop by Zone Breakdown</h3>
+      <p class="section-desc">Percentages per Gouvernorat</p>
+    </div>
+    <div class="breakdown-grid">
+      <div *ngFor="let g of shopPercentagesByZone | keyvalue" class="breakdown-card">
+        <h4 class="breakdown-title">{{ g.key }}</h4>
+        <ul class="breakdown-list">
+          <li *ngFor="let z of g.value | keyvalue">
+            <span class="breakdown-label">Zone {{ z.key }}</span>
+            <span class="breakdown-value">{{ z.value | number:'1.0-2' }}%</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warning Banner -->
+  <div class="warning-banner" *ngIf="zonesWithoutChefCount > 0">
+    <div class="warning-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <div class="warning-content">
+      <span class="warning-title">Attention Required</span>
+      <span class="warning-text"><strong>{{ zonesWithoutChefCount }}</strong> zone(s) without an assigned chief</span>
+    </div>
   </div>
 </div>
 
 <ng-template #loadingOrError>
-  <div *ngIf="errorMessage" class="alert alert-danger text-center">{{ errorMessage }}</div>
-  <div *ngIf="!errorMessage" class="text-center text-white">Loading statistics...</div>
+  <div class="loading-state" *ngIf="!errorMessage">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+    </div>
+    <p class="loading-text">Loading statistics...</p>
+  </div>
+  <div *ngIf="errorMessage" class="error-banner">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="error-content">
+      <span class="error-title">Something went wrong</span>
+      <span class="error-text">{{ errorMessage }}</span>
+    </div>
+  </div>
 </ng-template>

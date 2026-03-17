@@ -56,6 +56,35 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
+  get passwordValue(): string {
+    return this.loginForm.get('password')?.value || '';
+  }
+
+  get hasUppercase(): boolean { return /[A-Z]/.test(this.passwordValue); }
+  get hasLowercase(): boolean { return /[a-z]/.test(this.passwordValue); }
+  get hasNumber(): boolean { return /\d/.test(this.passwordValue); }
+  get hasSpecial(): boolean { return /[@$!%*?&]/.test(this.passwordValue); }
+  get hasValidLength(): boolean {
+    const len = this.passwordValue.length;
+    return len >= 8 && len <= 20;
+  }
+
+  get passwordStrength(): number {
+    let s = 0;
+    if (this.hasUppercase) s++;
+    if (this.hasLowercase) s++;
+    if (this.hasNumber) s++;
+    if (this.hasSpecial) s++;
+    if (this.hasValidLength) s++;
+    return s;
+  }
+
+  get strengthLabel(): string {
+    if (!this.passwordValue) return '';
+    const labels = ['Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+    return labels[this.passwordStrength];
+  }
+
   handleLogin(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();

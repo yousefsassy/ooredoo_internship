@@ -1,37 +1,89 @@
-:host {
-  display: block;
-  padding: 2rem;
-  max-width: 600px;
-  margin: 3rem auto;
-  background-color: #fff5f5;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #4a1f1f;
+.page-container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-8);
+  animation: fadeIn 0.4s ease both;
 }
 
-h2 {
-  color: #ed1c24;
-  font-weight: 700;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.detail-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--color-purple-light);
+  color: var(--color-purple);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  flex-shrink: 0;
+}
+
+.detail-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.detail-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+}
+
+.meta-item i {
+  width: 20px;
   text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
-p {
-  font-size: 1.1rem;
-  margin: 0.75rem 0;
-  line-height: 1.6;
-  padding-left: 0.5rem;
-  border-left: 4px solid #f8c1c1;
+.meta-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-strong {
-  color: #b71c1c;
+.meta-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-/* Optional icon style if you add icons later */
-p i {
-  margin-right: 0.5rem;
-  color: #b71c1c;
+.meta-value {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
 }

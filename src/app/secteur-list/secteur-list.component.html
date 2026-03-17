@@ -1,52 +1,76 @@
-<div class="shop-management-container">
-
-  <!-- Header + Add -->
-  <div class="management-header">
-    <div class="header-content">
-      <i class="fas fa-map-marked-alt header-icon"></i>
-      <h2>Sector Management</h2>
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Sectors</h1>
+      <p class="page-subtitle">Browse and manage all sectors</p>
     </div>
-    <button class="add-shop-btn" (click)="onAddSecteur()">
-      <i class="fas fa-plus-circle"></i> Add New Sector
+    <button class="btn-add" (click)="onAddSecteur()">
+      <i class="fas fa-plus"></i> Add Sector
     </button>
   </div>
 
-  <!-- Search Filter -->
-  <div class="filters-container">
-    <input
-      type="text"
-      placeholder="Search by sector name..."
-      [(ngModel)]="searchTerm"
-      (input)="onSearchChange()"
-      class="search-input"
-    />
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Search by sector name..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+      />
+    </div>
   </div>
 
-  <!-- Cards container -->
-  <div class="cards-container">
-    <div *ngFor="let secteur of filteredSecteurs" class="secteur-card">
-      <h3>{{ secteur.nom }}</h3>
-      <p>
-        <strong>Sector Chief:</strong>
-        {{ secteur.chefSecteur?.prenom || '' }} {{ secteur.chefSecteur?.nom || 'Not Assigned' }}
-      </p>
-      <button class="view-btn" (click)="onViewSecteur(secteur)" title="View" aria-label="View">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading sectors...</span>
+  </div>
 
-    <ng-container *ngIf="!loading && filteredSecteurs.length === 0">
-      <div class="empty-state">
-        <i class="fas fa-map-marked-alt empty-icon"></i>
-        <h3>No Sectors Found</h3>
-        <p>Start by adding your first sector.</p>
-        <button class="add-shop-btn" (click)="onAddSecteur()">
-          <i class="fas fa-plus-circle"></i> Add Sector
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="error-banner">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="cards-grid" *ngIf="!loading && filteredSecteurs.length > 0">
+    <div *ngFor="let secteur of filteredSecteurs" class="secteur-card">
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fas fa-layer-group"></i>
+        </div>
+        <div class="card-info">
+          <h3 class="card-title">{{ secteur.nom }}</h3>
+          <span class="card-meta">
+            <i class="fas fa-user-tie"></i>
+            {{ secteur.chefSecteur?.prenom || '' }} {{ secteur.chefSecteur?.nom || 'Not assigned' }}
+          </span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button
+          class="action-btn"
+          (click)="onViewSecteur(secteur)"
+          title="View details"
+        >
+          <i class="fas fa-eye"></i>
         </button>
       </div>
-    </ng-container>
+    </div>
   </div>
 
-  <div *ngIf="loading" class="loading">Loading sectors...</div>
-  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && filteredSecteurs.length === 0 && !errorMessage">
+    <div class="empty-icon">
+      <i class="fas fa-layer-group"></i>
+    </div>
+    <h3>No sectors found</h3>
+    <p>Try adjusting your search or add a new sector</p>
+    <button class="btn-add" (click)="onAddSecteur()">
+      <i class="fas fa-plus"></i> Add Sector
+    </button>
+  </div>
 </div>

@@ -1,46 +1,114 @@
-<div class="zone-dashboard-wrapper">
-  <div class="zone-container card shadow p-4" *ngIf="zone; else loadingOrError">
-    <h2 class="text-center mb-4">📍 Your Assigned Zone</h2>
-    
-    <div class="row zone-details">
-      <div class="detail-box">
-        <strong>Label:</strong>
-        <span>{{ zone.libelle }}</span>
+<div class="dashboard" *ngIf="zone; else loadingOrError">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Zone Dashboard</h1>
+      <p class="page-subtitle">Overview of your assigned zone and key metrics</p>
+    </div>
+  </div>
+
+  <!-- Zone Info Card -->
+  <div class="info-section">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon-wrap">
+          <div class="info-icon">
+            <i class="fas fa-map-pin"></i>
+          </div>
+        </div>
+        <div class="info-header-text">
+          <h3 class="info-card-title">Your Assigned Zone</h3>
+          <p class="info-card-desc">Zone details and location information</p>
+        </div>
       </div>
-      <div class="detail-box">
-        <strong>Governorate:</strong>
-        <span>{{ zone.gouvernorat }}</span>
+      <div class="info-card-body">
+        <div class="detail-row">
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--primary">
+                <i class="fas fa-tag"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Label</span>
+              <span class="detail-value">{{ zone.libelle }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--indigo">
+                <i class="fas fa-globe-africa"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Governorate</span>
+              <span class="detail-value">{{ zone.gouvernorat }}</span>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="info-accent"></div>
     </div>
   </div>
 
   <!-- KPI Stats -->
-  <div class="dashboard-cards" *ngIf="stats">
-    <div class="kpi-card red">
-      <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
-      <h4>{{ stats.totalRegions }}</h4>
-      <p>Regions</p>
+  <div class="kpi-grid" *ngIf="stats">
+    <div class="kpi-card kpi-card--red">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-map-marked-alt"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Regions</span>
+        <span class="kpi-value">{{ stats.totalRegions }}</span>
+      </div>
+      <div class="kpi-accent"></div>
     </div>
-    <div class="kpi-card orange">
-      <div class="icon"><i class="fas fa-store"></i></div>
-      <h4>{{ stats.totalShops }}</h4>
-      <p>Shops</p>
+
+    <div class="kpi-card kpi-card--amber">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-store"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Shops</span>
+        <span class="kpi-value">{{ stats.totalShops }}</span>
+      </div>
+      <div class="kpi-accent"></div>
     </div>
-    <div class="kpi-card yellow">
-      <div class="icon"><i class="fas fa-clipboard-list"></i></div>
-      <h4>{{ stats.totalReports }}</h4>
-      <p>Reports</p>
+
+    <div class="kpi-card kpi-card--teal">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">Reports</span>
+        <span class="kpi-value">{{ stats.totalReports }}</span>
+      </div>
+      <div class="kpi-accent"></div>
     </div>
   </div>
-
-  <!-- Loading or Error -->
-  <ng-template #loadingOrError>
-    <div class="alert alert-danger text-center" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </div>
-    <div class="loading text-center" *ngIf="!errorMessage">
-      <div class="spinner-border text-danger" role="status"></div>
-      <p class="mt-2">Loading zone details...</p>
-    </div>
-  </ng-template>
 </div>
+
+<!-- Loading or Error -->
+<ng-template #loadingOrError>
+  <div class="error-banner" *ngIf="errorMessage">
+    <div class="error-icon-wrap">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="error-content">
+      <span class="error-title">Something went wrong</span>
+      <span class="error-text">{{ errorMessage }}</span>
+    </div>
+  </div>
+  <div class="loading-state" *ngIf="!errorMessage">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+    </div>
+    <p class="loading-text">Loading zone details...</p>
+  </div>
+</ng-template>

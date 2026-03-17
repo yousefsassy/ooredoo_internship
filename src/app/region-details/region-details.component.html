@@ -1,28 +1,63 @@
-<div
-  class="region-details-container"
-  *ngIf="!isLoading && region; else loading"
->
-  <div class="region-details-header">
-    <i class="fas fa-map-signs region-details-icon"></i>
-    <h2>{{ region.nom }}</h2>
-    <!-- Using nom instead of libelle -->
-    <span class="region-id">#{{ region.idRegion }}</span>
-  </div>
-  <div class="region-details-body">
-    <p><strong>Delegation:</strong> {{ region.delegation }}</p>
-    <!-- You can display zone label if it exists -->
-    <p *ngIf="region.zone"><strong>Zone:</strong> {{ region.zone.libelle }}</p>
-    <p *ngIf="region.chefRegion">
-      <strong>Chef Region:</strong> {{ region.chefRegion.nom }}
-    </p>
-    <p><strong>Number of Shops:</strong> {{ region.shops?.length || 0 }}</p>
-    <!-- Add more fields as needed -->
+<div *ngIf="isLoading" class="loading-state">
+  <div class="spinner-ring"></div>
+  <p>Loading region details...</p>
+</div>
+
+<div *ngIf="error" class="error-banner">
+  <div class="error-icon"><i class="fas fa-exclamation-circle"></i></div>
+  <div class="error-content">
+    <span class="error-title">Error</span>
+    <span class="error-text">{{ error }}</span>
   </div>
 </div>
 
-<ng-template #loading>
-  <div class="region-details-loading">
-    <p *ngIf="!error">Loading region details...</p>
-    <p *ngIf="error" class="error-msg">{{ error }}</p>
+<div *ngIf="!isLoading && region" class="page-container">
+  <!-- Region Header -->
+  <div class="detail-header">
+    <div class="detail-icon">
+      <i class="fas fa-map-signs"></i>
+    </div>
+    <div class="detail-header-info">
+      <h1 class="detail-title">{{ region.nom }}</h1>
+    </div>
   </div>
-</ng-template>
+
+  <!-- Meta Grid -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <i class="fas fa-hashtag"></i>
+      <div class="meta-content">
+        <span class="meta-label">Region ID</span>
+        <span class="meta-value">{{ region.idRegion }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-city"></i>
+      <div class="meta-content">
+        <span class="meta-label">Delegation</span>
+        <span class="meta-value">{{ region.delegation }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-map-pin"></i>
+      <div class="meta-content">
+        <span class="meta-label">Zone</span>
+        <span class="meta-value">{{ region.zone?.libelle || 'N/A' }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-user-tie"></i>
+      <div class="meta-content">
+        <span class="meta-label">Chef Region</span>
+        <span class="meta-value">{{ region.chefRegion?.nom || 'Not assigned' }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-store"></i>
+      <div class="meta-content">
+        <span class="meta-label">Total Shops</span>
+        <span class="meta-value">{{ region.shops?.length || 0 }}</span>
+      </div>
+    </div>
+  </div>
+</div>

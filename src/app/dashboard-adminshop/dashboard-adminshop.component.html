@@ -1,14 +1,71 @@
-<div class="shop-container" *ngIf="shop; else errorOrLoading">
-  <h2>🏪 Your Shop</h2>
-  <ul>
-    <li><strong>Name:</strong> {{ shop.nomShop }}</li>
-    <li><strong>Phone:</strong> {{ shop.telephone }}</li>
-    
+<div class="dashboard" *ngIf="shop; else errorOrLoading">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Shop Dashboard</h1>
+      <p class="page-subtitle">Your assigned shop details at a glance</p>
+    </div>
+  </div>
 
-  </ul>
+  <!-- Shop Info Card -->
+  <div class="info-section">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon-wrap">
+          <div class="info-icon">
+            <i class="fas fa-store"></i>
+          </div>
+        </div>
+        <div class="info-header-text">
+          <h3 class="info-card-title">Shop Information</h3>
+          <p class="info-card-desc">Details about your assigned shop</p>
+        </div>
+      </div>
+      <div class="info-card-body">
+        <div class="detail-row">
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--primary">
+                <i class="fas fa-tag"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Shop Name</span>
+              <span class="detail-value">{{ shop.nomShop }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--teal">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Phone</span>
+              <span class="detail-value">{{ shop.telephone }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="info-accent"></div>
+    </div>
+  </div>
 </div>
 
 <ng-template #errorOrLoading>
-  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-  <div *ngIf="!errorMessage">Loading your shop...</div>
+  <div *ngIf="errorMessage" class="error-banner">
+    <div class="error-icon-wrap">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="error-content">
+      <span class="error-title">Something went wrong</span>
+      <span class="error-text">{{ errorMessage }}</span>
+    </div>
+  </div>
+  <div *ngIf="!errorMessage" class="loading-state">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+    </div>
+    <p class="loading-text">Loading your shop...</p>
+  </div>
 </ng-template>

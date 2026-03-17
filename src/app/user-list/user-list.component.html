@@ -1,146 +1,158 @@
-<div class="ooredoo-admin-container">
-  <div class="admin-header">
-    <h2><i class="fas fa-user-clock me-2"></i>Pending User Approvals</h2>
-    <div class="admin-controls">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input
-          type="text"
-          placeholder="Search users..."
-          (input)="onSearch($event)"
-        />
-      </div>
-      <div class="filter-dropdown">
-        <select class="form-select" (change)="onFilterChange($event)">
-          <option value="all">All Status</option>
-          <option value="locked">Locked Accounts</option>
-          <option value="disabled">Disabled Accounts</option>
-          <option value="pending">Pending Approval</option>
-        </select>
-      </div>
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">User Management</h1>
+      <p class="page-subtitle">Review and manage user accounts</p>
     </div>
   </div>
 
-  <div class="table-responsive">
-    <table class="ooredoo-admin-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th (click)="sortBy('username')" class="sortable">
-            Username <i class="fas fa-sort"></i>
-          </th>
-          <th (click)="sortBy('email')" class="sortable">
-            Email <i class="fas fa-sort"></i>
-          </th>
-          <th>Role</th>
-          <th (click)="sortBy('enabled')" class="sortable">
-            Status <i class="fas fa-sort"></i>
-          </th>
-          <th>Lock Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of filteredUsers; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>
-            <div class="user-info">
-              <div class="user-avatar">
-                {{ user.username.charAt(0).toUpperCase() }}
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Search by name or email..."
+        (input)="onSearch($event)"
+      />
+    </div>
+    <div class="filter-dropdown">
+      <select (change)="onFilterChange($event)">
+        <option value="all">All Status</option>
+        <option value="locked">Locked Accounts</option>
+        <option value="disabled">Disabled Accounts</option>
+        <option value="pending">Pending Approval</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="th-narrow">#</th>
+            <th (click)="sortBy('username')" class="sortable">
+              Username <i class="fas fa-sort sort-icon"></i>
+            </th>
+            <th (click)="sortBy('email')" class="sortable">
+              Email <i class="fas fa-sort sort-icon"></i>
+            </th>
+            <th>Role</th>
+            <th (click)="sortBy('enabled')" class="sortable">
+              Status <i class="fas fa-sort sort-icon"></i>
+            </th>
+            <th>Lock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers; let i = index">
+            <td class="td-narrow">{{ i + 1 }}</td>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">
+                  {{ user.username.charAt(0).toUpperCase() }}
+                </div>
+                <div class="user-meta">
+                  <span class="user-name">{{ user.username }}</span>
+                  <span class="user-date">{{ user.createdDate | date : "mediumDate" }}</span>
+                </div>
               </div>
-              <div class="user-details">
-                <strong>{{ user.username }}</strong>
-                <small
-                  >Created: {{ user.createdDate | date : "shortDate" }}</small
+            </td>
+            <td class="td-email">{{ user.email }}</td>
+            <td>
+              <span
+                class="badge role-badge"
+                [ngClass]="'role-' + user.roleName.toLowerCase()"
+              >
+                {{ user.roleName }}
+              </span>
+            </td>
+            <td>
+              <span
+                class="badge status-badge"
+                [ngClass]="{
+                  'status-active': user.enabled,
+                  'status-inactive': !user.enabled
+                }"
+              >
+                <i class="fas fa-circle status-dot"></i>
+                {{ user.enabled ? "Active" : "Inactive" }}
+              </span>
+            </td>
+            <td>
+              <span
+                class="lock-indicator"
+                [ngClass]="{
+                  locked: user.accountLocked,
+                  unlocked: !user.accountLocked
+                }"
+              >
+                <i
+                  class="fas"
+                  [class.fa-lock]="user.accountLocked"
+                  [class.fa-lock-open]="!user.accountLocked"
+                ></i>
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="action-btn btn-approve"
+                  (click)="approveUser(user.id)"
+                  [disabled]="!user.enabled || !user.accountLocked"
+                  title="Approve user"
                 >
+                  <i class="fas fa-check"></i>
+                </button>
+                <button
+                  class="action-btn btn-view"
+                  *ngIf="user.id != null"
+                  (click)="onViewUser(user.id!)"
+                  title="View details"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
               </div>
-            </div>
-          </td>
-          <td>{{ user.email }}</td>
-          <td>
-            <span
-              class="role-badge"
-              [ngClass]="'role-' + user.roleName.toLowerCase()"
-            >
-              {{ user.roleName }}
-            </span>
-          </td>
-          <td>
-            <span
-              class="status-badge"
-              [ngClass]="{
-                active: user.enabled,
-                inactive: !user.enabled
-              }"
-            >
-              <i class="fas fa-circle"></i>
-              {{ user.enabled ? "Active" : "Inactive" }}
-            </span>
-          </td>
-          <td>
-            <span
-              class="lock-status"
-              [ngClass]="{
-                locked: user.accountLocked,
-                unlocked: !user.accountLocked
-              }"
-            >
-              <i
-                class="fas"
-                [class.fa-lock]="user.accountLocked"
-                [class.fa-lock-open]="!user.accountLocked"
-              ></i>
-              {{ user.accountLocked ? "Locked" : "Unlocked" }}
-            </span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <button
-                class="btn-approve"
-                (click)="approveUser(user.id)"
-                [disabled]="!user.enabled || !user.accountLocked"
-              >
-                <i class="fas fa-check"></i> Approve
-              </button>
-              <button
-                class="btn btn-view"
-                *ngIf="user.id != null"
-                (click)="onViewUser(user.id!)"
-              >
-                <i class="fas fa-eye"></i> View
-              </button>
-            </div>
-          </td>
-        </tr>
-        <tr *ngIf="filteredUsers.length === 0">
-          <td colspan="7" class="no-results">
-            <i class="fas fa-user-slash"></i> No pending users found
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="table-footer" *ngIf="filteredUsers.length > 0">
-    <div class="pagination-info">
-      Showing {{ filteredUsers.length }} of {{ users.length }} users
+            </td>
+          </tr>
+          <tr *ngIf="filteredUsers.length === 0">
+            <td colspan="7" class="empty-state">
+              <div class="empty-content">
+                <i class="fas fa-users-slash"></i>
+                <p>No users found</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="pagination-controls">
-      <button
-        class="btn-pagination"
-        [disabled]="currentPage === 1"
-        (click)="previousPage()"
-      >
-        <i class="fas fa-chevron-left"></i>
-      </button>
-      <span class="page-indicator">Page {{ currentPage }}</span>
-      <button
-        class="btn-pagination"
-        [disabled]="currentPage * itemsPerPage >= users.length"
-        (click)="nextPage()"
-      >
-        <i class="fas fa-chevron-right"></i>
-      </button>
+
+    <!-- Pagination -->
+    <div class="table-footer" *ngIf="filteredUsers.length > 0">
+      <span class="pagination-info">
+        Showing {{ filteredUsers.length }} of {{ users.length }} users
+      </span>
+      <div class="pagination-controls">
+        <button
+          class="page-btn"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <span class="page-indicator">{{ currentPage }}</span>
+        <button
+          class="page-btn"
+          [disabled]="currentPage * itemsPerPage >= users.length"
+          (click)="nextPage()"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>

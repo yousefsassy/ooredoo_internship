@@ -1,280 +1,522 @@
-  /* Variables Ooredoo */
-  :root {
-    --ooredoo-red: #ED1C24;
-    --ooredoo-dark-red: #C41017;
-    --ooredoo-white: #FFFFFF;
-    --ooredoo-light-gray: #F8F9FA;
-    --ooredoo-medium-gray: #E9ECEF;
-    --ooredoo-dark-gray: #495057;
-    --ooredoo-text: #212529;
-    --ooredoo-error: #DC3545;
-  }
+/* ============================================
+   LOGIN PAGE — "Crimson Edge"
+   ============================================ */
 
-  .brand {
-    color: var(--ooredoo-red);
-  }
-
-  .subheading {
-    font-size: 13px;
-    color: var(--ooredoo-dark-gray);
-    margin-top: 4px;
-    margin-bottom: 20px;
-  }
-
-  /* Entrance animation */
-  .animate-fade-in {
-    animation: fadeInUp 0.6s ease-in-out;
-  }
-
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .ooredoo-login-card {
-    background: rgba(255, 255, 255, 0.9); /* semi-transparent */
-    backdrop-filter: blur(6px);
-  }
-  /* Reset et base */
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background-color: var(--ooredoo-light-gray);
-  }
-
-  /* Conteneur principal */
-  .ooredoo-login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    background: linear-gradient(to bottom right, #ed1c24, #c41017, #8b0f11);
-    /* REMOVE this ↓ */
-    /* color: white; */
-  }
-
-
-
-  /* Carte de connexion */
-  .ooredoo-login-card {
-    width: 100%;
-    max-width: 420px;
-    padding: 40px;
-    background-color: #ffffff; /* Solid white */
-    border-radius: 16px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-    border: 1px solid #eee;
-    color: var(--ooredoo-text); /* Ensure text inside is black */
-    transition: all 0.3s ease-in-out;
-  }
-
-
-
-  /* En-tête */
-  .ooredoo-login-header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-
-
-  .custom-ooredoo-logo {
-  width: 120px;   /* or whatever size you prefer */
-  height: auto;   /* keeps aspect ratio */
-  display: block;
-  margin: 0 auto; /* center horizontally */
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-surface);
+  position: relative;
+  overflow: hidden;
 }
-  .ooredoo-login-header h2 {
-    color: var(--ooredoo-text);
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
+
+/* ============================================
+   FORM PANEL (Left)
+   ============================================ */
+
+.form-panel {
+  flex: 0 0 54%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10);
+  position: relative;
+  z-index: 2;
+}
+
+.form-container {
+  max-width: 420px;
+  width: 100%;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+/* --- Header --- */
+.form-header {
+  margin-bottom: var(--space-8);
+}
+
+.form-title {
+  font-family: var(--font-family-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.accent-dot {
+  color: var(--color-primary);
+}
+
+.form-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-tertiary);
+}
+
+/* --- Form Groups --- */
+.form-group {
+  margin-bottom: var(--space-5);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+/* --- Input Wrapper with Icon --- */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 48px 0 var(--space-10);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-slate-50);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-xl);
+  transition: all 0.2s ease;
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+
+.form-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.form-input:hover {
+  border-color: var(--color-slate-300);
+}
+
+.form-input:focus {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--color-primary);
+}
+
+.form-input.input-error {
+  border-color: var(--color-error);
+  background: var(--color-surface);
+}
+
+.form-input.input-error:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+}
+
+/* --- Password Toggle --- */
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  color: #1e293b;
+  cursor: pointer;
+  font-size: 20px;
+  transition: color 0.2s ease;
+  padding: 6px;
+  z-index: 10;
+  line-height: 1;
+  opacity: 1;
+}
+
+.password-toggle:hover {
+  color: #000000;
+}
+
+/* --- Error Messages --- */
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}
+
+.error-message i {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* --- Password Strength Indicator --- */
+.strength-indicator {
+  margin-top: var(--space-3);
+  animation: fadeIn 0.3s ease both;
+}
+
+.strength-bar-wrapper {
+  height: 4px;
+  background: var(--color-slate-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.strength-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+
+.strength-0, .strength-1 { background: #ef4444; }
+.strength-2 { background: #f97316; }
+.strength-3 { background: #eab308; }
+.strength-4 { background: #22c55e; }
+.strength-5 { background: #10b981; }
+
+.strength-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
+}
+
+.strength-text-0, .strength-text-1 { color: #ef4444; }
+.strength-text-2 { color: #f97316; }
+.strength-text-3 { color: #eab308; }
+.strength-text-4 { color: #22c55e; }
+.strength-text-5 { color: #10b981; }
+
+.constraint-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3) 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1) var(--space-4);
+}
+
+.constraint-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  transition: color 0.2s ease;
+}
+
+.constraint-list li i {
+  font-size: 10px;
+  flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.constraint-list li.met {
+  color: #22c55e;
+}
+
+.constraint-list li.met i {
+  color: #22c55e;
+  transform: scale(1.15);
+}
+
+/* --- Forgot Password --- */
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-6);
+}
+
+.forgot-link {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+  color: var(--color-primary);
+}
+
+/* --- Submit Button --- */
+.submit-btn {
+  width: 100%;
+  height: 52px;
+  background: var(--gradient-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-spring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  box-shadow: var(--shadow-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-shimmer);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  box-shadow: var(--shadow-primary-lg);
+  transform: translateY(-2px);
+}
+
+.submit-btn:hover:not(:disabled)::after {
+  opacity: 1;
+  animation: shimmer 1.5s ease infinite;
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+.submit-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.submit-btn:disabled {
+  background: var(--color-slate-200);
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-loading i {
+  margin-right: var(--space-2);
+}
+
+/* --- Alert Error --- */
+.alert-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-error-light);
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}
+
+.alert-error i {
+  flex-shrink: 0;
+}
+
+/* --- Alt Link --- */
+.alt-link {
+  text-align: center;
+  margin-top: var(--space-8);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.alt-link a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.alt-link a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* ============================================
+   VISUAL PANEL (Right)
+   ============================================ */
+
+.visual-panel {
+  flex: 0 0 46%;
+  background: var(--color-dark-deeper);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Gradient Orbs */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.glow-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.28) 0%, transparent 70%);
+  top: -12%;
+  right: -15%;
+  animation: drift-1 14s ease-in-out infinite;
+}
+
+.glow-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(251, 113, 133, 0.18) 0%, transparent 70%);
+  bottom: -8%;
+  left: -10%;
+  animation: drift-2 18s ease-in-out infinite;
+}
+
+.glow-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.12) 0%, transparent 70%);
+  top: 50%;
+  left: 35%;
+  animation: drift-3 12s ease-in-out infinite;
+}
+
+/* Concentric Ring */
+.visual-ring {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  animation: ring-breathe 8s ease-in-out infinite;
+}
+
+.visual-ring::after {
+  content: '';
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Visual Content */
+.visual-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding-left: var(--space-6);
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+.brand-logo {
+  width: 240px;
+  height: auto;
+  margin-bottom: var(--space-8);
+  filter: drop-shadow(0 4px 24px rgba(220, 38, 38, 0.3));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.visual-content:hover .brand-logo {
+  transform: scale(1.04);
+}
+
+.visual-greeting {
+  font-family: var(--font-family-display);
+  font-size: 3rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: var(--space-3);
+  line-height: 1.2;
+}
+
+.accent-dot-light {
+  color: var(--color-primary);
+}
+
+.visual-subtitle {
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.4);
+  max-width: 300px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+/* --- Spinner --- */
+.fa-spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .login-page {
+    flex-direction: column-reverse;
   }
 
-  /* Champs de formulaire */
-  .ooredoo-form-group {
-    margin-bottom: 20px;
+  .visual-panel {
+    flex: none;
+    height: 200px;
   }
 
-  .ooredoo-form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--ooredoo-text);
-    font-size: 14px;
-    font-weight: 500;
+  .form-panel {
+    padding: var(--space-8) var(--space-6);
   }
 
-  .ooredoo-input {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 15px;
-    border: 1px solid var(--ooredoo-medium-gray);
-    border-radius: 8px;
-    background-color: var(--ooredoo-white);
-    transition: all 0.2s;
+  .visual-content {
+    padding-left: 0;
   }
 
-  .ooredoo-input:focus {
-    outline: none;
-    border-color: var(--ooredoo-red);
-    box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.1);
+  .visual-greeting {
+    font-size: 1.75rem;
   }
 
-  .ooredoo-input-error {
-    border-color: var(--ooredoo-error) !important;
+  .glow-1 { width: 280px; height: 280px; }
+  .glow-2 { width: 220px; height: 220px; }
+  .glow-3 { width: 180px; height: 180px; }
+  .visual-ring { width: 260px; height: 260px; }
+  .visual-ring::after { width: 170px; height: 170px; }
+
+  .brand-logo {
+    width: 120px;
+    margin-bottom: var(--space-4);
   }
 
-  /* Groupe mot de passe */
-  .ooredoo-password-group {
-    position: relative;
+  .visual-subtitle {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-panel {
+    padding: var(--space-6) var(--space-5);
   }
 
-  .ooredoo-password-toggle {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--ooredoo-dark-gray);
-    cursor: pointer;
-    transition: color 0.2s;
+  .form-title {
+    font-size: 2rem;
   }
-
-  .ooredoo-password-toggle:hover {
-    color: var(--ooredoo-red);
-  }
-
-  /* Bouton de connexion */
-  .ooredoo-submit-btn {
-    width: 100%;
-    padding: 14px;
-    background-color: var(--ooredoo-red);
-    color: var(--ooredoo-white);
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 10px;
-  }
-
-  .ooredoo-submit-btn:hover {
-    background-color: #f87171; /* Lighter red hover */
-    color: white;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-
-
-  .ooredoo-submit-btn:disabled {
-    background-color: #ccc; /* Soft grey */
-    color: #666;
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
-    pointer-events: none; /* <-- prevents hover effects */
-  }
-
-  /* Liens */
-  .ooredoo-forgot-password {
-    text-align: right;
-    margin-bottom: 20px;
-  }
-
-  .ooredoo-forgot-password a {
-    color: var(--ooredoo-red) !important;
-    font-size: 14px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease, text-decoration 0.2s ease;
-  }
-
-  .ooredoo-forgot-password a:hover {
-    color: var(--ooredoo-dark-red) !important;
-    text-decoration: underline;
-  }
-
-  .ooredoo-register-link {
-    text-align: center;
-    margin-top: 24px;
-    color: var(--ooredoo-dark-gray);
-    font-size: 14px;
-  }
-
-  .ooredoo-register-link a {
-    color: var(--ooredoo-red) !important;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease, text-decoration 0.2s ease;
-  }
-
-  .ooredoo-register-link a:hover {
-    color: var(--ooredoo-dark-red) !important;
-    text-decoration: underline;
-  }
-
-
-  /* Messages d'erreur */
-  .ooredoo-error-message {
-    color: var(--ooredoo-error);
-    font-size: 13px;
-    margin-top: 6px;
-  }
-
-  .ooredoo-password-rules {
-    margin-top: 8px;
-  }
-
-  .ooredoo-password-rules ul {
-    padding-left: 20px;
-    margin: 8px 0 0 0;
-  }
-
-  .ooredoo-password-rules li {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--ooredoo-dark-gray);
-  }
-
-  .ooredoo-alert-error {
-    background-color: rgba(220, 53, 69, 0.1);
-    border: 1px solid rgba(220, 53, 69, 0.2);
-    color: var(--ooredoo-error);
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 14px;
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  /* Animation spinner */
-  .fa-spinner {
-    animation: ooredoo-spin 1s linear infinite;
-    margin-right: 8px;
-  }
-
-  @keyframes ooredoo-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Responsive */
-  @media (max-width: 480px) {
-    .ooredoo-login-container {
-      padding: 0;
-      align-items: flex-start;
-    }
-    
-    .ooredoo-login-card {
-      border-radius: 0;
-      border: none;
-      box-shadow: none;
-      padding: 40px 24px;
-    }
-  }
+}

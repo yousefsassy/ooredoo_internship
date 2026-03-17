@@ -1,38 +1,56 @@
-<form class="zone-form" [formGroup]="zoneForm" (ngSubmit)="onSubmit()">
-  <h2 class="form-title">Create a New Zone</h2>
-
-  <!-- Secteur -->
-  <div class="form-group">
-    <label for="secteur">Sector <span class="required">*</span></label>
-    <select id="secteur" formControlName="secteur" class="form-control">
-      <option value="">-- Select a sector --</option>
-      <option *ngFor="let sec of secteurs" [ngValue]="sec">{{ sec.nom }}</option>
-    </select>
-    <div class="error" *ngIf="zoneForm.get('secteur')?.touched && zoneForm.get('secteur')?.invalid">
-      Sector is required
-    </div>
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Create Zone</h1>
+    <p class="page-subtitle">Define a new geographical zone</p>
   </div>
+  <div class="form-card">
+    <form [formGroup]="zoneForm" (ngSubmit)="onSubmit()">
+      <!-- Sector select -->
+      <div class="form-group">
+        <label for="secteur" class="form-label">Sector</label>
+        <div class="input-wrapper">
+          <i class="fas fa-sitemap input-icon"></i>
+          <select id="secteur" formControlName="secteur" class="form-input form-select"
+                  [ngClass]="{'input-error': zoneForm.get('secteur')?.touched && zoneForm.get('secteur')?.invalid}">
+            <option value="">-- Select a sector --</option>
+            <option *ngFor="let sec of secteurs" [ngValue]="sec">{{ sec.nom }}</option>
+          </select>
+        </div>
+        <div class="error-message" *ngIf="zoneForm.get('secteur')?.touched && zoneForm.get('secteur')?.invalid">
+          <i class="fas fa-exclamation-circle"></i> Sector is required
+        </div>
+      </div>
 
-  <!-- Gouvernorat -->
-  <div class="form-group">
-    <label for="gouvernorat">Governorate <span class="required">*</span></label>
-    <select id="gouvernorat" formControlName="gouvernorat" class="form-control" [disabled]="gouvernorats.length === 0">
-      <option value="">-- Select a governorate --</option>
-      <option *ngFor="let gov of gouvernorats" [value]="gov">{{ gov }}</option>
-    </select>
-    <div class="error" *ngIf="zoneForm.get('gouvernorat')?.touched && zoneForm.get('gouvernorat')?.invalid">
-      Governorate is required
-    </div>
-  </div>
+      <!-- Governorate select -->
+      <div class="form-group">
+        <label for="gouvernorat" class="form-label">Governorate</label>
+        <div class="input-wrapper">
+          <i class="fas fa-map-marker-alt input-icon"></i>
+          <select id="gouvernorat" formControlName="gouvernorat" class="form-input form-select"
+                  [ngClass]="{'input-error': zoneForm.get('gouvernorat')?.touched && zoneForm.get('gouvernorat')?.invalid}">
+            <option value="">-- Select a governorate --</option>
+            <option *ngFor="let gov of gouvernorats" [value]="gov">{{ gov }}</option>
+          </select>
+        </div>
+        <div class="error-message" *ngIf="zoneForm.get('gouvernorat')?.touched && zoneForm.get('gouvernorat')?.invalid">
+          <i class="fas fa-exclamation-circle"></i> Governorate is required
+        </div>
+      </div>
 
-  <!-- Libelle -->
-  <div class="form-group">
-    <label for="libelle">Label (auto-generated)</label>
-    <input id="libelle" formControlName="libelle" class="form-control" [disabled]="true" />
-  </div>
+      <!-- Libelle (auto) -->
+      <div class="form-group">
+        <label for="libelle" class="form-label">Label (auto-generated)</label>
+        <div class="input-wrapper">
+          <i class="fas fa-tag input-icon"></i>
+          <input id="libelle" formControlName="libelle" class="form-input input-disabled" [disabled]="true" />
+        </div>
+      </div>
 
-  <!-- Submit -->
-  <div class="form-actions">
-    <button type="submit" class="btn-primary" [disabled]="zoneForm.invalid">Create Zone</button>
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" [disabled]="zoneForm.invalid">
+        <i class="fas fa-plus-circle"></i>
+        Create Zone
+      </button>
+    </form>
   </div>
-</form>
+</div>

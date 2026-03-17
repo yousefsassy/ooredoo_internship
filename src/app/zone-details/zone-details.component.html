@@ -1,19 +1,49 @@
-<div class="zone-details-container" *ngIf="!isLoading && zone; else loading">
-  <div class="zone-details-header">
-    <i class="fas fa-map-pin zone-details-icon"></i>
-    <h2>{{ zone.libelle }}</h2>
-    <span class="zone-id">#{{ zone.idZone }}</span>
-  </div>
-  <div class="zone-details-body">
-    <p><strong>Governorate:</strong> {{ zone.gouvernorat }}</p>
-    <p><strong>Number of Shops:</strong> {{ zone.nbShop ?? "N/A" }}</p>
-    <!-- Add more fields as needed -->
+<div *ngIf="isLoading" class="loading-state">
+  <div class="spinner-ring"></div>
+  <p>Loading zone details...</p>
+</div>
+
+<div *ngIf="error" class="error-banner">
+  <div class="error-icon"><i class="fas fa-exclamation-circle"></i></div>
+  <div class="error-content">
+    <span class="error-title">Error</span>
+    <span class="error-text">{{ error }}</span>
   </div>
 </div>
 
-<ng-template #loading>
-  <div class="zone-details-loading">
-    <p *ngIf="!error">Loading zone details...</p>
-    <p *ngIf="error" class="error-msg">{{ error }}</p>
+<div *ngIf="!isLoading && zone" class="page-container">
+  <!-- Zone Header -->
+  <div class="detail-header">
+    <div class="detail-icon">
+      <i class="fas fa-map-pin"></i>
+    </div>
+    <div class="detail-header-info">
+      <h1 class="detail-title">{{ zone.libelle }}</h1>
+    </div>
   </div>
-</ng-template>
+
+  <!-- Zone Meta -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <i class="fas fa-hashtag"></i>
+      <div class="meta-content">
+        <span class="meta-label">Zone ID</span>
+        <span class="meta-value">{{ zone.idZone }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-city"></i>
+      <div class="meta-content">
+        <span class="meta-label">Governorate</span>
+        <span class="meta-value">{{ zone.gouvernorat }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-store"></i>
+      <div class="meta-content">
+        <span class="meta-label">Number of Shops</span>
+        <span class="meta-value">{{ zone.nbShop ?? 'N/A' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

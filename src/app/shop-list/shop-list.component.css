@@ -1,258 +1,303 @@
-.shop-management-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  color: #333;
+/* ============================================
+   SHOP LIST — "Crimson Edge" Data Table
+   ============================================ */
+
+.page-container {
+  padding: var(--space-5) var(--space-8);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease both;
 }
 
-/* Header */
-.management-header {
+/* --- Page Header --- */
+.page-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.025em;
+}
+
+.page-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-1);
+}
+
+.btn-add {
+  display: inline-flex;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #ed1c24;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-icon {
-  font-size: 2rem;
-  color: #ed1c24;
-}
-
-h2 {
-  color: #b71c1c;
-  margin: 0;
-  font-weight: 700;
-}
-
-/* Add shop button */
-.add-shop-btn {
-  background-color: #ed1c24;
-  color: white;
+  gap: var(--space-2);
+  height: 44px;
+  padding: 0 var(--space-6);
+  background: var(--gradient-primary);
+  color: var(--color-text-inverse);
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 30px;
-  font-weight: 600;
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.5);
+  transition: all var(--transition-spring);
+  white-space: nowrap;
+  box-shadow: var(--shadow-primary);
 }
 
-.add-shop-btn:hover {
-  background-color: #b71c1c;
+.btn-add:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(183, 28, 28, 0.7);
+  box-shadow: var(--shadow-primary-lg);
 }
 
-/* Filters container */
-.filters-container {
+.btn-add:active {
+  transform: translateY(0);
+}
+
+.btn-add i {
+  font-size: 11px;
+}
+
+/* --- Controls Bar --- */
+.controls-bar {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 
-.search-input {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  flex: 1 1 300px;
-  min-width: 200px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
 }
 
-.search-input:focus {
-  border-color: #ed1c24;
+.search-box i {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
+}
+
+.search-box input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--space-4) 0 var(--space-10);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
   outline: none;
-  box-shadow: 0 0 8px rgba(237, 28, 36, 0.4);
+  transition: all var(--transition-base);
 }
 
-/* Table container */
-.modern-table-container {
-  background: #fff0f0;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(237, 28, 36, 0.25);
+.search-box input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.search-box input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+.search-box:focus-within i {
+  color: var(--color-primary);
+}
+
+/* --- Table Card --- */
+.table-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.table-responsive {
   overflow-x: auto;
 }
 
-/* Table */
-.modern-shop-table {
+/* --- Data Table --- */
+.data-table {
   width: 100%;
   border-collapse: collapse;
-  font-weight: 500;
-  color: #4a1f1f;
 }
 
-.modern-shop-table thead {
-  background-color: #ed1c24;
-  color: white;
+.data-table thead {
+  background: var(--color-slate-50);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
-.modern-shop-table th {
-  padding: 1.25rem 1.5rem;
+.data-table th {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   text-align: left;
-  font-weight: 700;
-  border-bottom: 3px solid #b71c1c;
+  white-space: nowrap;
 }
 
-.modern-shop-table th i {
-  margin-right: 0.75rem;
-  color: white;
+.th-actions {
+  text-align: right;
 }
 
-.modern-shop-table td {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f8bbd0;
+.data-table td {
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
   vertical-align: middle;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
-.modern-shop-table td i {
-  margin-right: 0.75rem;
-  color: #b71c1c;
+.td-secondary {
+  color: var(--color-text-secondary);
 }
 
-.modern-shop-table tr:hover td {
-  background-color: #f8bbd0;
-  cursor: pointer;
+.data-table tbody tr {
+  transition: all var(--transition-fast);
 }
 
-/* Action buttons */
-.action-buttons {
-  display: flex;
-  gap: 0.75rem;
+.data-table tbody tr:hover {
+  background-color: var(--color-slate-50);
 }
 
-/* Buttons base */
-.action-buttons button {
-  padding: 0.5rem 1rem;
-  border-radius: 30px;
-  font-size: 0.9rem;
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Shop Info Cell --- */
+.shop-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-3);
+}
+
+.shop-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  flex-shrink: 0;
+}
+
+.shop-name {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* --- Action Buttons --- */
+.action-buttons {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
   cursor: pointer;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid transparent;
-  font-weight: 600;
-  box-shadow: 0 3px 8px rgba(183, 28, 28, 0.3);
+  transition: all var(--transition-base);
 }
 
-.action-buttons button i {
-  font-size: 1.2rem;
-  line-height: 0;
+.action-btn:hover {
+  border-color: var(--color-slate-300);
+  background: var(--color-slate-50);
+  color: var(--color-text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
-/* View Button */
-.view-btn {
-  background-color: #ffcdd2;
-  color: #b71c1c;
-  border-color: #f44336;
+.action-btn-warning:hover {
+  border-color: var(--color-warning);
+  background: var(--color-warning-light);
+  color: #92400e;
 }
 
-.view-btn:hover {
-  background-color: #f44336;
-  color: white;
-  box-shadow: 0 5px 14px rgba(244, 67, 54, 0.7);
+.action-btn-danger:hover {
+  border-color: var(--color-error);
+  background: var(--color-error-light);
+  color: var(--color-error);
 }
 
-/* Edit Button */
-.edit-btn {
-  background-color: #ffebee;
-  color: #b71c1c;
-  border-color: #f48fb1;
-}
-
-.edit-btn:hover {
-  background-color: #f48fb1;
-  color: white;
-  box-shadow: 0 5px 14px rgba(183, 28, 28, 0.7);
-}
-
-/* Archive Button */
-.archive-btn {
-  background-color: #fce4ec;
-  color: #d32f2f;
-  border-color: #ef9a9a;
-}
-
-.archive-btn:hover {
-  background-color: #ffcdd2;
-  box-shadow: 0 5px 14px rgba(244, 67, 54, 0.7);
-}
-
-/* Delete Button */
-.delete-btn {
-  background-color: #f8f9fa;
-  color: #6c757d;
-  border-color: #d3d3d3;
-}
-
-.delete-btn:hover {
-  background-color: #e9ecef;
-}
-
-/* Empty state */
+/* --- Empty State --- */
 .empty-state {
-  padding: 3rem 2rem;
   text-align: center;
-  background-color: #f8bbd0;
-  border-radius: 12px;
-  color: #b71c1c;
-  font-weight: 700;
-  font-size: 1.3rem;
+  padding: var(--space-12) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .empty-icon {
-  font-size: 3rem;
-  color: #b71c1c;
-  margin-bottom: 1rem;
+  width: 64px;
+  height: 64px;
+  background: var(--color-slate-100);
+  border-radius: var(--radius-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-2);
 }
 
-/* Responsive */
+.empty-icon i {
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-tertiary);
+  opacity: 0.6;
+}
+
+.empty-state h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.empty-state p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  max-width: 280px;
+}
+
+/* --- Responsive --- */
 @media (max-width: 768px) {
-  .management-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+  .page-container {
+    padding: var(--space-5);
   }
-  
-  .filters-container {
+
+  .page-header {
     flex-direction: column;
   }
-  
-  .modern-shop-table th, 
-  .modern-shop-table td {
-    padding: 0.75rem;
+
+  .page-title {
+    font-size: var(--font-size-2xl);
   }
-  
-  .action-buttons {
-    flex-wrap: wrap;
-  }
-  
-  .action-buttons button {
-    padding: 0.5rem;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    justify-content: center;
-    font-size: 0;
-    overflow: hidden;
-  }
-  
-  .action-buttons button i {
-    margin: 0;
-    font-size: 1rem;
+
+  .search-box {
+    max-width: none;
   }
 }

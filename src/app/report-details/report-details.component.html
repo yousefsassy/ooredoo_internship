@@ -1,34 +1,87 @@
-<div *ngIf="loading" class="loading">Loading report...</div>
+<div *ngIf="loading" class="loading-state">
+  <div class="spinner-ring"></div>
+  <p>Loading report...</p>
+</div>
 
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div *ngIf="errorMessage" class="error-banner">
+  <div class="error-icon"><i class="fas fa-exclamation-circle"></i></div>
+  <div class="error-content">
+    <span class="error-title">Error</span>
+    <span class="error-text">{{ errorMessage }}</span>
+  </div>
+</div>
 
-<div *ngIf="report && !loading" class="report-container">
-  <h2>{{ report.titre }}</h2>
-  <p><strong>Description:</strong> {{ report.description }}</p>
-  <p><strong>Type:</strong> {{ report.type }}</p>
-  <p><strong>Creation Date:</strong> {{ report.dateCreation | date:'medium' }}</p>
-  <p><strong>Store:</strong> {{ report.nomShop }}</p>
-  <p><strong>Administrator:</strong> {{ report.nomAdmin }}</p>
+<div *ngIf="report && !loading" class="page-container">
+  <!-- Back Button -->
+  <button (click)="goBack()" class="btn-back">
+    <i class="fas fa-arrow-left"></i>
+    <span>Back to Reports</span>
+  </button>
 
-  <h3>Field Details:</h3>
-  <ul class="fields-list">
-    <li *ngFor="let field of report.labelsEtValeurs" class="field-item">
-      <strong>{{ field.label }}:</strong>
+  <!-- Report Header -->
+  <div class="report-header">
+    <div class="report-icon">
+      <i class="fas fa-file-alt"></i>
+    </div>
+    <div class="report-header-info">
+      <h1 class="report-title">{{ report.titre }}</h1>
+      <p class="report-desc" *ngIf="report.description">{{ report.description }}</p>
+    </div>
+  </div>
 
-      <!-- Image -->
-      <img *ngIf="isImage(field.valeur)" [src]="getPhotoUrl(field.valeur)" [alt]="field.label" class="field-image" />
+  <!-- Report Meta -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <i class="fas fa-tag"></i>
+      <div class="meta-content">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">{{ report.type }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-calendar"></i>
+      <div class="meta-content">
+        <span class="meta-label">Created</span>
+        <span class="meta-value">{{ report.dateCreation | date:'medium' }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-store"></i>
+      <div class="meta-content">
+        <span class="meta-label">Store</span>
+        <span class="meta-value">{{ report.nomShop }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <i class="fas fa-user"></i>
+      <div class="meta-content">
+        <span class="meta-label">Administrator</span>
+        <span class="meta-value">{{ report.nomAdmin }}</span>
+      </div>
+    </div>
+  </div>
 
-      <!-- Checkbox -->
-      <span *ngIf="!isImage(field.valeur) && isCheckboxValue(field.valeur)">
-        {{ field.valeur === 'true' ? 'Yes' : 'No' }}
-      </span>
+  <!-- Fields Section -->
+  <div class="fields-section" *ngIf="report.labelsEtValeurs && report.labelsEtValeurs.length > 0">
+    <h3 class="section-title">Field Details</h3>
+    <div class="fields-grid">
+      <div *ngFor="let field of report.labelsEtValeurs" class="field-card">
+        <span class="field-label">{{ field.label }}</span>
 
-      <!-- Simple Text -->
-      <span *ngIf="!isImage(field.valeur) && !isCheckboxValue(field.valeur)">
-        {{ field.valeur }}
-      </span>
-    </li>
-  </ul>
+        <!-- Image -->
+        <img *ngIf="isImage(field.valeur)" [src]="getPhotoUrl(field.valeur)" [alt]="field.label" class="field-image" />
 
-  <button (click)="goBack()" class="btn-back">Back</button>
+        <!-- Checkbox -->
+        <span *ngIf="!isImage(field.valeur) && isCheckboxValue(field.valeur)" class="field-value">
+          <i class="fas" [ngClass]="{'fa-check-circle field-yes': field.valeur === 'true', 'fa-times-circle field-no': field.valeur !== 'true'}"></i>
+          {{ field.valeur === 'true' ? 'Yes' : 'No' }}
+        </span>
+
+        <!-- Simple Text -->
+        <span *ngIf="!isImage(field.valeur) && !isCheckboxValue(field.valeur)" class="field-value">
+          {{ field.valeur }}
+        </span>
+      </div>
+    </div>
+  </div>
 </div>

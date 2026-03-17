@@ -1,50 +1,111 @@
-<div class="dashboard-wrapper container my-4">
-  <h2 class="dashboard-title text-center mb-4">Dashboard Overview</h2>
+<div class="dashboard">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Region Dashboard</h1>
+      <p class="page-subtitle">Overview of your assigned region, shops, and reports</p>
+    </div>
+  </div>
 
-  <div class="region-container card shadow p-4 mb-5" *ngIf="region; else loadingOrError">
-    <h3 class="text-center mb-4">🏞️ Your Assigned Region</h3>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <strong>Name:</strong>
-        <span>{{ region.nom }}</span>
+  <!-- Region Info Card -->
+  <div class="info-section" *ngIf="region; else loadingOrError">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon-wrap">
+          <div class="info-icon">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+        </div>
+        <div class="info-header-text">
+          <h3 class="info-card-title">Your Assigned Region</h3>
+          <p class="info-card-desc">Region details and zone information</p>
+        </div>
       </div>
-      <div class="col-md-6 mb-3">
-        <strong>Delegation:</strong>
-        <span>{{ region.delegation }}</span>
+      <div class="info-card-body">
+        <div class="detail-row">
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--primary">
+                <i class="fas fa-tag"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Name</span>
+              <span class="detail-value">{{ region.nom }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--indigo">
+                <i class="fas fa-landmark"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Delegation</span>
+              <span class="detail-value">{{ region.delegation }}</span>
+            </div>
+          </div>
+          <div class="detail-item" *ngIf="region.zone">
+            <div class="detail-icon-wrap">
+              <div class="detail-icon detail-icon--teal">
+                <i class="fas fa-globe-africa"></i>
+              </div>
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">Zone</span>
+              <span class="detail-value">{{ region.zone.libelle }} ({{ region.zone.gouvernorat }})</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6 mb-3" *ngIf="region.zone">
-        <strong>Zone:</strong>
-        <span>{{ region.zone.libelle }} ({{ region.zone.gouvernorat }})</span>
-      </div>
+      <div class="info-accent"></div>
     </div>
   </div>
 
   <ng-template #loadingOrError>
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-      {{ errorMessage }}
+    <div *ngIf="errorMessage" class="error-banner">
+      <div class="error-icon-wrap">
+        <i class="fas fa-exclamation-circle"></i>
+      </div>
+      <div class="error-content">
+        <span class="error-title">Something went wrong</span>
+        <span class="error-text">{{ errorMessage }}</span>
+      </div>
     </div>
-    <div *ngIf="!errorMessage" class="text-center">
-      <div class="spinner-border text-danger" role="status" aria-hidden="true"></div>
-      <span class="sr-only">Loading region details...</span>
-      <p class="mt-2">Loading region details...</p>
+    <div *ngIf="!errorMessage" class="loading-state">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+      </div>
+      <p class="loading-text">Loading region details...</p>
     </div>
   </ng-template>
 
-  <div class="dashboard-cards d-flex justify-content-center gap-4 flex-wrap">
-    <div class="kpi-card shops-card card text-center p-3 shadow" style="width: 180px;">
-      <div class="icon mb-2">
-        <i class="fas fa-store fa-2x text-primary"></i>
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-card--red">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-store"></i>
+        </div>
       </div>
-      <h4 class="mb-1">{{ stats.totalShops }}</h4>
-      <p class="mb-0">Total Shops</p>
+      <div class="kpi-content">
+        <span class="kpi-label">Total Shops</span>
+        <span class="kpi-value">{{ stats.totalShops }}</span>
+      </div>
+      <div class="kpi-accent"></div>
     </div>
 
-    <div class="kpi-card reports-card card text-center p-3 shadow" style="width: 180px;">
-      <div class="icon mb-2">
-        <i class="fas fa-clipboard-list fa-2x text-success"></i>
+    <div class="kpi-card kpi-card--green">
+      <div class="kpi-icon-wrap">
+        <div class="kpi-icon">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
       </div>
-      <h4 class="mb-1">{{ stats.totalReports }}</h4>
-      <p class="mb-0">Reports Received</p>
+      <div class="kpi-content">
+        <span class="kpi-label">Reports Received</span>
+        <span class="kpi-value">{{ stats.totalReports }}</span>
+      </div>
+      <div class="kpi-accent"></div>
     </div>
   </div>
 </div>

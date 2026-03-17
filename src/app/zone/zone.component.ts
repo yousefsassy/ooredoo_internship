@@ -146,7 +146,7 @@ export class ZoneComponent implements OnInit {
   ngOnInit(): void {
     this.zoneForm = this.fb.group({
       secteur: [null, Validators.required],
-      gouvernorat: ['', Validators.required],
+      gouvernorat: [{ value: '', disabled: true }, Validators.required],
       
       libelle: [{ value: '', disabled: true }, Validators.required],
     });
@@ -156,16 +156,23 @@ export class ZoneComponent implements OnInit {
 
     // Quand secteur change
     this.zoneForm.get('secteur')?.valueChanges.subscribe(secteur => {
+      const gouvControl = this.zoneForm.get('gouvernorat');
       if (secteur) {
         this.gouvernorats = [];
-        this.zoneForm.patchValue({ gouvernorat: '', delegation: '' });
+        gouvControl?.reset('');
         // Extraire gouvernorats du secteur
         if (this.secteursDetail[secteur.nom]) {
           this.gouvernorats = this.secteursDetail[secteur.nom].map(g => g.name);
         }
+        if (this.gouvernorats.length > 0) {
+          gouvControl?.enable();
+        } else {
+          gouvControl?.disable();
+        }
       } else {
         this.gouvernorats = [];
-        
+        gouvControl?.reset('');
+        gouvControl?.disable();
       }
       this.updateLibelle();
     });
@@ -179,7 +186,6 @@ export class ZoneComponent implements OnInit {
       } else {
         this.delegations = [];
       }
-      this.zoneForm.patchValue({ delegation: '' });
       this.updateLibelle();
     });
   }

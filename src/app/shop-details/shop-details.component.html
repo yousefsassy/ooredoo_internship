@@ -1,7 +1,36 @@
-<div class="shop-details-container" *ngIf="shop">
-  <h2>{{ shop.nomShop }}</h2>
+<div *ngIf="shop" class="page-container">
+  <div class="detail-header">
+    <div class="detail-icon">
+      <i class="fas fa-store"></i>
+    </div>
+    <div class="detail-header-info">
+      <h1 class="detail-title">{{ shop.nomShop }}</h1>
+    </div>
+  </div>
 
-  <p><i class="fas fa-user-tie"></i> <strong>Admin:</strong> {{ shop.adminShop?.username || "N/A" }}</p>
-<p><i class="fas fa-phone-alt"></i> <strong>Phone:</strong> {{ shop.telephone }}</p>
+  <div class="meta-grid">
+    <div class="meta-item">
+      <i class="fas fa-hashtag"></i>
+      <div class="meta-content">
+        <span class="meta-label">Shop ID</span>
+        <span class="meta-value">{{ shop.idShop }}</span>
+      </div>
+    </div>
 
+    <div class="meta-item">
+      <i class="fas fa-user-tie"></i>
+      <div class="meta-content">
+        <span class="meta-label">Administrator</span>
+        <span class="meta-value">{{ shop.adminShop?.username || 'N/A' }}</span>
+      </div>
+    </div>
+
+    <div class="meta-item">
+      <i class="fas fa-phone-alt"></i>
+      <div class="meta-content">
+        <span class="meta-label">Phone</span>
+        <span class="meta-value">{{ shop.telephone }}</span>
+      </div>
+    </div>
+  </div>
 </div>

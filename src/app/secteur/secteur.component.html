@@ -1,40 +1,58 @@
-<form [formGroup]="secteurForm" (ngSubmit)="onSubmit()" class="secteur-create-container">
-  <h2>Create a New Sector</h2>
-
-  <div class="form-group">
-    <label for="sector-select">Select a Sector</label>
-    <select id="sector-select" formControlName="nom" class="form-control" required>
-      <option value="" disabled selected>-- Choose a sector --</option>
-      <option *ngFor="let sector of availableSectors" [value]="sector">
-        {{ sector }}
-      </option>
-    </select>
-    <div *ngIf="secteurForm.controls['nom'].invalid && secteurForm.controls['nom'].touched" class="error">
-      Please select a sector.
-    </div>
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Create Sector</h1>
+    <p class="page-subtitle">Register a new operational sector</p>
   </div>
 
-  <button
-    type="submit"
-    [disabled]="secteurForm.invalid || loading"
-    class="btn btn-danger btn-block mt-3"
-  >
-    {{ loading ? 'Creating...' : 'Create Sector' }}
-  </button>
+  <div class="form-card">
+    <form [formGroup]="secteurForm" (ngSubmit)="onSubmit()">
+      <!-- Sector select -->
+      <div class="form-group">
+        <label for="sector-select" class="form-label">Select a Sector</label>
+        <div class="input-wrapper">
+          <i class="fas fa-layer-group input-icon"></i>
+          <select id="sector-select" formControlName="nom" class="form-input form-select" required
+                  [ngClass]="{'input-error': secteurForm.controls['nom'].invalid && secteurForm.controls['nom'].touched}">
+            <option value="" disabled selected>-- Choose a sector --</option>
+            <option *ngFor="let sector of availableSectors" [value]="sector">{{ sector }}</option>
+          </select>
+        </div>
+        <div *ngIf="secteurForm.controls['nom'].invalid && secteurForm.controls['nom'].touched" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Please select a sector.
+        </div>
+      </div>
 
-  <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
-  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
-</form>
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" [disabled]="secteurForm.invalid || loading">
+        <i class="fas fa-plus-circle"></i>
+        {{ loading ? 'Creating...' : 'Create Sector' }}
+      </button>
 
-<!-- Sector Details Display -->
-<div *ngIf="secteurForm.value.nom" class="mt-4 secteur-details">
-  <h4>Details for {{ secteurForm.value.nom }}</h4>
-  <ul>
-    <li *ngFor="let governorate of sectorsDetail[secteurForm.value.nom]">
-      <strong>{{ governorate.name }}:</strong>
-      <ul>
-        <li *ngFor="let delegation of governorate.delegations">{{ delegation }}</li>
-      </ul>
-    </li>
-  </ul>
+      <!-- Success/Error messages -->
+      <div *ngIf="successMessage" class="alert-message alert-success">
+        <i class="fas fa-check-circle"></i>
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert-message alert-error">
+        <i class="fas fa-exclamation-triangle"></i>
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+
+  <!-- Sector Details Display -->
+  <div *ngIf="secteurForm.value.nom" class="details-card">
+    <h3 class="details-title">
+      <i class="fas fa-info-circle"></i>
+      Details for {{ secteurForm.value.nom }}
+    </h3>
+    <div class="details-list">
+      <div *ngFor="let governorate of sectorsDetail[secteurForm.value.nom]" class="detail-item">
+        <h4 class="governorate-name">{{ governorate.name }}</h4>
+        <div class="delegation-tags">
+          <span *ngFor="let delegation of governorate.delegations" class="delegation-tag">{{ delegation }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

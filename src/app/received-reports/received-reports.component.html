@@ -1,20 +1,55 @@
-<div *ngIf="reports.length === 0" class="no-reports">
-  <p>No reports received yet.</p>
-</div>
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Received Reports</h1>
+    <p class="page-subtitle">Reports assigned to you for completion</p>
+  </div>
 
-<div class="reports-container">
-  <div *ngFor="let report of reports" class="report-card">
-    <div class="card-header">
-      <h3>{{ report.titre }}</h3>
-      <span class="date">{{ report.dateCreation | date:'mediumDate' }}</span>
+  <!-- Empty State -->
+  <div *ngIf="reports.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <i class="fas fa-inbox"></i>
     </div>
-    <div class="card-body">
-      <p><strong>Type:</strong> {{ report.type }}</p>
-      <p><strong>Shop:</strong> {{ report.nomShop }}</p>
-      <p><strong>Admin:</strong> {{ report.nomAdmin }}</p>
+    <h3 class="empty-title">No reports received yet</h3>
+    <p class="empty-text">When reports are assigned to you, they will appear here.</p>
+  </div>
+
+  <!-- Reports Grid -->
+  <div class="reports-grid" *ngIf="reports.length > 0">
+    <div *ngFor="let report of reports; let i = index" class="report-card" [style.animation-delay]="(i * 0.06) + 's'">
+      <div class="card-accent"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <span class="card-date">
+            <i class="fas fa-clock"></i>
+            {{ report.dateCreation | date:'mediumDate' }}
+          </span>
+        </div>
+
+        <h3 class="card-title">{{ report.titre }}</h3>
+
+        <div class="card-meta">
+          <div class="meta-row">
+            <i class="fas fa-tag"></i>
+            <span>{{ report.type }}</span>
+          </div>
+          <div class="meta-row">
+            <i class="fas fa-store"></i>
+            <span>{{ report.nomShop }}</span>
+          </div>
+          <div class="meta-row">
+            <i class="fas fa-user"></i>
+            <span>{{ report.nomAdmin }}</span>
+          </div>
+        </div>
+
+        <button (click)="onFillReport(report.idReport)" class="btn-fill">
+          <i class="fas fa-pen-to-square"></i>
+          Fill Report
+        </button>
+      </div>
     </div>
-    <button (click)="onFillReport(report.idReport)" class="btn-fill-report">
-      Fill Report
-    </button>
   </div>
 </div>

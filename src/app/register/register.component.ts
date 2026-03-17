@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required,
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[$!%*?&])[A-Za-z\d$!%*?&]{8,20}$/)
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/)
       ]],
       rePassword: ['', Validators.required],
       role: ['', Validators.required]
@@ -77,7 +77,16 @@ export class RegisterComponent implements OnInit {
       },
       error: (err) => {
         this.isloading = false;
-        this.msgerror = err?.message || 'An error occurred during registration.';
+        const errMsg = err?.error?.message || err?.error?.error || err?.message || '';
+        // Backend registers the user successfully but then tries to auto-authenticate,
+        // which fails because the account isn't activated yet. Treat as success.
+        if (errMsg.includes('Authentication failed')) {
+          this.router.navigate(['/activateaccount'], {
+            queryParams: { username: user.username }
+          });
+        } else {
+          this.msgerror = errMsg || 'An error occurred during registration.';
+        }
       }
     });
   }
@@ -93,6 +102,35 @@ export class RegisterComponent implements OnInit {
 
   toggleRePasswordVisibility(): void {
     this.showRePassword = !this.showRePassword;
+  }
+
+  get passwordValue(): string {
+    return this.registerform.get('password')?.value || '';
+  }
+
+  get hasUppercase(): boolean { return /[A-Z]/.test(this.passwordValue); }
+  get hasLowercase(): boolean { return /[a-z]/.test(this.passwordValue); }
+  get hasNumber(): boolean { return /\d/.test(this.passwordValue); }
+  get hasSpecial(): boolean { return /[@$!%*?&]/.test(this.passwordValue); }
+  get hasValidLength(): boolean {
+    const len = this.passwordValue.length;
+    return len >= 8 && len <= 20;
+  }
+
+  get passwordStrength(): number {
+    let s = 0;
+    if (this.hasUppercase) s++;
+    if (this.hasLowercase) s++;
+    if (this.hasNumber) s++;
+    if (this.hasSpecial) s++;
+    if (this.hasValidLength) s++;
+    return s;
+  }
+
+  get strengthLabel(): string {
+    if (!this.passwordValue) return '';
+    const labels = ['Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+    return labels[this.passwordStrength];
   }
 
   

@@ -1,123 +1,202 @@
-<div class="container" style="display: flex; gap: 20px;">
-
-  <!-- Left: Available Fields -->
-  <div style="flex: 1;">
-    <h3>Available Fields</h3>
-    <div *ngFor="let field of fields" class="field-item">
-      <input
-        type="checkbox"
-        [checked]="isFieldSelected(field)"
-        (change)="onFieldToggle(field, $event)"
-        id="field-{{field.id}}"
-      />
-      <label for="field-{{field.id}}">{{ field.label }} ({{ field.type }})</label>
-    </div>
-
-    <h4 class="mt-4">Add Custom Field</h4>
-    <input
-      type="text"
-      [(ngModel)]="customFieldLabel"
-      placeholder="Field label"
-      class="form-control mb-2"
-    />
-    <select [(ngModel)]="customFieldType" class="form-control mb-2">
-      <option value="text">Text</option>
-      <option value="number">Number</option>
-      <option value="date">Date</option>
-    </select>
-    <button (click)="addCustomField()" class="btn btn-primary">
-      Add Custom Field
-    </button>
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Create Report Template</h1>
+    <p class="page-subtitle">Build a report with custom fields and assign it</p>
   </div>
 
-  <!-- Middle: Report Form and Selected Fields -->
-  <div style="flex: 1.5;">
-    <h2>Create Report</h2>
-    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label>Title</label>
-        <input class="form-control" formControlName="titre" />
+  <div class="panels-grid">
+    <!-- Left Panel: Available Fields -->
+    <div class="panel panel-fields">
+      <div class="panel-header">
+        <h3 class="panel-title"><i class="fas fa-th-list"></i> Available Fields</h3>
       </div>
+      <div class="panel-body">
+        <div *ngFor="let field of fields" class="field-item">
+          <label class="checkbox-wrapper">
+            <input
+              type="checkbox"
+              [checked]="isFieldSelected(field)"
+              (change)="onFieldToggle(field, $event)"
+              id="field-{{field.id}}"
+            />
+            <span class="checkbox-custom"></span>
+            <span class="field-label">{{ field.label }}</span>
+            <span class="field-type-badge">{{ field.type }}</span>
+          </label>
+        </div>
 
-      <div class="mb-3">
-        <label>Description</label>
-        <textarea class="form-control" formControlName="description"></textarea>
-      </div>
-      <div class="mb-3">
-    <label>Type</label>
-    <select class="form-control" formControlName="type">
-      <option value="">-- Choose a type --</option>
-      <option value="TECHNICAL">Technical</option>
-      <option value="MARKETING">Marketing</option>
-      <option value="FINANCIAL">Financial</option>
-      <option value="OTHER">Other</option>
-    </select>
-  </div>
-
-      <div class="mb-3">
-        <label>Select Shop</label>
-        <select class="form-control" formControlName="shopId">
-          <option value="">-- Choose a shop --</option>
-          <option *ngFor="let shop of shops" [value]="shop.idShop">{{ shop.nomShop }}</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label>Select Recipient</label>
-        <select class="form-control" formControlName="destinataireId">
-          <option value="">-- Choose a recipient --</option>
-          <option *ngFor="let user of users" [value]="user.id">{{ user.nom || user.username }}</option>
-        </select>
-      </div>
-
-      <hr />
-
-      <h4>Selected Fields (Drag & Drop)</h4>
-      <div
-        cdkDropList
-        [cdkDropListData]="selectedFields"
-        class="selected-fields"
-        (cdkDropListDropped)="drop($event)"
-        style="min-height: 150px; border: 1px solid #ccc; padding: 10px;"
-      >
-        <div *ngFor="let field of selectedFields" cdkDrag class="drag-field" style="margin-bottom: 5px;">
-          {{ field.label }} ({{ field.type }})
-          <button type="button" (click)="removeField(field)" style="margin-left: 10px;">❌</button>
+        <div class="custom-field-section">
+          <h4 class="section-label">Add Custom Field</h4>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <i class="fas fa-font input-icon"></i>
+              <input
+                type="text"
+                [(ngModel)]="customFieldLabel"
+                placeholder="Field label"
+                class="form-input"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <i class="fas fa-list input-icon"></i>
+              <select [(ngModel)]="customFieldType" class="form-input form-select">
+                <option value="text">Text</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" (click)="addCustomField()" class="btn-secondary">
+            <i class="fas fa-plus"></i> Add Field
+          </button>
         </div>
       </div>
+    </div>
 
-      <button type="submit" class="btn btn-primary mt-3">Create Report</button>
-    </form>
+    <!-- Center Panel: Report Form -->
+    <div class="panel panel-form">
+      <div class="panel-header">
+        <h3 class="panel-title"><i class="fas fa-file-alt"></i> Report Form</h3>
+      </div>
+      <div class="panel-body">
+        <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label class="form-label">Title</label>
+            <div class="input-wrapper">
+              <i class="fas fa-heading input-icon"></i>
+              <input class="form-input" formControlName="titre" placeholder="Enter report title" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <div class="input-wrapper textarea-wrapper">
+              <i class="fas fa-align-left input-icon input-icon--top"></i>
+              <textarea class="form-input form-textarea" formControlName="description" placeholder="Describe the report..." rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <div class="input-wrapper">
+              <i class="fas fa-tag input-icon"></i>
+              <select class="form-input form-select" formControlName="type">
+                <option value="">-- Choose a type --</option>
+                <option value="TECHNICAL">Technical</option>
+                <option value="MARKETING">Marketing</option>
+                <option value="FINANCIAL">Financial</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Shop</label>
+            <div class="input-wrapper">
+              <i class="fas fa-store input-icon"></i>
+              <select class="form-input form-select" formControlName="shopId">
+                <option value="">-- Choose a shop --</option>
+                <option *ngFor="let shop of shops" [value]="shop.idShop">{{ shop.nomShop }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Recipient</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user input-icon"></i>
+              <select class="form-input form-select" formControlName="destinataireId">
+                <option value="">-- Choose a recipient --</option>
+                <option *ngFor="let user of users" [value]="user.id">{{ user.nom || user.username }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="selected-fields-section">
+            <h4 class="section-label">Selected Fields</h4>
+            <div
+              cdkDropList
+              [cdkDropListData]="selectedFields"
+              class="drop-zone"
+              (cdkDropListDropped)="drop($event)"
+            >
+              <div *ngFor="let field of selectedFields" cdkDrag class="drag-field">
+                <div class="drag-field-info">
+                  <i class="fas fa-grip-vertical drag-handle"></i>
+                  <span class="field-label">{{ field.label }}</span>
+                  <span class="field-type-badge">{{ field.type }}</span>
+                </div>
+                <button type="button" (click)="removeField(field)" class="btn-remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div *ngIf="selectedFields.length === 0" class="drop-zone-empty">
+                <i class="fas fa-arrows-alt"></i>
+                <p>Select fields from the left panel</p>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Create Report
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Panel: Created Report Preview -->
+    <div class="panel panel-preview" *ngIf="createdReport">
+      <div class="panel-header">
+        <h3 class="panel-title"><i class="fas fa-eye"></i> Report Preview</h3>
+      </div>
+      <div class="panel-body">
+        <div class="preview-field">
+          <span class="preview-label">Title</span>
+          <span class="preview-value">{{ createdReport.titre }}</span>
+        </div>
+        <div class="preview-field">
+          <span class="preview-label">Description</span>
+          <span class="preview-value">{{ createdReport.description || 'No description' }}</span>
+        </div>
+        <div class="preview-field">
+          <span class="preview-label">Shop</span>
+          <span class="preview-value">{{ createdReport.shop?.nomShop || 'N/A' }}</span>
+        </div>
+        <div class="preview-field">
+          <span class="preview-label">Recipient</span>
+          <span class="preview-value">{{ createdReport.destinataire?.username || 'N/A' }}</span>
+        </div>
+        <div class="preview-field">
+          <span class="preview-label">Created At</span>
+          <span class="preview-value">{{ createdReport.dateCreation | date:'medium' }}</span>
+        </div>
+
+        <div class="preview-fields-table" *ngIf="createdReport.fields?.length > 0">
+          <h4 class="section-label">Fields & Values</h4>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Label</th>
+                  <th>Type</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let field of createdReport.fields">
+                  <td>{{ field.label }}</td>
+                  <td><span class="field-type-badge">{{ field.type }}</span></td>
+                  <td>{{ getFieldValue(field.idReportField) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p *ngIf="!createdReport.fields || createdReport.fields.length === 0" class="no-fields-text">No fields added.</p>
+      </div>
+    </div>
   </div>
-
-  <!-- Right: Display Created Report -->
-  <div style="flex: 1.5;" *ngIf="createdReport">
-    <h2>Report Details</h2>
-    <p><strong>Title:</strong> {{ createdReport.titre }}</p>
-    <p><strong>Description:</strong></p>
-    <p>{{ createdReport.description || 'No description' }}</p>
-    <p><strong>Shop:</strong> {{ createdReport.shop?.nomShop || 'N/A' }}</p>
-    <p><strong>Recipient:</strong> {{ createdReport.destinataire?.username || 'N/A' }}</p>
-    <p><strong>Created At:</strong> {{ createdReport.dateCreation | date:'medium' }}</p>
-
-    <h4>Fields and Values</h4>
-    <table class="table-report" *ngIf="createdReport.fields?.length > 0">
-      <thead>
-        <tr>
-          <th>Field Label</th>
-          <th>Type</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let field of createdReport.fields">
-          <td>{{ field.label }}</td>
-          <td>{{ field.type }}</td>
-          <td>{{ getFieldValue(field.idReportField) }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <p *ngIf="!createdReport.fields || createdReport.fields.length === 0">No fields added.</p>
-  </div>
-
 </div>

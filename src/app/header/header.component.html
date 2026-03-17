@@ -1,47 +1,47 @@
-<header class="ooredoo-admin-header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <div class="logo-container">
-        <span class="logo">Ooredoo</span>
-        <span class="admin-badge">{{ userRole || 'Guest' }}</span>
-      </div>
-      <div class="mobile-menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+<aside class="sidebar">
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-mark">
+      <span class="brand-icon">O</span>
+      <span class="brand-text">Ooredoo</span>
     </div>
+    <span class="role-badge">{{ userRole || 'Guest' }}</span>
+  </div>
 
-    <div class="navbar-content">
-      <ul class="nav-links">
-        <li *ngFor="let link of navLinks">
-          <a [routerLink]="link.route" class="nav-link">
-            <i [class]="link.iconClass"></i>
-            <span>{{ link.label }}</span>
-            <div class="link-indicator"></div>
-          </a>
-        </li>
-      </ul>
-
-      <div class="navbar-actions d-flex align-items-center">
-        <div class="search-box me-3">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search...">
-        </div>
-        <div class="user-profile d-flex align-items-center">
-          <div class="notification-badge me-3">
-            <i class="fas fa-bell"></i>
-            <span class="badge-count">3</span>
-          </div>
-          <div class="profile-dropdown me-3 d-flex align-items-center">
-            <img class="profile-avatar" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiw0QTE2LDE2IDAgMCwxIDEyLDIwQTE2LDE2IDAgMCwxIDEyLDRNMTIsMkM2LjQ4LDIgMiw2LjQ4IDIsMTJDNiwxNiAxMiwyMiAxMiwyMkMxOCw5IDE4LDkgMTIsMloiLz48L3N2Zz4=" alt="User">
-            <span class="profile-name ms-2">{{ currentUsername }}</span>
-          </div>
-          <button class="btn btn-outline-light btn-sm" (click)="logout()">
-            <i class="fas fa-sign-out-alt"></i> Logout
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li *ngFor="let link of navLinks" class="nav-item">
+        <a [routerLink]="link.route" class="nav-link" routerLinkActive="active">
+          <i [class]="link.iconClass" class="nav-icon"></i>
+          <span class="nav-label">{{ link.label }}</span>
+        </a>
+      </li>
+    </ul>
   </nav>
-</header>
+
+  <!-- User & Logout -->
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">
+        {{ currentUsername.charAt(0).toUpperCase() }}
+      </div>
+      <div class="user-meta">
+        <span class="user-name">{{ currentUsername }}</span>
+        <span class="user-role-label">{{ userRole || 'Guest' }}</span>
+      </div>
+    </div>
+    <button class="logout-btn" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span class="nav-label">Log out</span>
+    </button>
+  </div>
+</aside>
+
+<!-- Mobile overlay backdrop -->
+<div class="sidebar-backdrop"></div>
+
+<!-- Mobile toggle button -->
+<button class="mobile-sidebar-toggle">
+  <i class="fas fa-bars"></i>
+</button>

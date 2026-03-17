@@ -1,23 +1,77 @@
-<div class="user-details-container" *ngIf="!isLoading && user; else loading">
-  <div class="user-details-header">
-    <i class="fas fa-user user-details-icon"></i>
-    <h2>{{ user.username }}</h2>
-    <span class="user-id">#{{ user.id }}</span>
+<!-- Loading State -->
+<div *ngIf="isLoading" class="loading-state">
+  <div class="spinner-ring"></div>
+  <p>Loading user details...</p>
+</div>
+
+<!-- Error Banner -->
+<div *ngIf="error" class="error-banner">
+  <div class="error-icon">
+    <i class="fas fa-exclamation-circle"></i>
   </div>
-  <div class="user-details-body">
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Role:</strong> {{ user.roleName }}</p>
-    <p><strong>Status:</strong> {{ user.enabled ? "Active" : "Inactive" }}</p>
-    <p>
-      <strong>Account Locked:</strong> {{ user.accountLocked ? "Yes" : "No" }}
-    </p>
-    <!-- If you don't have createdDate in your UserDTO, remove the next line: -->
-    <!-- <p><strong>Account Created:</strong> {{ user.createdDate | date : "medium" }}</p> -->
+  <div class="error-content">
+    <span class="error-title">Error</span>
+    <span class="error-text">{{ error }}</span>
   </div>
 </div>
-<ng-template #loading>
-  <div class="user-details-loading">
-    <p *ngIf="!error">Loading user details...</p>
-    <p *ngIf="error" class="error-msg">{{ error }}</p>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading && user" class="page-container">
+  <div class="detail-header">
+    <div class="detail-icon">
+      <i class="fas fa-user"></i>
+    </div>
+    <div class="detail-header-info">
+      <h1 class="detail-title">{{ user.username }}</h1>
+    </div>
   </div>
-</ng-template>
+
+  <div class="meta-grid">
+    <!-- ID -->
+    <div class="meta-item">
+      <i class="fas fa-hashtag"></i>
+      <div class="meta-content">
+        <span class="meta-label">User ID</span>
+        <span class="meta-value">{{ user.id }}</span>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="meta-item">
+      <i class="fas fa-envelope"></i>
+      <div class="meta-content">
+        <span class="meta-label">Email</span>
+        <span class="meta-value">{{ user.email }}</span>
+      </div>
+    </div>
+
+    <!-- Role -->
+    <div class="meta-item">
+      <i class="fas fa-shield-alt"></i>
+      <div class="meta-content">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">{{ user.roleName }}</span>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="meta-item">
+      <i class="fas fa-circle"></i>
+      <div class="meta-content">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" [ngClass]="{'status-active': user.enabled, 'status-inactive': !user.enabled}">
+          {{ user.enabled ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Account Locked -->
+    <div class="meta-item">
+      <i class="fas fa-lock"></i>
+      <div class="meta-content">
+        <span class="meta-label">Account Locked</span>
+        <span class="meta-value">{{ user.accountLocked ? 'Yes' : 'No' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
